@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+  font-family: 'Oxygen', sans-serif;
+}
+.main-container-height{
+  min-height: calc(100vh - 80px);
+}
+.container-height{
+  min-height: calc(100vh - 95px);
+}
+
+input[type='number']{
+  all: unset;
+  width: 40px;
+  font-size: 36px;
+}
+
+.dashboard-players-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 5px;
+}
+.dashboard-players-stats-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+}
