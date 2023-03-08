@@ -19,6 +19,7 @@ const GamePlayerStats = ({
     gameId,
     id,
     currentTeam,
+    player,
   },
 }: GamePlayerStatsProps) => {
   const { mutate } = useSWRConfig();
@@ -68,9 +69,21 @@ const GamePlayerStats = ({
         <div className="avatar placeholder flex gap-8 items-center">
           <div className="bg-neutral-focus text-neutral-content rounded-full w-8">
             {currentTeam === 'GREEN' ? (
-              <span className="text-xs">G</span>
+              <img
+                src={
+                  player.greenShirtpicture ||
+                  `https://ui-avatars.com/api/?name=${player.slug}?bold=true`
+                }
+                alt="Avatar do jogador"
+              />
             ) : (
-              <span className="text-xs">B</span>
+              <img
+                src={
+                  player.whiteShirtpicture ||
+                  `https://ui-avatars.com/api/?name=${player.name}?bold=true`
+                }
+                alt="Avatar do jogador"
+              />
             )}
           </div>
           <h1 className="text-[16px]">{name}</h1>

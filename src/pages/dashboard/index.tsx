@@ -1,5 +1,4 @@
 import { GetServerSideProps } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
@@ -30,7 +29,11 @@ const Dashboard = () => {
                   ) : (
                     <>
                       <img
-                        src={player.currentPicture}
+                        src={
+                          player.currentPicture === 'WHITE'
+                            ? `${player.whiteShirtpicture}`
+                            : `${player.greenShirtpicture}`
+                        }
                         className="cursor-pointer"
                         onClick={() => push(`/dashboard/jogadores/${player.id}`)}
                       />
@@ -40,7 +43,7 @@ const Dashboard = () => {
               </div>
               <h2 className="m-b-2 cursor-pointer">{player.name}</h2>
               <div className="w-full h-6 rounded-b-lg bg-[#14191F] flex px-2">
-                <p>#{player.id}</p>
+                <p>#{player.shirtNumber}</p>
               </div>
             </div>
           ))}

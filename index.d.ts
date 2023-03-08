@@ -9,7 +9,11 @@ export type User = {
   createdAt: Date;
   updatedAt: Date;
 };
-
+export type _count = {
+  Stats: number;
+  games: number;
+  MOTM: number;
+};
 /**
  * Model PlayerProfile
  *
@@ -20,6 +24,8 @@ export type PlayerProfile = {
   greenShirtpicture: string | null;
   whiteShirtpicture: string | null;
   currentPicture: string | null;
+  shirtNumber: number | null;
+  slug: string;
   goals: number;
   assists: number;
   goalsConceded: number | null;
@@ -27,8 +33,9 @@ export type PlayerProfile = {
   defeats: number;
   draws: number;
   function: PlayerFunction;
-  MOTMScore: number | null;
+  MOTM: MOTM;
   Stats: PlayerStats[];
+  _count: _count;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -69,6 +76,7 @@ export type PlayerStats = {
   gameId: number | null;
   MOTM: MOTM[];
   Game: Game;
+  player: PlayerProfile;
   createdAt: string;
   updatedAt: string;
   _count: {

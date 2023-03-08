@@ -7,6 +7,6 @@ module.exports = {
     DEV_URL: process.env.DEV_URL,
   },
   images: {
-    domains: ['ui-avatars.com'],
+    domains: ['ui-avatars.com', 'res.cloudinary.com'],
   },
 };

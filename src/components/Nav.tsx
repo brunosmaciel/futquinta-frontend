@@ -61,7 +61,7 @@ const Nav = () => {
             )}
           </div>
           <Link className="btn btn-ghost normal-case text-xl " href={'/'}>
-            FutQuintaScore
+            FutQuinta <span className="logo">Score</span>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -90,9 +90,9 @@ const Nav = () => {
           )}
         </div>
         {isLoggedIn ? (
-          <div className="navbar-end">
-            <Link href={'/dashboard'} className="btn">
-              Dashboard
+          <div className="navbar-end mr-2">
+            <Link href={'/dashboard'} className="btn btn-outline">
+              Admin
             </Link>
           </div>
         ) : (

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useEffect, useState } from 'react';
 
+import { useSWRConfig } from 'swr';
+
 import { Game, PlayerProfile } from '../..';
 import { api } from '../services/axios';
 
@@ -23,6 +25,7 @@ const MOTMContainer = ({ game }: MOTMContainerProps) => {
   const [newGreenMOTM, setNewGreenMOTM] = useState<MOTMType>({} as MOTMType);
   const [currentWhiteMOTM, setCurrentWhiteMOTM] = useState('');
   const [currentGreenMOTM, setCurrentGreenMOTM] = useState('');
+  const { mutate } = useSWRConfig();
 
   useEffect(() => {
     if (game.MOTM.length > 0) {
@@ -47,6 +50,7 @@ const MOTMContainer = ({ game }: MOTMContainerProps) => {
       });
     });
     setIsLoading('not_loading');
+    mutate(`games/${game.id}`);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

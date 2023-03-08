@@ -32,9 +32,7 @@ const GameContainer = ({ game }: GameContainerProps) => {
         <VscEdit
           className="cursor-pointer"
           size={20}
-          onClick={() =>
-            push(`/dashboard/jogos/${new Date(game.createdAt).toISOString().slice(0, 10)}`)
-          }
+          onClick={() => push(`/dashboard/jogos/${game.id}`)}
         />
         <Modal game={game}>
           <h1>Deseja realmente excluir o jogo?</h1>

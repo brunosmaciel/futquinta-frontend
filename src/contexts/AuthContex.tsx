@@ -65,12 +65,11 @@ const AuthProvider = ({ children }: any) => {
 
       router.push('/dashboard');
     } catch (err: any) {
-      console.log(err.response.data.message);
+      throw new Error(err.response.data.message);
     }
   };
-  const logOut = async () => {
-    const data = destroyCookie(undefined, 'token');
-    console.log(data);
+  const logOut = () => {
+    destroyCookie(undefined, 'token');
   };
 
   return (

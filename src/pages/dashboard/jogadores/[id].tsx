@@ -1,35 +1,49 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
-import { PlayerProfile } from '../../../..';
+import { PlayerProfile, PlayerStats } from '../../../..';
 import { GameContainer } from '../../../components/Dashboard/DashboardGameContainer';
+import { LoadingSpin } from '../../../components/Loading';
+
 const Jogador = () => {
   const { query } = useRouter();
   const { data: player, isLoading } = useSWR<PlayerProfile>(`/players/${query.id}`);
+  let games: PlayerStats[];
 
   const getGoalsPerGame = (vic: number, def: number, draw: number, goals: number): string => {
     const totalOfGames = vic + def + draw;
     const goalsPerGame = goals / totalOfGames;
     return goalsPerGame.toFixed(2).replace('.', ',');
   };
-  player?.Stats.map((player) => {
-    console.log(player);
-  });
+  const getProfileImage = ({
+    currentPicture,
+    whiteShirtpicture,
+    greenShirtpicture,
+    name,
+  }: PlayerProfile): string => {
+    if (currentPicture === 'WHITE') {
+      return whiteShirtpicture!;
+    }
+    if (currentPicture === 'GREEN') {
+      return greenShirtpicture!;
+    }
+    return `https://ui-avatars.com/api/?name=${name}?bold=true`;
+  };
   if (isLoading) {
-    return <h1>carregando</h1>;
+    return <LoadingSpin />;
   }
   if (player) {
     return (
       <div>
         <div className="mx-2  h-36  flex items-center gap-4">
           <Image
-            src={
-              player.currentPicture || `https://ui-avatars.com/api/?name=${player.name}?bold=true`
-            }
+            src={getProfileImage(player)}
             alt={'Foto de perfil do jogador'}
-            width={60}
-            height={60}
+            width={100}
+            height={100}
+            priority
             className="h-20 w-20 rounded-full"
           />
           <h1 className="text-xl">{player.name}</h1>
@@ -42,9 +56,9 @@ const Jogador = () => {
               <p>{player.goalsConceded}</p>
             </div>
           ) : (
-            <div className="h-12 w-12 flex flex-col items-center bg-red-500">
-              <p>Gols</p>
-              <p>{player.goals}</p>
+            <div className="h-12 w-12 flex flex-col items-center ">
+              <p className="text-sm">Gols</p>
+              <p className="font-bold text-lg text-white">{player.goals}</p>
             </div>
           )}
           <div className="h-12 w-12 flex flex-col items-center">
@@ -74,7 +88,7 @@ const Jogador = () => {
         </div>
         <div className="divider divider-vertical"></div>
         <div className="w-[80%] flex flex-col gap-4 md:mx-0 lg:mx-0 mx-auto">
-          {player.Stats.map((player) => (
+          {player.Stats.reverse().map((player) => (
             <GameContainer game={player.Game} key={player.Game.id} />
           ))}
         </div>

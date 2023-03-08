@@ -1,49 +1,97 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { NextPage } from 'next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
-import { Game } from '../..';
+import { Game, PlayerProfile } from '../..';
 import { LoadingSpin } from '../components/Loading';
 
 const Home: NextPage = () => {
   const { data: games, isLoading } = useSWR<Game[]>('/games');
+  const { data: players } = useSWR<PlayerProfile[]>('/players');
+  const { push } = useRouter();
   if (isLoading) {
     return <LoadingSpin />;
   }
   return (
-    <div className="margin">
-      <div className="flex mt-4 ">
-        <img
-          src="https://estado.rs.gov.br/upload/recortes/201707/20075647_1210628_GDO.jpg"
-          alt="avatar"
-          className="w-12 h-12 rounded-full"
-        />
-        <div className="ml-4">
-          <h1>Fut</h1>
-          <h2>Quinta</h2>
-        </div>
-      </div>
-      {games &&
-        games.slice(0, 3).map((game) => (
-          <>
-            <div className="flex  text-sm">
-              <div className="flex flex-col items-center w-12">
-                <p>{new Date(game.createdAt).toLocaleDateString('pt-BR').slice(0, 5)}</p>
-                <p>19:15</p>
+    <div className="container-height  mx-2">
+      {/* //? Last Games */}
+      <div className="flex flex-col  gap-6">
+        <h2 className=" font-bold text-lg">Ultimas partidas</h2>
+        <div className="home-page-games-grid flex ">
+          {games?.slice(0, 3).map((game) => (
+            <div className="rounded-lg shadow-md bg-[#191D24] text-sm  p-2" key={game.id}>
+              <div className="flex flex-col items-center gap-[2px]">
+                <span>{new Date(game.createdAt).toLocaleDateString('pt-BR').slice(0, 5)}</span>
+                <span>19:15</span>
               </div>
-              <div className="divider divider-horizontal"></div>
-              <div className="">
-                <div className="flex justify-between w-20">
-                  <p className="text-white">Verde </p>
-                  <p className="text-white">{game.greenGoals}</p>
+              <div className="flex  mt-2 gap-2 items-center">
+                <p className="h-4 w-4 rounded-full bg-green-500"></p>
+                <span className="w-[44px]">Verde</span>
+                <span>{game.greenGoals}</span>
+              </div>
+              <div className="flex  mt-[2px] gap-2 items-center ">
+                <p className="h-4 w-4 rounded-full bg-white"></p>
+                <div className="flex gap-2">
+                  <span>Branco</span>
+                  <span>{game.whiteGoals}</span>
                 </div>
-                <div className="flex justify-between w-20">
-                  <p className="text-white">Branco</p>
-                  <p className="text-white">{game.whiteGoals}</p>
-                </div>
+              </div>
+              <div className="mt-2">
+                <Link className="link" href={`/jogos/${game.id}`}>
+                  Ver detalhes
+                </Link>
               </div>
             </div>
-          </>
-        ))}
+          ))}
+        </div>
+        <div>
+          <Link className="link" href={`/jogos`}>
+            Ver todos os jogos
+          </Link>
+        </div>
+      </div>
+      <div className="divider"></div>
+      <div>
+        <h2 className=" font-bold text-lg">Artilheiros</h2>
+
+        <div className="home-page-players-grid  w-full my-4">
+          {players?.slice(0, 3).map((player) => (
+            <div
+              key={player.id}
+              className=" bg-[#191D24] w-24 h-32 rounded-lg flex flex-col items-center justify-between"
+            >
+              <div className="avatar  placeholder mt-2">
+                <div className="bg-neutral-focus text-neutral-content rounded-full w-16">
+                  {player.currentPicture === null ? (
+                    <span className="text-xl">P</span>
+                  ) : (
+                    <>
+                      <img
+                        src={
+                          player.currentPicture === 'GREEN'
+                            ? player.greenShirtpicture!
+                            : player.whiteShirtpicture!
+                        }
+                        className="cursor-pointer"
+                        onClick={() => push(`/jogadores/${player.slug}`)}
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
+              <h2 className="m-b-2 cursor-pointer">{player.name}</h2>
+              <div className="w-full h-6 rounded-b-lg bg-[#14191F] flex px-2">
+                <p># {player.shirtNumber || '00'}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <Link className="link" href={`/jogadores`}>
+          Ver todos os jogadores
+        </Link>
+      </div>
     </div>
   );
 };
