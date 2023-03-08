@@ -2,7 +2,7 @@ import axios from 'axios';
 import { parseCookies } from 'nookies';
 const { token } = parseCookies();
 const api = axios.create({
-  baseURL: process.env.PROD_URL,
+  baseURL: process.env.BASE_URL,
 });
 
 if (token) {
