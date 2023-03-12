@@ -1,11 +1,26 @@
+import { useContext, useEffect } from 'react';
+
 import { Game } from '../../..';
+import { ScoreboardContext } from '../../contexts/ScoreboardContext';
 
 export type GameScore = {
   game: Game;
 };
 const GameScore = ({ game }: GameScore) => {
-  // const whiteTeam = game?.players.filter((player) => player.currentTeam === 'WHITE');
-  // const greenTeam = game?.players.filter((player) => player.currentTeam === 'GREEN');
+  const { whiteGoals, greenGoals, setWhiteGoals, setGreenGoals } = useContext(ScoreboardContext);
+  useEffect(() => {
+    const white = game?.players
+      .filter((player) => player.currentTeam === 'WHITE')
+      .map((goals) => goals.goals)
+      .reduce((acc, current) => acc + current, 0);
+    const green = game?.players
+      .filter((player) => player.currentTeam === 'GREEN')
+      .map((goals) => goals.goals)
+      .reduce((acc, current) => acc + current, 0);
+
+    setWhiteGoals(white);
+    setGreenGoals(green);
+  }, []);
 
   return (
     <>
@@ -15,9 +30,9 @@ const GameScore = ({ game }: GameScore) => {
           <div className="h-14 w-14 rounded-full bg-white"></div>
         </div>
         <div className="flex gap-2 text-3xl ">
-          <p>{game?.whiteGoals}</p>
+          <p>{whiteGoals}</p>
           <span>-</span>
-          <p>{game?.greenGoals}</p>
+          <p>{greenGoals}</p>
         </div>
         <div className="flex flex-col items-center">
           <p>Verde</p>

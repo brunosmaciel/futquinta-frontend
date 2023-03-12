@@ -9,6 +9,7 @@ export type GameContainerProps = {
 };
 const GameContainer = ({ game }: GameContainerProps) => {
   const { push } = useRouter();
+
   return (
     <div className="mx-2 mt-[0.1rem] flex  w-full justify-between" key={game.id}>
       <div className="flex">

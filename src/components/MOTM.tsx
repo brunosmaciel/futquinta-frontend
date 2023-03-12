@@ -44,11 +44,11 @@ const MOTMContainer = ({ game }: MOTMContainerProps) => {
     setIsLoading('loading');
     const allMOTM = [newWhiteMOTM, newGreenMOTM];
 
-    allMOTM.forEach(async (player) => {
-      await api.post(`/motm/${player.gameId}/${player.playerId}`, {
-        team: player.team,
+    for await (const motm of allMOTM) {
+      await api.post(`/motm/${motm.gameId}/${motm.playerId}`, {
+        team: motm.team,
       });
-    });
+    }
     setIsLoading('not_loading');
     mutate(`games/${game.id}`);
   };

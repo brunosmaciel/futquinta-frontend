@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import { PlayerProfile } from '../../..';
 import { getGamesRecord, getGoalsPerGame } from '../../functions/functions';
+import { getPlayerStats } from '../../functions/getPlayerStats';
 import { getProfileImage } from '../../functions/getProfileImage';
 import { api } from '../../services/axios';
 
@@ -22,6 +23,18 @@ const Jogador = ({ player }: JogadorProps) => {
 
     return 0;
   });
+  const {
+    goals,
+    goalsConceded,
+    victories,
+    defeats,
+    draws,
+    points,
+    goalsPerGame,
+    gamesRecord,
+    mvp,
+  } = getPlayerStats(player);
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col items-center gap-5 py-2  w-[90%] mx-auto cursor-pointer">
@@ -71,46 +84,42 @@ const Jogador = ({ player }: JogadorProps) => {
           {player.function === 'OUTFIELDPLAYER' ? (
             <>
               <span className="text-sm">Gols</span>
-              <span className="text-xl font-bold">{player.goals}</span>
+              <span className="text-xl font-bold">{goals}</span>
             </>
           ) : (
             <>
               <span className="text-sm">Gols S</span>
-              <span className="text-xl font-bold">{player.goalsConceded}</span>
+              <span className="text-xl font-bold">{goalsConceded}</span>
             </>
           )}
         </div>
         <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
           <span className="text-sm">Vitorias</span>
-          <span className="text-xl font-bold">{player.victories}</span>
+          <span className="text-xl font-bold">{victories}</span>
         </div>
         <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
           <span className="text-sm">Derrotas</span>
-          <span className="text-xl font-bold">{player.defeats}</span>
+          <span className="text-xl font-bold">{defeats}</span>
         </div>
         <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
           <span className="text-sm">Empates</span>
-          <span className="text-xl font-bold">{player.draws}</span>
+          <span className="text-xl font-bold">{draws}</span>
         </div>
         <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
           <span className="text-sm">Pontos</span>
-          <span className="text-xl font-bold">{player.victories * 3 + player.draws}</span>
+          <span className="text-xl font-bold">{points}</span>
         </div>
         <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
           <span className="text-sm">Gols p/j</span>
-          <span className="text-xl font-bold">
-            {getGoalsPerGame(player._count.Stats, player.goals)}
-          </span>
+          <span className="text-xl font-bold">{goalsPerGame.toFixed(2)}</span>
         </div>
         <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
           <span className="text-sm">Aprov.</span>
-          <span className="text-xl font-bold">
-            {getGamesRecord(player._count.Stats, player.victories, player.draws)}%
-          </span>
+          <span className="text-xl font-bold">{gamesRecord.toFixed(0)}%</span>
         </div>
         <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
           <span className="text-sm">MVP</span>
-          <span className="text-xl font-bold">{player._count.MOTM}</span>
+          <span className="text-xl font-bold">{mvp}</span>
         </div>
       </div>
       <div className="divider"></div>

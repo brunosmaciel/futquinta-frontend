@@ -5,13 +5,13 @@ const getGoalsPerGame = (totalOfGames: number, goals: number): string => {
   return goalsPerGame.toFixed(1).replace('.', ',');
 };
 
-export const getGamesRecord = (totalOfGames: number, vic: number, draw: number): string => {
+export const getGamesRecord = (totalOfGames: number, vic: number, draw: number): number => {
   const playerTotalPoints = vic * 3 + draw * 1;
   const disputedPoints = totalOfGames * 3;
 
   const record = (playerTotalPoints / disputedPoints) * 100;
 
-  return Math.ceil(record).toFixed(0);
+  return +record;
 };
 const getProfileImage = ({
   currentPicture,

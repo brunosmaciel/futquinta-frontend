@@ -6,6 +6,7 @@ import useSWR from 'swr';
 
 import { Game, PlayerProfile } from '../../..';
 import { LoadingSpin } from '../../components/Loading';
+
 const Dashboard = () => {
   const { push } = useRouter();
   const { data: players, isLoading } = useSWR<PlayerProfile[]>('/players');
@@ -15,7 +16,7 @@ const Dashboard = () => {
   }
   if (!isLoading) {
     return (
-      <div className="mx-2   mt-16">
+      <div className="mx-2  mt-16">
         <div className="dashboard-players-grid  w-full my-4">
           {players?.slice(0, 3).map((player) => (
             <div

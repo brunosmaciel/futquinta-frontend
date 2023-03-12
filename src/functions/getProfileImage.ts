@@ -13,7 +13,8 @@ const getProfileImage = ({
   if (currentPicture === 'GREEN') {
     return greenShirtpicture!;
   }
-  return `https://ui-avatars.com/api/?name=${slug}?bold=true`;
+
+  return `https://ui-avatars.com/api/?name=${slug.replace('-', '')}?bold=true`;
 };
 
 export { getProfileImage };

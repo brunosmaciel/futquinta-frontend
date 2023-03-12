@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
@@ -7,6 +7,7 @@ import useSWR from 'swr';
 
 import { Game } from '../../../..';
 import { GameContainer } from '../../../components/Dashboard/DashboardGameContainer';
+import { ToastContext } from '../../../contexts/ToastContext';
 import { api } from '../../../services/axios';
 export type GameProps = {
   games: Game[];
@@ -23,8 +24,6 @@ const Game = () => {
       router.push(`/dashboard/jogos/${data.id}`);
       setIsLoading('not_loading');
     } catch (err: any) {
-      // eslint-disable-next-line no-console
-      console.log(err);
       setIsLoading('not_loading');
     }
   };

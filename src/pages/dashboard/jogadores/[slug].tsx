@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { GetStaticProps } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
 import { PlayerProfile, PlayerStats } from '../../../..';
 import { GameContainer } from '../../../components/Dashboard/DashboardGameContainer';
-import { LoadingSpin } from '../../../components/Loading';
-
-const Jogador = () => {
-  const { query } = useRouter();
-  const { data: player, isLoading } = useSWR<PlayerProfile>(`/players/${query.id}`);
-  let games: PlayerStats[];
-
+import { getPlayerStats } from '../../../functions/getPlayerStats';
+import { api } from '../../../services/axios';
+export type JogadorProps = {
+  player: PlayerProfile;
+};
+const Jogador = ({ player }: JogadorProps) => {
   const getGoalsPerGame = (vic: number, def: number, draw: number, goals: number): string => {
     const totalOfGames = vic + def + draw;
     const goalsPerGame = goals / totalOfGames;
@@ -31,9 +31,7 @@ const Jogador = () => {
     }
     return `https://ui-avatars.com/api/?name=${name}?bold=true`;
   };
-  if (isLoading) {
-    return <LoadingSpin />;
-  }
+
   if (player) {
     return (
       <div>
@@ -96,5 +94,29 @@ const Jogador = () => {
     );
   }
 };
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { data: player } = await api.get<PlayerProfile>(`/players/${context?.params?.slug}`);
+
+  return {
+    props: {
+      player,
+    },
+    revalidate: 60,
+  };
+};
+export async function getStaticPaths() {
+  const { data: players } = await api.get<PlayerProfile[]>('/players');
+
+  return {
+    paths: players.map((player) => {
+      return {
+        params: {
+          slug: player.slug,
+        },
+      };
+    }),
+    fallback: false,
+  };
+}
 
 export default Jogador;

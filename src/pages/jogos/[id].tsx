@@ -11,6 +11,7 @@ const Jogo = () => {
   } = useRouter();
 
   const { data, isLoading, error } = useSWR<Game>(`/games/${id}`);
+
   if (error) {
     return <FourOhFour />;
   }
@@ -20,6 +21,7 @@ const Jogo = () => {
   if (data) {
     const whiteMOTM = data.MOTM.filter((player) => player.team === 'WHITE')[0];
     const greenMOTM = data.MOTM.filter((player) => player.team === 'GREEN')[0];
+
     const whitePlayers = data.players
       .filter((player) => player.currentTeam === 'WHITE')
       .sort((a, b) => {
@@ -37,35 +39,49 @@ const Jogo = () => {
 
     return (
       <div className="flex flex-col items-center">
+        {/* //TODO adicionar data do jogo aqui */}
+
+        {/*//TODO add this code later */
+        /* <Image
+          alt="alt"
+          src="/g.jpeg"
+          className="w-max border-[1px] rounded-lg"
+          width={320}
+          height={30}
+        /> */}
         <GameScore game={data} />
-        <div className=" flex w-96 flex-col self-center items-center gap-4 ">
-          <h1 className="font-bold text-xl">Melhores da partida</h1>
-          <div className="w-[90%] h-22 bg-[#131A21] flex rounded-2xl justify-between px-4 py-2 ">
-            <div className="flex items-center gap-2">
-              <img
-                src={
-                  whiteMOTM.player.whiteShirtpicture ||
-                  `https://ui-avatars.com/api/?name=${whiteMOTM.player.slug}?bold=true`
-                }
-                alt=""
-                className="w-10 h-10 rounded-full"
-              />
-              <h1>{whiteMOTM.player.name}</h1>
+        {data.MOTM.length >= 2 && (
+          <>
+            <div className=" flex w-96 flex-col self-center items-center gap-4 ">
+              <h1 className="font-bold text-xl">Melhores da partida</h1>
+              <div className="w-[90%] h-22 bg-[#131A21] flex rounded-2xl justify-between px-4 py-2 ">
+                <div className="flex items-center gap-2">
+                  <img
+                    src={
+                      whiteMOTM.player.whiteShirtpicture ||
+                      `https://ui-avatars.com/api/?name=${whiteMOTM.player.slug}?bold=true`
+                    }
+                    alt=""
+                    className="w-10 h-10 rounded-full"
+                  />
+                  <h1>{whiteMOTM.player.name}</h1>
+                </div>
+                <div className="bg-white w-[2px]"></div>
+                <div className="flex items-center gap-2">
+                  <h1>{greenMOTM.player.name}</h1>
+                  <img
+                    src={
+                      greenMOTM.player.greenShirtpicture ||
+                      `https://ui-avatars.com/api/?name=${greenMOTM.player.slug}?bold=true`
+                    }
+                    alt=""
+                    className="w-10 h-10 rounded-full"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="bg-white w-[2px]"></div>
-            <div className="flex items-center gap-2">
-              <h1>{greenMOTM.player.name}</h1>
-              <img
-                src={
-                  greenMOTM.player.greenShirtpicture ||
-                  `https://ui-avatars.com/api/?name=${greenMOTM.player.slug}?bold=true`
-                }
-                alt=""
-                className="w-10 h-10 rounded-full"
-              />
-            </div>
-          </div>
-        </div>
+          </>
+        )}
         <div className="w-[95%] lg:w-[70%] my-8">
           <div className="border border-base-300 bg-base-100 p-4 flex items-center gap-10 text-xl overflow-x-hidden">
             <div className="h-10 w-10 rounded-full bg-white"></div>
@@ -152,7 +168,7 @@ const Jogo = () => {
                     {playerFunction === 'GOALKEEPER' ? (
                       <>
                         <span className="text-sm">Gols S</span>
-                        <span className="text-xl font-bold">{data.greenGoals}</span>
+                        <span className="text-xl font-bold">{data.whiteGoals}</span>
                       </>
                     ) : (
                       <>

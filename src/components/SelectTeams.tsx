@@ -23,6 +23,7 @@ export const SelectPlayers = ({ team, handleTeamSelection, players }: SelectPlay
             id: player.id,
             function: player.function,
             name: player.name,
+            shirtNumber: String(player.shirtNumber || '00'),
           })}
         >
           {player.name}

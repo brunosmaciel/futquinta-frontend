@@ -1,90 +1,56 @@
+import { useRef, useState } from 'react';
+
 import useSWR from 'swr';
 
 import { PlayerProfile } from '../..';
+import { LoadingSpin } from '../components/Loading';
+import { GeneralRanking } from '../components/Rankings/GeneralRanking';
+import { GoalkeepersRankings } from '../components/Rankings/GoalkeepersRanking';
+import { MOTMRanking } from '../components/Rankings/MOTMRanking';
+import { TopScorersRanking } from '../components/Rankings/TopScorerRanking';
 
 const Rankings = () => {
-  const { data, isLoading } = useSWR<PlayerProfile[]>('/players');
-  const outfieldPlayers = data?.filter((player) => player.function === 'OUTFIELDPLAYER');
+  const { data: players, isLoading } = useSWR<PlayerProfile[]>('/players');
+  const [tab, setTab] = useState<number>(1);
+  const tabsDiv = useRef<HTMLDivElement | null>(null);
 
-  const getNumberOfGames = (vic: number, def: number, draw: number): number => {
-    const games = vic + def + draw;
-
-    return games;
-  };
-  const getAveragingGoals = (vic: number, def: number, draw: number, goals: number): string => {
-    const games = getNumberOfGames(vic, def, draw);
-
-    const averagingGoals = (goals / games).toFixed(2);
-    if (+averagingGoals === Infinity) {
-      return '0,00';
-    }
-    if (Number.isNaN(+averagingGoals)) {
-      return '0,00';
-    }
-    if (averagingGoals.length === 2) {
-      return averagingGoals + '0'.replace('.', ',');
-    }
-    if (averagingGoals.length === 1) {
-      return averagingGoals + '0'.replace('.', ',');
-    }
-    if (averagingGoals === '0') {
-      return averagingGoals.replace('.', ',');
-    }
-    return averagingGoals.replace('.', ',');
-  };
   if (isLoading) {
+    <LoadingSpin />;
+  }
+  const handleTabChange = (e: any) => {
+    const index = Array.from(e.target.parentNode.children).indexOf(e.target);
+    const tabElements = Array.from(e.target.parentNode.children) as HTMLAnchorElement[];
+    tabElements.map((element) => element.classList.remove('tab-active'));
+    tabsDiv.current?.children[index].classList.add('tab-active');
+
+    setTab(index + 1);
+  };
+  if (players) {
+    const goalkeepers = players.filter(
+      (player) => player.function === 'GOALKEEPER'
+    ) as PlayerProfile[];
     return (
       <>
-        <h1>loading</h1>
+        <div className="tabs" ref={tabsDiv}>
+          <a className="tab tab-lifted tab-active" onClick={handleTabChange}>
+            Classificação geral
+          </a>
+          <a className="tab tab-lifted" onClick={handleTabChange}>
+            Artilharia
+          </a>
+          <a className="tab tab-lifted" onClick={handleTabChange}>
+            Goleiros
+          </a>
+          <a className="tab tab-lifted" onClick={handleTabChange}>
+            MVP
+          </a>
+        </div>
+        {tab === 1 && <GeneralRanking players={players} />}
+        {tab === 2 && <TopScorersRanking players={players} />}
+        {tab === 3 && <GoalkeepersRankings players={goalkeepers} />}
+        {tab === 4 && <MOTMRanking players={players} />}
       </>
     );
   }
-  return (
-    <>
-      <div className="tabs">
-        <a className="tab tab-lifted">Artilharia</a>
-        <a className="tab tab-lifted tab-active">Classificação geral</a>
-        <a className="tab tab-lifted">Goleiros</a>
-      </div>
-      <div className="overflow-x-auto">
-        {data && (
-          <table className="table table-zebra w-full">
-            {/* head */}
-            <thead>
-              <tr>
-                <th></th>
-                <th>Nome</th>
-                <th>Jogos</th>
-                <th>Gols</th>
-                <th>Media</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {outfieldPlayers &&
-                outfieldPlayers
-                  .filter((player) => player.function === 'OUTFIELDPLAYER')
-                  .map((player, i) => (
-                    <tr key={player.id}>
-                      <th>{i + 1}</th>
-                      <td>{player.name}</td>
-                      <td>{getNumberOfGames(player.victories, player.defeats, player.draws)}</td>
-                      <td>{player.goals}</td>
-                      <td>
-                        {getAveragingGoals(
-                          player.victories,
-                          player.defeats,
-                          player.draws,
-                          player.goals
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-            </tbody>
-          </table>
-        )}
-      </div>
-    </>
-  );
 };
 export default Rankings;

@@ -33,7 +33,7 @@ export type PlayerProfile = {
   defeats: number;
   draws: number;
   function: PlayerFunction;
-  MOTM: MOTM;
+  MOTM: MOTM[];
   Stats: PlayerStats[];
   _count: _count;
   createdAt: Date;
