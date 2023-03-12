@@ -1,37 +1,66 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+
 import { GetStaticProps } from 'next';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
-import useSWR from 'swr';
 
-import { PlayerProfile, PlayerStats } from '../../../..';
+import { PlayerProfile } from '../../../..';
 import { GameContainer } from '../../../components/Dashboard/DashboardGameContainer';
-import { getPlayerStats } from '../../../functions/getPlayerStats';
 import { api } from '../../../services/axios';
 export type JogadorProps = {
   player: PlayerProfile;
 };
 const Jogador = ({ player }: JogadorProps) => {
+  const [currentPlayerPicture, setCurrentPlayerPicture] = useState<string | null>(
+    player.currentPicture
+  );
+  const [uploadImageColor, setUploadImageColor] = useState<string>(
+    player.currentPicture || 'GREEN'
+  );
+  const [picture, setPicture] = useState<FileList | null>(null);
+  const [isLoading, setIsLoading] = useState<'loading' | 'not_loading'>('not_loading');
   const getGoalsPerGame = (vic: number, def: number, draw: number, goals: number): string => {
     const totalOfGames = vic + def + draw;
     const goalsPerGame = goals / totalOfGames;
     return goalsPerGame.toFixed(2).replace('.', ',');
   };
   const getProfileImage = ({
-    currentPicture,
     whiteShirtpicture,
     greenShirtpicture,
-    name,
+    slug,
   }: PlayerProfile): string => {
-    if (currentPicture === 'WHITE') {
+    if (currentPlayerPicture === 'WHITE') {
       return whiteShirtpicture!;
     }
-    if (currentPicture === 'GREEN') {
+    if (currentPlayerPicture === 'GREEN') {
       return greenShirtpicture!;
     }
-    return `https://ui-avatars.com/api/?name=${name}?bold=true`;
+    return `https://ui-avatars.com/api/?name=${slug}?bold=true`;
   };
 
+  const handleUploadImage = async () => {
+    if (picture) {
+      setIsLoading('loading');
+      const formData = new FormData();
+      formData.append('avatar', picture[0]);
+      formData.append('shirtColor', uploadImageColor);
+      const data = await api.post(`/players/upload/${player.id}`, formData);
+
+      toast.success(
+        `Foto ${data.data.image_url === 'GREEN' ? 'Verde' : 'Branco'} do jogador ${
+          player.name
+        } foi atualizada com sucesso`
+      ),
+        setIsLoading('not_loading');
+      return;
+    }
+
+    return;
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setUploadImageColor(e.target.value);
+  };
   if (player) {
     return (
       <div>
@@ -45,6 +74,73 @@ const Jogador = ({ player }: JogadorProps) => {
             className="h-20 w-20 rounded-full"
           />
           <h1 className="text-xl">{player.name}</h1>
+        </div>
+
+        {/* The button to open modal */}
+        <label htmlFor={`my-modal-${player.id}`} className="btn btn-sm btn-outline">
+          Adicionar Fotos
+        </label>
+
+        {/* Put this part before </body> tag */}
+        <input type="checkbox" id={`my-modal-${player.id}`} className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box relative">
+            <label
+              htmlFor={`my-modal-${player.id}`}
+              className="btn btn-sm btn-circle absolute right-2 top-2"
+            >
+              ✕
+            </label>
+            <h3 className="text-lg font-bold">Galeria</h3>
+            <p className="text-[10px]">
+              {' '}
+              <i>* Clique em cima da foto para trocar</i>
+            </p>
+            <div className="flex gap-2 my-4 w-full justify-center ">
+              {player.whiteShirtpicture && (
+                <>
+                  <img
+                    className="h-24 w-24 rounded-xl border-[1px] cursor-pointer hover:scale-105 transition-all"
+                    src={player.whiteShirtpicture}
+                    alt=""
+                    onClick={() => setCurrentPlayerPicture('WHITE')}
+                  />
+                </>
+              )}
+
+              {player.greenShirtpicture && (
+                <>
+                  <img
+                    className="h-24 w-24 rounded-xl border-[1px] cursor-pointer hover:scale-105 transition-all"
+                    src={player.greenShirtpicture}
+                    alt=""
+                    onClick={() => setCurrentPlayerPicture('GREEN')}
+                  />
+                </>
+              )}
+            </div>
+            <div>
+              <h3 className="text-lg font-bold">Carregar nova foto</h3>
+              <select
+                className="select select-bordered select-sm w-full max-w-xs my-4"
+                onChange={handleChange}
+                defaultValue={uploadImageColor}
+              >
+                <option value={'GREEN'}>Verde</option>
+                <option value={'WHITE'}>Branco</option>
+              </select>
+              <input
+                type="file"
+                className="file-input file-input-bordered file-input-sm w-full max-w-xs"
+                placeholder=""
+                onChange={(e) => setPicture(e.target.files)}
+              />
+              <p>Cor selecionada: {uploadImageColor}</p>
+              <button className={`btn btn-outline ${isLoading}`} onClick={handleUploadImage}>
+                Salvar
+              </button>
+            </div>
+          </div>
         </div>
         <div className="divider divider-vertical"></div>
         <div className="flex items-center gap-8 flex-wrap w-[60%]   md:mx-0 lg:mx-0 mx-auto my-4">
@@ -101,7 +197,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       player,
     },
-    revalidate: 60,
+    revalidate: 5,
   };
 };
 export async function getStaticPaths() {
