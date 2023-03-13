@@ -22,8 +22,8 @@ const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
     });
 
   return (
-    <>
-      <div className="overflow-x-auto">
+    <div className="goalkeeper-rank-height">
+      <div className="overflow-x-auto ">
         {playerStats && (
           <table className="table table-zebra w-full">
             {/* head */}
@@ -55,7 +55,7 @@ const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
           </table>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

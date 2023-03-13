@@ -11,6 +11,10 @@
 }
 .container-height{
   min-height: calc(100vh - 95px);
+} 
+
+.goalkeeper-rank-height{
+  min-height: calc(100vh - 120px);
 }
 
 input[type='number']{
