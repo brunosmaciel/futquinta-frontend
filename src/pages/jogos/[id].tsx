@@ -1,3 +1,6 @@
+import { ImCalendar } from 'react-icons/im';
+
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
@@ -39,16 +42,21 @@ const Jogo = () => {
 
     return (
       <div className="flex flex-col items-center">
-        {/* //TODO adicionar data do jogo aqui */}
+        {data.gamePicture && (
+          <>
+            <Image
+              alt="alt"
+              src={data.gamePicture}
+              className="w-max border-[1px] rounded-lg"
+              width={320}
+              height={30}
+              quality={100}
+            />
+          </>
+        )}
 
         {/*//TODO add this code later */
-        /* <Image
-          alt="alt"
-          src="/g.jpeg"
-          className="w-max border-[1px] rounded-lg"
-          width={320}
-          height={30}
-        /> */}
+        /*  */}
         <GameScore game={data} />
         {data.MOTM.length >= 2 && (
           <>
@@ -82,6 +90,12 @@ const Jogo = () => {
             </div>
           </>
         )}
+        <div className=" mt-5 w-[95%] lg:w-[70%] flex gap-2 items-center">
+          <ImCalendar />
+          <p>
+            <i>{new Date(data.createdAt).toLocaleDateString('pt-BR').slice(0, 10)}</i>
+          </p>
+        </div>
         <div className="w-[95%] lg:w-[70%] my-8">
           <div className="border border-base-300 bg-base-100 p-4 flex items-center gap-10 text-xl overflow-x-hidden">
             <div className="h-10 w-10 rounded-full bg-white"></div>

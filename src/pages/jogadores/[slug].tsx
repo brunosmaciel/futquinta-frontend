@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { GetStaticProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { PlayerProfile } from '../../..';
-import { getGamesRecord, getGoalsPerGame } from '../../functions/functions';
 import { getPlayerStats } from '../../functions/getPlayerStats';
-import { getProfileImage } from '../../functions/getProfileImage';
 import { api } from '../../services/axios';
 
 export type JogadorProps = {
@@ -15,6 +14,11 @@ export type JogadorProps = {
 };
 const Jogador = ({ player }: JogadorProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const [currentPlayerProfilePicture, setCurrentPlayerProfilePicture] = useState(
+    player.currentPicture || ''
+  );
+
   const games = [...player.Stats].sort((a, b) => {
     const aDate = a.createdAt;
     const bDate = b.createdAt;
@@ -39,7 +43,11 @@ const Jogador = ({ player }: JogadorProps) => {
     <div className="flex flex-col">
       <div className="flex flex-col items-center gap-5 py-2  w-[90%] mx-auto cursor-pointer">
         <Image
-          src={getProfileImage(player)}
+          src={
+            currentPlayerProfilePicture === 'WHITE'
+              ? player.whiteShirtpicture || ''
+              : player.greenShirtpicture || ''
+          }
           alt="Foto de perfil do jogador"
           width={300}
           height={300}
@@ -62,18 +70,52 @@ const Jogador = ({ player }: JogadorProps) => {
         />
         <div className="modal modal-bottom sm:modal-middle">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">Congratulations random Internet user!</h3>
-            <p className="py-4">
-              ve been selected for a chance to get one year of subscription to use Wikipedia for
-              free!
-            </p>
+            <h3 className="font-bold text-lg">Galeria</h3>
+            <div className="flex my-4 gap-8 justify-center  w-full">
+              {player.whiteShirtpicture && (
+                <div className="flex flex-col gap-2 items-center">
+                  <Image
+                    src={player.whiteShirtpicture}
+                    alt="Foto de perfil do jogador"
+                    width={300}
+                    height={300}
+                    className="rounded-xl w-32 h-32 border-2"
+                    onClick={() => setIsOpen(true)}
+                  />
+                  <button
+                    className="btn btn-sm btn-outline"
+                    onClick={() => setCurrentPlayerProfilePicture('WHITE')}
+                  >
+                    Usar foto
+                  </button>
+                </div>
+              )}
+              {player.greenShirtpicture && (
+                <div className="flex flex-col gap-2 items-center">
+                  <Image
+                    src={player.greenShirtpicture}
+                    alt="Foto de perfil do jogador"
+                    width={300}
+                    height={300}
+                    className="rounded-xl w-32 h-32 border-2"
+                    onClick={() => setIsOpen(true)}
+                  />
+                  <button
+                    className="btn btn-sm btn-outline"
+                    onClick={() => setCurrentPlayerProfilePicture('WHITE')}
+                  >
+                    Usar foto
+                  </button>
+                </div>
+              )}
+            </div>
             <div className="modal-action">
               <label
                 htmlFor={`my-modal-${player.id}`}
                 className="btn"
                 onClick={() => setIsOpen(false)}
               >
-                fechar
+                Salvar
               </label>
             </div>
           </div>

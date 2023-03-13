@@ -2,12 +2,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import useSWR, { useSWRConfig } from 'swr';
 
 import { Game } from '../../../..';
 import { AddPlayerToGameModal } from '../../../components/AddPlayerToGameModal';
-import { GameScore } from '../../../components/Dashboard/GameScore';
+import { GamePicure } from '../../../components/GamePicture';
 import { GamePlayerStats } from '../../../components/GamePlayerStats';
 import { LoadingSpin } from '../../../components/Loading';
 import { MOTMContainer } from '../../../components/MOTM';
@@ -159,6 +160,12 @@ const SingleGame = () => {
       <div className="mx-2 flex flex-col  min-h-[577px]">
         {game?.status === 'FINISHED' && (
           <>
+            <div className="gap-2  flex flex-col items-center">
+              <GamePicure game={game} />
+              <p>
+                <i>Dia {new Date(game?.createdAt).toLocaleDateString('pt-BR').slice(0, 5)}</i>
+              </p>
+            </div>
             <div className=" flex items-center justify-center gap-8 my-8">
               <div className="flex flex-col items-center">
                 <p>Branco</p>

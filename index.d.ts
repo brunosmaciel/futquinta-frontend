@@ -57,6 +57,7 @@ export type Game = {
   playerId: number | null;
   players: PlayerStats[];
   MOTM: MOTM[];
+  gamePicture: string | null;
 };
 
 /**
