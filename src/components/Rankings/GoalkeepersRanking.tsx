@@ -10,19 +10,22 @@ const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
   const playerStats = players
     .map((player) => {
       const stats = getPlayerStats(player);
-      const goalsConcededPerGame = stats.goalsConceded | stats.totalGames;
+
       return {
         name: player.name,
         slug: player.slug,
-        goalsConcededPerGame,
+
         ...stats,
       };
     })
     .sort((a, b) => {
-      return a.goalsConcededPerGame < b.goalsConcededPerGame ? -1 : 1;
+      return a.goalsConceded / a.totalGames < b.goalsConceded / b.totalGames ? -1 : 1;
     })
     .sort((a, b) => {
-      if (a.goalsConcededPerGame === b.goalsConcededPerGame && a.totalGames > b.totalGames)
+      if (
+        a.goalsConceded / a.totalGames === b.goalsConceded / b.totalGames &&
+        a.totalGames > b.totalGames
+      )
         return -1;
       return 1;
     });
