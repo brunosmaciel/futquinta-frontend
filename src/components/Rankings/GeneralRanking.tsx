@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import { PlayerProfile } from '../../../';
 import { getGeneralRanking } from '../../functions/getGeneralRanking';
 
@@ -26,22 +24,16 @@ const GeneralRanking = ({ players }: GeneralPlacingProps) => {
             </thead>
             <tbody>
               {/* row 1 */}
-              {playersGeneralRanking.map(
-                ({ slug, name, games, pointsDisputed, pointsEarned, record }, i) => (
-                  <tr key={slug}>
-                    <th>{i + 1}°</th>
-                    <td>
-                      <Link href={`/jogadores/${slug}`} className="cursor-pointer">
-                        {name}
-                      </Link>
-                    </td>
-                    <td>{pointsEarned}</td>
-                    <td>{games}</td>
-                    <td>{pointsDisputed}</td>
-                    <td>{record.toFixed(1)}%</td>
-                  </tr>
-                )
-              )}
+              {playersGeneralRanking.map(({ slug, name, totalGames, points, gamesRecord }, i) => (
+                <tr key={slug}>
+                  <th>{i + 1}</th>
+                  <td>{name}</td>
+                  <td>{points}</td>
+                  <td>{totalGames}</td>
+                  <td>{totalGames * 3}</td>
+                  <td>{gamesRecord.toFixed(1)}%</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         )}
