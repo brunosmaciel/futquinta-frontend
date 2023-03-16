@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useState, Suspense } from 'react';
 
 import { GetStaticProps } from 'next';
 import Image from 'next/image';

@@ -32,7 +32,7 @@ const Login = () => {
           <span>Email</span>
           <input
             type="text"
-            placeholder="info@site.com"
+            placeholder="Seu email"
             className="input input-bordered"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -44,14 +44,14 @@ const Login = () => {
         <label className="input-group">
           <span>Senha</span>
           <input
-            type="text"
-            placeholder="info@site.com"
+            type="password"
+            placeholder="Sua senha"
             className="input input-bordered"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <button className={`btn btn-primary mt-7 ${loading}`} onClick={handleLogin}>
+        <button className={`btn  mt-7 ${loading}`} onClick={handleLogin}>
           Login
         </button>
       </div>

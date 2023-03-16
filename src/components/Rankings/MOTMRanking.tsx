@@ -17,7 +17,12 @@ const MOTMRanking = ({ players }: GeneralPlacingProps) => {
         ...stats,
       };
     })
-    .sort((a, b) => (a.mvp > b.mvp ? -1 : 1));
+    .sort((a, b) => (a.mvp > b.mvp ? -1 : 1))
+    .sort((a, b) => {
+      if (a.mvp === b.mvp && a.totalGames < b.totalGames) return -1;
+
+      return 1;
+    });
 
   return (
     <>

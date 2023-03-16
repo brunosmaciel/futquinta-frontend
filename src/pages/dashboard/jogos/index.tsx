@@ -7,7 +7,6 @@ import useSWR from 'swr';
 
 import { Game } from '../../../..';
 import { GameContainer } from '../../../components/Dashboard/DashboardGameContainer';
-import { ToastContext } from '../../../contexts/ToastContext';
 import { api } from '../../../services/axios';
 export type GameProps = {
   games: Game[];

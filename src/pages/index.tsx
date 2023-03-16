@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { toast } from 'react-toastify';
+
+import { Suspense } from 'react';
 
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 
 import { Game, PlayerProfile } from '../..';
@@ -13,7 +14,7 @@ import { getPlayerStats } from '../functions/getPlayerStats';
 const Home: NextPage = () => {
   const { data: games, isLoading: loadingGames } = useSWR<Game[]>('/games?status=finished');
   const { data: playersRawData, isLoading: loadingPlayers } = useSWR<PlayerProfile[]>('/players');
-  const { push } = useRouter();
+  const { push, prefetch } = useRouter();
   if (loadingGames && loadingPlayers) {
     return <LoadingSpin />;
   }
@@ -79,36 +80,41 @@ const Home: NextPage = () => {
           <h2 className="font-bold text-lg">Artilheiros</h2>
 
           <div className="flex flex-wrap gap-2 justify-center   my-4">
-            {goalScorers?.slice(0, 3).map((player) => (
-              <div
-                key={player.id}
-                className=" bg-[#191D24] w-24 h-32 rounded-lg flex flex-col items-center justify-between"
-              >
-                <div className="avatar  placeholder mt-2">
-                  <div className="bg-neutral-focus text-neutral-content rounded-full w-16">
-                    {player.currentPicture === null ? (
-                      <span className="text-xl">P</span>
-                    ) : (
-                      <>
-                        <img
-                          src={
-                            player.currentPicture === 'GREEN'
-                              ? player.greenShirtpicture!
-                              : player.whiteShirtpicture!
-                          }
-                          className="cursor-pointer"
-                          onClick={() => push(`/jogadores/${player.slug}`)}
-                        />
-                      </>
-                    )}
+            <Suspense fallback={<LoadingSpin />}>
+              {goalScorers?.slice(0, 3).map((player) => (
+                <div
+                  key={player.id}
+                  className=" bg-[#191D24] w-24 h-32 rounded-lg flex flex-col items-center justify-between"
+                >
+                  <div className="avatar  placeholder mt-2">
+                    <div className="bg-neutral-focus text-neutral-content rounded-full w-16">
+                      {player.currentPicture === null ? (
+                        <span className="text-xl">P</span>
+                      ) : (
+                        <>
+                          <img
+                            src={
+                              player.currentPicture === 'GREEN'
+                                ? player.greenShirtpicture!
+                                : player.whiteShirtpicture!
+                            }
+                            className="cursor-pointer"
+                            onClick={() => {
+                              prefetch(`/jogadores/${player.slug}`);
+                              push(`/jogadores/${player.slug}`);
+                            }}
+                          />
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  <h2 className="m-b-2 cursor-pointer">{player.name}</h2>
+                  <div className="w-full h-6 rounded-b-lg bg-[#14191F] flex px-2">
+                    <p># {player.shirtNumber || '00'}</p>
                   </div>
                 </div>
-                <h2 className="m-b-2 cursor-pointer">{player.name}</h2>
-                <div className="w-full h-6 rounded-b-lg bg-[#14191F] flex px-2">
-                  <p># {player.shirtNumber || '00'}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </Suspense>
           </div>
           <Link className="link" href={`/jogadores`}>
             Ver todos os jogadores

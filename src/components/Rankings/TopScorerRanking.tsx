@@ -6,7 +6,7 @@ export type GeneralPlacingProps = {
 };
 const TopScorersRanking = ({ players }: GeneralPlacingProps) => {
   const topScorerRankingArray = players
-    .filter((player) => player.function === 'OUTFIELDPLAYER')
+    .filter((player) => player.name !== 'Convidados')
     .map((player) => {
       const stats = getPlayerStats(player);
       const { id, name, slug } = player;

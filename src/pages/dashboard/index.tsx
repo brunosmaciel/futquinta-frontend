@@ -1,23 +1,41 @@
+import { useState } from 'react';
+
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { parseCookies } from 'nookies';
 import useSWR from 'swr';
 
 import { Game, PlayerProfile } from '../../..';
 import { LoadingSpin } from '../../components/Loading';
+import { api } from '../../services/axios';
 
 const Dashboard = () => {
   const { push } = useRouter();
-  const { data: players, isLoading } = useSWR<PlayerProfile[]>('/players');
+  const { data: players, isLoading: isFetching } = useSWR<PlayerProfile[]>('/players');
   const { data: games } = useSWR<Game[]>('/games');
-  if (isLoading) {
+  const [isLoading, setIsLoading] = useState<'loading' | 'not_loading'>('not_loading');
+  const handleCreateGame = async () => {
+    try {
+      setIsLoading('loading');
+      const data = await api.post('/games').then((res) => res.data);
+      push(`/dashboard/jogos/${data.id}`);
+      setIsLoading('not_loading');
+    } catch (err: any) {
+      setIsLoading('not_loading');
+    }
+  };
+
+  if (isFetching) {
     return <LoadingSpin />;
   }
-  if (!isLoading) {
+  if (!isFetching) {
     return (
       <div className="mx-2  mt-16">
-        <div className="dashboard-players-grid  w-full my-4">
+        <Link className="btn btn-outline" href={'/dashboard/jogadores/create'}>
+          Novo jogador
+        </Link>
+        <div className="flex flex-wrap gap-2  w-full my-4">
           {players?.slice(0, 3).map((player) => (
             <div
               key={player.id}
@@ -54,7 +72,10 @@ const Dashboard = () => {
         </Link>
         <div className="divider"></div>
         <div>
-          <div className="dashboard-players-grid  w-full my-4">
+          <button className={`btn btn-outline ${isLoading}`} onClick={handleCreateGame}>
+            Nova partida
+          </button>
+          <div className="flex flex-wrap gap-2  w-full my-4">
             {games?.slice(0, 3).map((game) => (
               <div
                 key={game.id}
