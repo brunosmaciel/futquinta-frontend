@@ -49,6 +49,7 @@ const Jogo = () => {
             content={`Verde ${data.greenGoals} x Branco ${data.whiteGoals}`}
           />
           <meta property="og:image" content={data.gamePicture || ''} />
+          <meta property="og:image" itemProp="image" content={data.gamePicture || ''} />
         </Head>
         <div className="flex flex-col items-center">
           {data.gamePicture && (
