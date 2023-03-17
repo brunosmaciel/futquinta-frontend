@@ -34,7 +34,7 @@ const MOTMRanking = ({ players }: GeneralPlacingProps) => {
               <tr>
                 <th></th>
                 <th>Atleta</th>
-                <th>MVP</th>
+                <th>Pontos</th>
                 <th>Jogos</th>
               </tr>
             </thead>
