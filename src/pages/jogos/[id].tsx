@@ -50,6 +50,8 @@ const Jogo = () => {
           <meta property="og:type" content="blog" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="og:image" content={data.gamePicture || ''} />
+          <meta property="og:image:width" content="300" />
+          <meta property="og:image:height" content="300" />
         </Head>
         <div className="flex flex-col items-center">
           {data.gamePicture && (
