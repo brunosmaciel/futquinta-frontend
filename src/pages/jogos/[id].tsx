@@ -44,12 +44,12 @@ const Jogo = () => {
     return (
       <>
         <Head>
-          <meta
-            property="og:title"
-            content={`Verde ${data.greenGoals} x Branco ${data.whiteGoals}`}
-          />
+          <title>{`Branco ${data.whiteGoals} x Verde ${data.greenGoals}`}</title>
+          <meta name="description" content={`Verde 1 x 0 Branco`} />
+          <meta property="og:url" content={`/jogos/${data.id}`} />
+          <meta property="og:type" content="blog" />
+          <meta name="twitter:card" content="summary_large_image" />
           <meta property="og:image" content={data.gamePicture || ''} />
-          <meta property="og:image" itemProp="image" content={data.gamePicture || ''} />
         </Head>
         <div className="flex flex-col items-center">
           {data.gamePicture && (
