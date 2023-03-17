@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { useContext, useEffect, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -97,8 +98,10 @@ const SingleGame = () => {
       await api.post<Game>(`/games/${id}/finish`);
       await mutate(`/games/${id}`);
       setIsLoading('not_loading');
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      toast.error(err.message);
+      setIsLoading('not_loading');
     }
   };
   if (isLoadingApi) {
