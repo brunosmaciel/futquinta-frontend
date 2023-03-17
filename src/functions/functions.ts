@@ -1,4 +1,5 @@
 import { PlayerProfile } from '../..';
+import { getPlayerStats } from './getPlayerStats';
 
 const getGoalsPerGame = (totalOfGames: number, goals: number): string => {
   const goalsPerGame = goals / totalOfGames;
@@ -27,5 +28,35 @@ const getProfileImage = ({
   }
   return `https://ui-avatars.com/api/?name=${name}?bold=true`;
 };
+export function getTopScorers(players: PlayerProfile[]) {
+  const topScorerRankingArray = players
+    .filter((player) => player.name !== 'Convidados')
+    .map((player) => {
+      const stats = getPlayerStats(player);
+      const { id, name, slug, currentPicture, whiteShirtpicture, greenShirtpicture, shirtNumber } =
+        player;
 
+      return {
+        id,
+        name,
+        slug,
+        currentPicture,
+        whiteShirtpicture,
+        greenShirtpicture,
+        shirtNumber,
+        ...stats,
+      };
+    })
+    .sort((a, b) => (a.goals > b.goals ? -1 : 1))
+    .sort((a, b) => {
+      if (a.goals === b.goals && a.goalsPerGame > b.goalsPerGame) return -1;
+      return 1;
+    })
+    .sort((a, b) => {
+      if (a.goals === b.goals && a.goalsPerGame === b.goalsPerGame && a.name < b.name) return -1;
+      return 1;
+    });
+
+  return topScorerRankingArray;
+}
 export { getGoalsPerGame, getProfileImage };

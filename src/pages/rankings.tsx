@@ -42,7 +42,7 @@ const Rankings = () => {
             Goleiros
           </a>
           <a className="tab tab-lifted" onClick={handleTabChange}>
-            MVP
+            Craque do Ano
           </a>
         </div>
         {tab === 1 && <GeneralRanking players={players} />}

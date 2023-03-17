@@ -9,6 +9,7 @@ import useSWR from 'swr';
 
 import { Game, PlayerProfile } from '../..';
 import { LoadingSpin } from '../components/Loading';
+import { getTopScorers } from '../functions/functions';
 import { getPlayerStats } from '../functions/getPlayerStats';
 
 const Home: NextPage = () => {
@@ -35,7 +36,8 @@ const Home: NextPage = () => {
         ...stats,
       };
     });
-    const goalScorers = players.sort((a, b) => (a.goals > b.goals ? -1 : 1));
+    const goalScorers = getTopScorers(playersRawData);
+
     return (
       <div className="container-height  mx-2">
         {/* //? Last Games */}

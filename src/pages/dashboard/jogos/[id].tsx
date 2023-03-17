@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import useSWR, { useSWRConfig } from 'swr';
 

@@ -1,32 +1,12 @@
 import { PlayerProfile } from '../../..';
+import { getTopScorers } from '../../functions/functions';
 import { getPlayerStats } from '../../functions/getPlayerStats';
 
 export type GeneralPlacingProps = {
   players: PlayerProfile[];
 };
 const TopScorersRanking = ({ players }: GeneralPlacingProps) => {
-  const topScorerRankingArray = players
-    .filter((player) => player.name !== 'Convidados')
-    .map((player) => {
-      const stats = getPlayerStats(player);
-      const { id, name, slug } = player;
-
-      return {
-        id,
-        name,
-        slug,
-        ...stats,
-      };
-    })
-    .sort((a, b) => (a.goals > b.goals ? -1 : 1))
-    .sort((a, b) => {
-      if (a.goals === b.goals && a.goalsPerGame > b.goalsPerGame) return -1;
-      return 1;
-    })
-    .sort((a, b) => {
-      if (a.goals === b.goals && a.goalsPerGame === b.goalsPerGame && a.name < b.name) return -1;
-      return 1;
-    });
+  const topScorerRankingArray = getTopScorers(players);
 
   return (
     <>
