@@ -97,7 +97,7 @@ const Nav = () => {
           </div>
         ) : (
           <div className="navbar-end">
-            <Link className="btn" href="/login">
+            <Link className="btn btn-primary" href="/login">
               Login
             </Link>
           </div>

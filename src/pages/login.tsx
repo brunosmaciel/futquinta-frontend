@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { useRouter } from 'next/router';
 
@@ -19,6 +20,7 @@ const Login = () => {
       setLoading('not_loading');
       router.push('/dashboard');
     } catch (err: any) {
+      toast.error('Email ou senha inválidos');
       setLoading('not_loading');
     }
   };
@@ -51,7 +53,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <button className={`btn  mt-7 ${loading}`} onClick={handleLogin}>
+        <button className={`btn btn-primary mt-7 ${loading}`} onClick={handleLogin}>
           Login
         </button>
       </div>
