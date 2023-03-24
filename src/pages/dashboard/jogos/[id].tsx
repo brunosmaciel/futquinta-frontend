@@ -30,6 +30,7 @@ const SingleGame = () => {
 
   const id = query.id;
   const { data: game, isLoading: isLoadingApi } = useSWR<Game>(`/games/${id}`);
+  console.log(game?.winnerTeam);
   const { players } = usePlayers();
   const { mutate } = useSWRConfig();
   const [isLoading, setIsLoading] = useState<'loading' | 'not_loading'>('not_loading');
@@ -87,14 +88,23 @@ const SingleGame = () => {
     }
   };
   const hanleFinalizeGame = async () => {
+    function getWinnerTeam(greenGoals: number, whiteGoals: number): 'WHITE' | 'GREEN' | 'DRAW' {
+      if (greenGoals > whiteGoals) return 'GREEN';
+      if (whiteGoals > greenGoals) return 'WHITE';
+
+      return 'DRAW';
+    }
     try {
       setIsLoading('loading');
+
       await api.put(`/games/${id}`, {
         greenGoals,
         whiteGoals,
       });
 
-      await api.post<Game>(`/games/${id}/finish`);
+      await api.post<Game>(`/games/${id}/finish`, {
+        winnerTeam: getWinnerTeam(greenGoals, whiteGoals),
+      });
       await mutate(`/games/${id}`);
       setIsLoading('not_loading');
     } catch (err: any) {

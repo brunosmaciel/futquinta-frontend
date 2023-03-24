@@ -7,7 +7,6 @@ import { AuthContext } from '../contexts/AuthContex';
 
 const Nav = () => {
   const { pathname } = useRouter();
-
   const { isLoggedIn } = useContext(AuthContext);
   return (
     <div className="container mx-auto ">

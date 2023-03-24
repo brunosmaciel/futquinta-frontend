@@ -1,4 +1,4 @@
-import { useState, Suspense } from 'react';
+import { useState } from 'react';
 
 import { GetStaticProps } from 'next';
 import Image from 'next/image';
@@ -74,7 +74,7 @@ const Jogador = ({ player }: JogadorProps) => {
               {player.whiteShirtpicture && (
                 <div className="flex flex-col gap-2 items-center">
                   <Image
-                    src={player.whiteShirtpicture}
+                    src={player.whiteShirtpicture || ''}
                     alt="Foto de perfil do jogador"
                     width={300}
                     height={300}
@@ -92,7 +92,7 @@ const Jogador = ({ player }: JogadorProps) => {
               {player.greenShirtpicture && (
                 <div className="flex flex-col gap-2 items-center">
                   <Image
-                    src={player.greenShirtpicture}
+                    src={player.greenShirtpicture || ''}
                     alt="Foto de perfil do jogador"
                     width={300}
                     height={300}

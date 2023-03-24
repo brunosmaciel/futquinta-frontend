@@ -29,7 +29,10 @@ const HomeComponent = ({ players, games }: HomeProps) => {
         <h2 className=" font-bold text-lg">Ultimas partidas</h2>
         <div className="flex flex-wrap justify-center gap-2 ">
           {games.slice(0, 3).map((game) => (
-            <div className="rounded-lg shadow-md bg-[#191D24] text-sm  p-2" key={game.id}>
+            <div
+              className="rounded-lg shadow-md bg-[#191D24] text-sm  p-2  roll-in-left"
+              key={game.id}
+            >
               <div className="flex flex-col items-center gap-[2px]">
                 <span>{new Date(game.createdAt).toLocaleDateString('pt-BR').slice(0, 5)}</span>
                 <span>19:15</span>

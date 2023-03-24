@@ -1,8 +1,9 @@
+import { useCallback } from 'react';
 import { ImCalendar } from 'react-icons/im';
 
 import Head from 'next/head';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 
 import { Game } from '../../..';
@@ -10,12 +11,37 @@ import { GameScore } from '../../components/Dashboard/GameScore';
 import { LoadingSpin } from '../../components/Loading';
 import FourOhFour from '../404';
 const Jogo = () => {
-  const {
-    query: { id },
-  } = useRouter();
+  const { get } = useSearchParams();
+  const id = get('id');
+  const { push } = useRouter();
 
   const { data, isLoading, error } = useSWR<Game>(`/games/${id}`);
-
+  const getWhitePlayers = useCallback(
+    (data: Game) => {
+      const filtered = data.players
+        .filter((player) => player.currentTeam === 'WHITE')
+        .sort((a, b) => {
+          if (a.function < b.function) return -1;
+          if (a.function > b.function) return 0;
+          return 1;
+        });
+      return filtered;
+    },
+    [data]
+  );
+  const getGreenPlayers = useCallback(
+    (data: Game) => {
+      const filtered = data.players
+        .filter((player) => player.currentTeam === 'GREEN')
+        .sort((a, b) => {
+          if (a.function < b.function) return -1;
+          if (a.function > b.function) return 0;
+          return 1;
+        });
+      return filtered;
+    },
+    [data]
+  );
   if (error) {
     return <FourOhFour />;
   }
@@ -26,20 +52,8 @@ const Jogo = () => {
     const whiteMOTM = data.MOTM.filter((player) => player.team === 'WHITE')[0];
     const greenMOTM = data.MOTM.filter((player) => player.team === 'GREEN')[0];
 
-    const whitePlayers = data.players
-      .filter((player) => player.currentTeam === 'WHITE')
-      .sort((a, b) => {
-        if (a.function < b.function) return -1;
-        if (a.function > b.function) return 0;
-        return 1;
-      });
-    const greenPlayers = data.players
-      .filter((player) => player.currentTeam === 'GREEN')
-      .sort((a, b) => {
-        if (a.function < b.function) return -1;
-        if (a.function > b.function) return 0;
-        return 1;
-      });
+    const whitePlayers = getWhitePlayers(data);
+    const greenPlayers = getGreenPlayers(data);
 
     return (
       <>
@@ -82,7 +96,8 @@ const Jogo = () => {
                         `https://ui-avatars.com/api/?name=${whiteMOTM.player.slug}?bold=true`
                       }
                       alt=""
-                      className="w-10 h-10 rounded-full"
+                      className="w-10 h-10 rounded-full cursor-pointer"
+                      onClick={() => push(`/jogadores/${whiteMOTM.player.slug}`)}
                     />
                     <h1>{whiteMOTM.player.name}</h1>
                   </div>
@@ -135,11 +150,11 @@ const Jogo = () => {
                           alt="Avatar do jogador"
                         />
                       </div>
-                      <h1 className="text-[16px]">{name}</h1>
+                      <h1 className="text-[16px] text-info">{name}</h1>
                     </div>
                   </div>
                   {/* // ? Collapse Content */}
-                  <div className="collapse-content bg-base-100 text-primary-content peer-checked:bg-base-300 peer-checked:text-base-300-content pl-18 gap-2 flex justify-center">
+                  <div className=" text-info collapse-content bg-base-100  peer-checked:bg-base-300 peer-checked:text-base-300-content pl-18 gap-2 flex justify-center">
                     <div className="bg-[#191D24]  w-[100px] h-[68px]  p-2 rounded-lg flex flex-col items-center ">
                       {playerFunction === 'GOALKEEPER' ? (
                         <>
