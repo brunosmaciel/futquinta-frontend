@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { PlayerProfile } from '../../..';
 import { getPlayerStats } from '../../functions/getPlayerStats';
 import { api } from '../../services/axios';
+import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder';
 
 export type JogadorProps = {
   player: PlayerProfile;
@@ -44,8 +45,8 @@ const Jogador = ({ player }: JogadorProps) => {
         <Image
           src={
             currentPlayerProfilePicture === 'WHITE'
-              ? player.whiteShirtpicture || ''
-              : player.greenShirtpicture || ''
+              ? player.whiteShirtpicture || profilePicturePlaceholder(player.slug)
+              : player.greenShirtpicture || profilePicturePlaceholder(player.slug)
           }
           alt="Foto de perfil do jogador"
           width={300}
