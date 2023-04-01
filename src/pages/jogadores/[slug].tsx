@@ -208,7 +208,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       player,
     },
-    revalidate: 60,
+    revalidate: 10,
   };
 };
 export async function getStaticPaths() {
