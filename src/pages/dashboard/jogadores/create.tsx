@@ -21,7 +21,7 @@ export default function CreatePlayer() {
         name,
       });
 
-      push(`/dashboard/jogadores/${slug}`);
+      push(`/dashboard/jogadores/`);
     } catch (err: any) {
       toast.error(err.message);
     }
@@ -32,7 +32,7 @@ export default function CreatePlayer() {
       <h1>Criar novo jogador</h1>
       <div className="form-control w-[320px]  mx-auto gap-6">
         <label className="input-group input-group-vertical ">
-          <span>Email</span>
+          <span>Nome</span>
           <input
             type="text"
             placeholder="Nome do jogador"
@@ -56,7 +56,7 @@ export default function CreatePlayer() {
             className="file-input file-input-bordered w-full max-w-xs"
           />
         </label> */}
-        <button type="submit" className="btn w-fit self-center mt-6">
+        <button type="submit" className="btn btn-primary w-fit self-center mt-6">
           Criar
         </button>
       </div>

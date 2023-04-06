@@ -53,7 +53,6 @@ export function getPlayerStats(player: PlayerProfile): OutfieldProfileStats {
     .filter((stat) => stat.currentTeam === 'WHITE') // filtrei todos os jogos do X no time Branco
     .map((stat) => stat.Game.greenGoals)
     .reduce((acc, current) => acc + current, 0); //Desses jogos retornei todos os gols do time adversario
-  // .reduce((acc, current) => acc + current, 0);
 
   const goalsConcededOnGreenTeam = goalKeeper
     .filter((stat) => stat.currentTeam === 'GREEN') // filtrei todos os jogos do X no time Verde

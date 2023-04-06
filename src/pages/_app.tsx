@@ -1,12 +1,14 @@
 import '../styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import type { AppProps } from 'next/app';
 import { SWRConfig } from 'swr';
 
 import { Layout } from '../components/Layout';
+import { LoadingSpin } from '../components/Loading';
 import { AuthProvider } from '../contexts/AuthContex';
 import { ScoreboardProvider } from '../contexts/ScoreboardContext';
 import { api } from '../services/axios';
@@ -26,7 +28,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         >
           <ToastContainer theme="dark" />
           <Layout>
-            <Component {...pageProps} />
+            <Suspense fallback={<LoadingSpin />}>
+              <Component {...pageProps} />
+            </Suspense>
           </Layout>
         </SWRConfig>
       </ScoreboardProvider>
