@@ -26,9 +26,9 @@ const GeneralRanking = ({ players }: GeneralPlacingProps) => {
               {/* row 1 */}
               {playersGeneralRanking
                 .filter((player) => player.name !== 'Convidados')
-                .map(({ slug, name, totalGames, points, gamesRecord, rankPosition }, i) => (
+                .map(({ slug, name, totalGames, points, gamesRecord }, i) => (
                   <tr key={slug}>
-                    <th>{rankPosition + 1}</th>
+                    <th>{i + 1}</th>
                     <td>{name}</td>
                     <td>{points}</td>
                     <td>{totalGames}</td>

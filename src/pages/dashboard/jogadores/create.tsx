@@ -15,9 +15,7 @@ export default function CreatePlayer() {
   const { register, handleSubmit } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async ({ name }) => {
     try {
-      const {
-        data: { slug },
-      } = await api.post<PlayerProfile>('/players', {
+      await api.post<PlayerProfile>('/players', {
         name,
       });
 
