@@ -359,7 +359,7 @@ const SingleGame = () => {
           </>
         )}
         {game?.status === 'NOT_STARTED' && (
-          <button className={`btn w-fit ${isLoading} mt-8`} onClick={handleStartGame}>
+          <button className={`btn btn-primary w-fit ${isLoading} mt-8`} onClick={handleStartGame}>
             Iniciar partida
           </button>
         )}

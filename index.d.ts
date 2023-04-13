@@ -38,6 +38,7 @@ export type PlayerProfile = {
   _count: _count;
   createdAt: Date;
   updatedAt: Date;
+  role: PlayerRole;
 };
 
 /**
@@ -129,5 +130,11 @@ export const Winner: {
   GREEN: 'GREEN';
   DRAW: 'DRAW';
 };
+export const PlayerRole: {
+  PERMANENT: 'PERMANENT';
+  GUEST: 'GUEST';
+};
+
+export type PlayerRole = (typeof PlayerRole)[keyof typeof PlayerRole];
 
 export type Winner = (typeof Winner)[keyof typeof Winner];

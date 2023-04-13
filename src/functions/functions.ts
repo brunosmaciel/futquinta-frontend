@@ -30,7 +30,7 @@ const getProfileImage = ({
 };
 export function getTopScorers(players: PlayerProfile[]) {
   const topScorerRankingArray = players
-    .filter((player) => player.name !== 'Convidados')
+    .filter((player) => player.name !== 'Convidados' && player.role === 'PERMANENT')
     .map((player) => {
       const stats = getPlayerStats(player);
       const { id, name, slug, currentPicture, whiteShirtpicture, greenShirtpicture, shirtNumber } =

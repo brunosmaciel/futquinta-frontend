@@ -13,7 +13,6 @@ type Inputs = {
   color: string;
 };
 export default function CreatePlayer() {
-  const { push } = useRouter();
   const { register, handleSubmit, formState, watch } = useForm<Inputs>();
 
   const { photo, name } = watch();
@@ -23,15 +22,11 @@ export default function CreatePlayer() {
       name,
       role: guest ? 'GUEST' : 'PERMANENT',
     };
-    console.log(data);
-    return;
-    try {
-      await api.post<PlayerProfile>('/players', {
-        name,
-        role: guest ? 'GUEST' : 'PERMANENT',
-      });
 
-      push(`/dashboard/jogadores/`);
+    try {
+      await api.post<PlayerProfile>('/players', data);
+
+      toast.success(`Jogador ${name} criado com sucesso`);
     } catch (err: any) {
       toast.error(err.message);
     }
