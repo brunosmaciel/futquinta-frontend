@@ -172,6 +172,12 @@ const Jogo = () => {
                       <span className="text-sm">Substituições</span>
                       <span className="text-xl font-bold">{substituition}</span>
                     </div>
+                    {playerFunction === 'GOALKEEPER' ? (
+                      <div className="bg-[#191D24]  w-[100px] h-[68px]  p-2 rounded-lg flex flex-col items-center ">
+                        <span className="text-sm">Gols</span>
+                        <span className="text-xl font-bold">{goals}</span>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               )
@@ -224,6 +230,12 @@ const Jogo = () => {
                       <span className="text-sm">Substituições</span>
                       <span className="text-xl font-bold">{substituition}</span>
                     </div>
+                    {playerFunction === 'GOALKEEPER' ? (
+                      <div className="bg-[#191D24]  w-[100px] h-[68px]  p-2 rounded-lg flex flex-col items-center ">
+                        <span className="text-sm">Gols</span>
+                        <span className="text-xl font-bold">{goals}</span>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               )
