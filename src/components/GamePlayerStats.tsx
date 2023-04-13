@@ -24,8 +24,8 @@ const GamePlayerStats = ({
     console.log('component mounted on goals change');
   }, []);
   const handleIncrementGoals = async (e: any) => {
+    console.log(e.target.value);
     if (e.target.value === '') return;
-    if (playerFunction === 'GOALKEEPER') return;
 
     try {
       if (e.target.value === '0') {
@@ -37,10 +37,10 @@ const GamePlayerStats = ({
         return;
       }
 
-      await api.put(`/stats/${gameId}/${id}`, {
+      const { data } = await api.put(`/stats/${gameId}/${id}`, {
         goals: Number(e.target.value) || goals,
       });
-
+      console.log(data);
       await mutate(`/games/${gameId}`);
 
       await mutate('/games');
@@ -147,6 +147,19 @@ const GamePlayerStats = ({
               onChange={handleIncrementSubstitution}
             />
           </div>
+          {player.function === 'GOALKEEPER' ? (
+            <div className="stat">
+              <div className="stat-title">Gols</div>
+              <input
+                type="number"
+                className="input text-[36px]"
+                defaultValue={goals}
+                size={20}
+                min={0}
+                onChange={handleIncrementGoals}
+              />
+            </div>
+          ) : null}
         </div>
         <div className="flex items-end justify-end">
           <button className="btn btn-circle btn-outline btn-sm" onClick={handleRemovePlayer}>
