@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { mutate } from 'swr';
@@ -22,33 +23,41 @@ export type ModalProps = {
   players: PlayerProfile[];
 };
 
+export type Inputs = {
+  player: string;
+  playerFunction: 'GOALKEEPER' | 'OUTFIELDPLAYER';
+};
+
 const AddPlayerToGameModal = ({ currentTeam, children, game, players }: ModalProps) => {
   const playersOnTheGame = game.players.map((player) => player.name);
   const [newPlayer, setNewPlayer] = useState<GamePlayersList>({} as GamePlayersList);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
 
   const avaliablePlayers = players.filter((player) => {
     return !playersOnTheGame.includes(player.name);
   });
-  const handleAddPlayerToGame = async (e: any) => {
-    const { id, name, function: playerFunction }: GamePlayersList = JSON.parse(e.target.value);
-    setNewPlayer({
-      id,
+
+  const onSubmit = async ({ player, playerFunction }: Inputs) => {
+    const { id, name }: GamePlayersList = JSON.parse(player);
+    const data = {
       name,
-      function: playerFunction,
       currentTeam,
-    });
-  };
-  const handleSave = async () => {
-    const { name, currentTeam, function: playerFunction } = newPlayer;
+      function: playerFunction,
+    };
+
     try {
-      await api.post(`/stats/${game.id}/${newPlayer.id}`, {
-        name,
-        currentTeam,
-        function: playerFunction,
-      });
+      await api.post(`/stats/${game.id}/${id}`, data);
 
       await mutate(`/games/${game.id}`);
+      toast.success(
+        `Jogador ${name} adicionado ao  time ${currentTeam === 'WHITE' ? 'Branco' : 'Verde'}`
+      );
     } catch (err: any) {
+      console.log(err);
       toast.error('algum erro aconteceu');
     }
   };
@@ -75,37 +84,61 @@ const AddPlayerToGameModal = ({ currentTeam, children, game, players }: ModalPro
             ✕
           </label>
           <p className="py-4">Selecione</p>
-          <select
-            className="select select-bordered select-sm w-full max-w-xs"
-            onChange={handleAddPlayerToGame}
-            value={newPlayer.name || 'Selecione'}
-          >
-            <option defaultValue={newPlayer.name || 'Selecione'}>
-              {newPlayer.name || 'Selecione'}
-            </option>
-            {avaliablePlayers.map((player) => (
-              <option
-                key={player.id}
-                value={JSON.stringify({
-                  id: player.id,
-                  function: player.function,
-                  name: player.name,
-                  shirtNumber: String(player.shirtNumber || '00'),
-                })}
-              >
-                {player.name}
-              </option>
-            ))}
-          </select>
-          <div className="modal-action">
-            <label
-              htmlFor={`my-modal-${currentTeam.toLocaleLowerCase()}`}
-              className="btn"
-              onClick={handleSave}
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+            <select
+              {...register('player')}
+              className="select select-bordered select-sm w-full max-w-xs"
             >
-              Adicionar
-            </label>
-          </div>
+              <option key={99999}>Selecione</option>
+              {avaliablePlayers.map((player) => {
+                return (
+                  <option
+                    key={player.id}
+                    value={JSON.stringify({
+                      id: player.id,
+                      name: player.name,
+                      shirtNumber: String(player.shirtNumber || '00'),
+                    })}
+                  >
+                    {player.name}
+                  </option>
+                );
+              })}
+            </select>
+            <div className="flex gap-4">
+              <div className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  className="radio radio-accent"
+                  value={'GOALKEEPER'}
+                  {...register('playerFunction')}
+                />
+                <p className="text-sm">Goleiro</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  className="radio radio-accent"
+                  value={'OUTFIELDPLAYER'}
+                  {...register('playerFunction')}
+                  defaultChecked
+                />
+                <p className="text-sm">Jogador de linha</p>
+              </div>
+            </div>
+            <button className="btn btn-accent w-fit" type="submit">
+              Salvar
+            </button>
+
+            <div className="modal-action">
+              <label
+                htmlFor={`my-modal-${currentTeam.toLocaleLowerCase()}`}
+                className="btn btn-neutral"
+              >
+                Fechar
+              </label>
+            </div>
+          </form>
         </div>
       </div>
     </>

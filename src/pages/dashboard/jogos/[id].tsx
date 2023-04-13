@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useContext, useEffect, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -30,7 +29,6 @@ const SingleGame = () => {
 
   const id = query.id;
   const { data: game, isLoading: isLoadingApi } = useSWR<Game>(`/games/${id}`);
-  console.log(game?.winnerTeam);
   const { players } = usePlayers();
   const { mutate } = useSWRConfig();
   const [isLoading, setIsLoading] = useState<'loading' | 'not_loading'>('not_loading');
@@ -108,7 +106,6 @@ const SingleGame = () => {
       await mutate(`/games/${id}`);
       setIsLoading('not_loading');
     } catch (err: any) {
-      console.log(err);
       toast.error(err.message);
       setIsLoading('not_loading');
     }
@@ -142,7 +139,6 @@ const SingleGame = () => {
         setGreenPlayers((prevState) => [...prevState, newPlayer]);
       }
       if (currentTeam === 'WHITE') {
-        console.log(e.target.value);
         const {
           id,
           name,
