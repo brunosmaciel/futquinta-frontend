@@ -8,6 +8,7 @@ export type GeneralPlacingProps = {
 };
 const MOTMRanking = ({ players }: GeneralPlacingProps) => {
   const playerStats = players
+    .filter((player) => player.role === 'PERMANENT')
     .map((player) => {
       const stats = getPlayerStats(player);
 

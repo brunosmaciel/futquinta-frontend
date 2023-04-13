@@ -1,6 +1,5 @@
 import { PlayerProfile } from '../../..';
 import { getTopScorers } from '../../functions/functions';
-import { getPlayerStats } from '../../functions/getPlayerStats';
 
 export type GeneralPlacingProps = {
   players: PlayerProfile[];
