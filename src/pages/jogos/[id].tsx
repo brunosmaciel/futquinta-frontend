@@ -58,8 +58,7 @@ const Jogo = () => {
     return (
       <>
         <Head>
-          <title>{`Branco ${data.whiteGoals} x Verde ${data.greenGoals}`}</title>
-          <meta name="description" content={`Verde 1 x 0 Branco`} />
+          <title>{`Branco ${data.whiteGoals} x ${data.greenGoals} Verde`}</title>
           <meta property="og:url" content={`/jogos/${data.id}`} />
           <meta property="og:type" content="blog" />
           <meta name="twitter:card" content="summary_large_image" />

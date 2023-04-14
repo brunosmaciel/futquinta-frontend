@@ -1,3 +1,13 @@
+export type GeneralRankingAPIType = {
+  position: string;
+  name: string;
+  slug: string;
+  points: number;
+  totalGames: number;
+  draws: number;
+  gamesRecord: number;
+};
+
 /**
  * Model User
  *
