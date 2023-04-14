@@ -11,16 +11,18 @@ type Inputs = {
   photo: FileList;
   guest: boolean;
   color: string;
+  number: string;
 };
 export default function CreatePlayer() {
   const { register, handleSubmit, formState, watch } = useForm<Inputs>();
 
   const { photo, name } = watch();
 
-  const onSubmit: SubmitHandler<Inputs> = async ({ guest, name }) => {
+  const onSubmit: SubmitHandler<Inputs> = async ({ guest, name, number }) => {
     const data = {
       name,
       role: guest ? 'GUEST' : 'PERMANENT',
+      shirtNumber: Number(number),
     };
 
     try {
@@ -45,6 +47,16 @@ export default function CreatePlayer() {
             placeholder="Nome do jogador"
             className="input input-bordered"
             {...register('name')}
+          />
+          <span className="mt-4">Número do jogador</span>
+          <input
+            type="text"
+            placeholder="Ex: 10"
+            className="input input-bordered"
+            {...register('number')}
+            autoComplete="off"
+            pattern="[0-9]*"
+            inputMode="numeric"
           />
         </label>
         <label className="flex items-center gap-4  justify-end">
