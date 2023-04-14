@@ -29,17 +29,8 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
 
     return 0;
   });
-  const {
-    goals,
-    goalsConceded,
-    victories,
-    defeats,
-    draws,
-    points,
-    goalsPerGame,
-    gamesRecord,
-    mvp,
-  } = getPlayerStats(player);
+  const { goals, goalsConceded, victories, defeats, draws, points, goalsPerGame, mvp } =
+    getPlayerStats(player);
 
   return (
     <>
@@ -62,7 +53,7 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
             onClick={() => setIsOpen(true)}
           />
           <h1 className="text-xl font-bold">
-            {player.name} #{player.shirtNumber || '00'} {'Posicao no ranking' + rankPosition}
+            {player.name} #{player.shirtNumber || '00'}
           </h1>
           {/* The button to open modal */}
           <label htmlFor={`my-modal-${player.id}`}></label>
