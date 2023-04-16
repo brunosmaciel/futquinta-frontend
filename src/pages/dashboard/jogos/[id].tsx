@@ -361,7 +361,7 @@ const SingleGame = () => {
         )}
         {game?.status === 'IN_PROGRESS' && (
           <button
-            className={`btn ${isLoading} lg:w-fit lg:self-center`}
+            className={`btn ${isLoading}  my-6 btn-primary lg:w-fit lg:self-center`}
             onClick={hanleFinalizeGame}
           >
             Finalizar partida

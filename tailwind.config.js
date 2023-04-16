@@ -10,8 +10,8 @@ module.exports = {
     themes: [
       {
         appTheme: {
-          primary: '#1B8325',
-          secondary: '#85eaa2',
+          primary: '#064e3b',
+          secondary: '#f5f5f4',
           accent: '#7cc94c',
           neutral: '#1C2632',
           'base-100': '#1C2632',
@@ -21,7 +21,7 @@ module.exports = {
           error: '#FC222D',
         },
       },
-      'dark',
+      'light',
     ],
   },
   plugins: [require('daisyui')],

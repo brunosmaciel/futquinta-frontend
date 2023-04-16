@@ -23,7 +23,6 @@ const Login = () => {
       push(`/dashboard/`);
     } catch (err: any) {
       setLoading('not_loading');
-      console.log(err);
     }
   };
   return (
