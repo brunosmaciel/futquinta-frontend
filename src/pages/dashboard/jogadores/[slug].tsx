@@ -1,218 +1,136 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { useState } from 'react';
-import { toast } from 'react-toastify';
 
-import { GetStaticProps } from 'next';
+import { ChangeEvent, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
+import useSWR, { mutate } from 'swr';
 
 import { PlayerProfile } from '../../../..';
-import { GameContainer } from '../../../components/Dashboard/DashboardGameContainer';
+import { LoadingSpin } from '../../../components/Loading';
+import { UpdateProfilePictureModal } from '../../../components/UploadProfilePictureModal';
+import { slugify } from '../../../functions/slugify';
 import { api } from '../../../services/axios';
-export type JogadorProps = {
-  player: PlayerProfile;
+import { profilePicturePlaceholder } from '../../../utils/profilePicturePlaceholder';
+import FourOhFour from '../../404';
+
+export type Inputs = {
+  name: string;
+  shirtNumber: string;
+  isGuest: boolean;
 };
-const Jogador = ({ player }: JogadorProps) => {
-  const [currentPlayerPicture, setCurrentPlayerPicture] = useState<string | null>(
-    player.currentPicture
-  );
-  const [uploadImageColor, setUploadImageColor] = useState<string>(
-    player.currentPicture || 'GREEN'
-  );
-  const [picture, setPicture] = useState<FileList | null>(null);
-  const [isLoading, setIsLoading] = useState<'loading' | 'not_loading'>('not_loading');
-  const getGoalsPerGame = (vic: number, def: number, draw: number, goals: number): string => {
-    const totalOfGames = vic + def + draw;
-    const goalsPerGame = goals / totalOfGames;
-    return goalsPerGame.toFixed(2).replace('.', ',');
-  };
-  const getProfileImage = ({
-    whiteShirtpicture,
-    greenShirtpicture,
-    slug,
-  }: PlayerProfile): string => {
-    if (currentPlayerPicture === 'WHITE') {
-      return whiteShirtpicture!;
+const Jogador = () => {
+  const { get } = useSearchParams();
+  const slug = get('slug');
+  const { data: player, error, isLoading } = useSWR<PlayerProfile>(`/players/${slug}`);
+  const { register, handleSubmit } = useForm<Inputs>();
+  const [IsBtnDisable, setBtnDisable] = useState<'btn-disabled' | 'false'>('btn-disabled');
+  const { push } = useRouter();
+  const onSubmit = async (data: Inputs) => {
+    const { name, isGuest, shirtNumber } = data;
+
+    try {
+      const { data } = await api.put<PlayerProfile>(`/players/${player?.id}`, {
+        name,
+        role: isGuest ? 'GUEST' : 'PERMANENT',
+        shirtNumber: +shirtNumber,
+        slug: slugify(name),
+      });
+      push(`/dashboard/jogadores/${slugify(name)}`);
+      mutate(`/players/${slug}`);
+      setBtnDisable('btn-disabled');
+    } catch (err: any) {
+      console.log(err);
     }
-    if (currentPlayerPicture === 'GREEN') {
-      return greenShirtpicture!;
-    }
-    return `https://ui-avatars.com/api/?name=${slug}?bold=true`;
   };
 
-  const handleUploadImage = async () => {
-    if (picture) {
-      setIsLoading('loading');
-      const formData = new FormData();
-      formData.append('avatar', picture[0]);
-      formData.append('shirtColor', uploadImageColor);
-      const data = await api.post(`/players/upload/${player.id}`, formData);
-
-      toast.success(
-        `Foto ${data.data.image_url === 'GREEN' ? 'Verde' : 'Branco'} do jogador ${
-          player.name
-        } foi atualizada com sucesso`
-      ),
-        setIsLoading('not_loading');
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value !== e.target.defaultValue) {
+      setBtnDisable('false');
       return;
     }
-
-    return;
+    setBtnDisable('btn-disabled');
   };
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setUploadImageColor(e.target.value);
+  const getCurrentProfilePicture = (player: PlayerProfile): string => {
+    if (player.currentPicture === 'WHITE') return player.whiteShirtpicture!;
+    if (player.currentPicture === 'GREEN') return player.greenShirtpicture!;
+
+    return profilePicturePlaceholder(player.slug);
   };
-  if (player) {
-    return (
-      <div>
-        <div className="mx-2  h-36  flex items-center gap-4">
-          <Image
-            src={getProfileImage(player)}
-            alt={'Foto de perfil do jogador'}
-            width={100}
-            height={100}
-            priority
-            className="h-20 w-20 rounded-full"
-          />
-          <h1 className="text-xl">{player.name}</h1>
-        </div>
-
-        {/* The button to open modal */}
-        <label htmlFor={`my-modal-${player.id}`} className="btn btn-sm btn-outline">
-          Adicionar Fotos
-        </label>
-
-        {/* Put this part before </body> tag */}
-        <input type="checkbox" id={`my-modal-${player.id}`} className="modal-toggle" />
-        <div className="modal">
-          <div className="modal-box relative">
-            <label
-              htmlFor={`my-modal-${player.id}`}
-              className="btn btn-sm btn-circle absolute right-2 top-2"
-            >
-              ✕
-            </label>
-            <h3 className="text-lg font-bold">Galeria</h3>
-            <p className="text-[10px]">
-              {' '}
-              <i>* Clique em cima da foto para trocar</i>
-            </p>
-            <div className="flex gap-2 my-4 w-full justify-center ">
-              {player.whiteShirtpicture && (
-                <>
-                  <img
-                    className="h-24 w-24 rounded-xl border-[1px] cursor-pointer hover:scale-105 transition-all"
-                    src={player.whiteShirtpicture}
-                    alt=""
-                    onClick={() => setCurrentPlayerPicture('WHITE')}
-                  />
-                </>
-              )}
-
-              {player.greenShirtpicture && (
-                <>
-                  <img
-                    className="h-24 w-24 rounded-xl border-[1px] cursor-pointer hover:scale-105 transition-all"
-                    src={player.greenShirtpicture}
-                    alt=""
-                    onClick={() => setCurrentPlayerPicture('GREEN')}
-                  />
-                </>
-              )}
-            </div>
-            <div>
-              <h3 className="text-lg font-bold">Carregar nova foto</h3>
-              <select
-                className="select select-bordered select-sm w-full max-w-xs my-4"
-                onChange={handleChange}
-                defaultValue={uploadImageColor}
-              >
-                <option value={'GREEN'}>Verde</option>
-                <option value={'WHITE'}>Branco</option>
-              </select>
-              <input
-                type="file"
-                className="file-input file-input-bordered file-input-sm w-full max-w-xs"
-                placeholder=""
-                onChange={(e) => setPicture(e.target.files)}
-              />
-              <p>Cor selecionada: {uploadImageColor}</p>
-              <button className={`btn btn-outline ${isLoading}`} onClick={handleUploadImage}>
-                Salvar
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="divider divider-vertical"></div>
-        <div className="flex items-center gap-8 flex-wrap w-[60%]   md:mx-0 lg:mx-0 mx-auto my-4">
-          {player.function === 'GOALKEEPER' ? (
-            <div className="h-12 w-12  ">
-              <p>Gols S</p>
-              <p>{player.goalsConceded}</p>
-            </div>
-          ) : (
-            <div className="h-12 w-12 flex flex-col items-center ">
-              <p className="text-sm">Gols</p>
-              <p className="font-bold text-lg text-white">{player.goals}</p>
-            </div>
-          )}
-          <div className="h-12 w-12 flex flex-col items-center">
-            <p>Vitorias</p>
-            <p>{player.victories}</p>
-          </div>
-          <div className="h-12 w-12 flex flex-col items-center">
-            <p>Derrotas</p>
-            <p>{player.defeats}</p>
-          </div>
-          <div className="h-12 w-12 flex flex-col items-center">
-            <p>Empates</p>
-            <p>{player.draws}</p>
-          </div>
-          <div className="h-12 w-12 flex flex-col items-center">
-            <p>Gols p/j</p>
-            <p>{getGoalsPerGame(player.victories, player.defeats, player.draws, player.goals)}</p>
-          </div>
-          <div className="h-12 w-12 flex flex-col items-center">
-            <p>Pontos</p>
-            <p>1</p>
-          </div>
-          <div className="h-12 w-12 flex flex-col items-center">
-            <p>Aprov</p>
-            <p>1</p>
-          </div>
-        </div>
-        <div className="divider divider-vertical"></div>
-        <div className="w-[80%] flex flex-col gap-4 md:mx-0 lg:mx-0 mx-auto">
-          {player.Stats.reverse().map((player) => (
-            <GameContainer game={player.Game} key={player.Game.id} />
-          ))}
-        </div>
-      </div>
-    );
+  if (error) {
+    return <FourOhFour />;
   }
-};
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { data: player } = await api.get<PlayerProfile>(`/players/${context?.params?.slug}`);
+  if (isLoading) {
+    return <LoadingSpin />;
+  }
+  return (
+    <>
+      {player && (
+        <div className="flex flex-col">
+          <div className="flex flex-col items-center gap-5 py-2  w-[90%] mx-auto cursor-pointer">
+            {player?.role === 'GUEST' ? (
+              <span className="indicator-item badge badge-primary">Convidado</span>
+            ) : null}
+            {/* <Image
+              src={getCurrentProfilePicture(player)}
+              alt="Foto de perfil do jogador"
+              width={300}
+              height={300}
+              className="rounded-full w-32 h-32 border-2"
+            /> */}
+            <UpdateProfilePictureModal player={player} />
 
-  return {
-    props: {
-      player,
-    },
-    revalidate: 5,
-  };
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="container mx-auto flex flex-col items-center gap-4 "
+            >
+              <div className="flex items-center gap-2">
+                <span className="label-text">Convidado</span>
+                <input
+                  {...register('isGuest')}
+                  type="checkbox"
+                  defaultChecked={player?.role === 'GUEST' ? true : false}
+                  className="checkbox checkbox-primary"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="flex flex-col ">
+                <input
+                  {...register('name')}
+                  type="text"
+                  className="input input-bordered input-neutral"
+                  defaultValue={player.name}
+                  onChange={handleChange}
+                  autoComplete="off"
+                />
+                <label htmlFor=""></label>
+              </div>
+              <div className="divider"></div>
+              <div className="flex flex-wrap gap-2">
+                <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
+                  <span className="text-sm">Número</span>
+                  <input
+                    {...register('shirtNumber')}
+                    type="text"
+                    className="input input-ghost text-center w-14"
+                    defaultValue={player?.shirtNumber}
+                    onChange={handleChange}
+                    autoComplete="off"
+                    pattern="[0-9]*"
+                    inputMode="numeric"
+                  />
+                </div>
+              </div>
+              <button className={`btn btn-primary w-fit ${IsBtnDisable} `}>Salvar</button>
+            </form>
+            <h1 className="text-xl font-bold"></h1>
+          </div>
+        </div>
+      )}
+    </>
+  );
 };
-export async function getStaticPaths() {
-  const { data: players } = await api.get<PlayerProfile[]>('/players');
-
-  return {
-    paths: players.map((player) => {
-      return {
-        params: {
-          slug: player.slug,
-        },
-      };
-    }),
-    fallback: false,
-  };
-}
 
 export default Jogador;
