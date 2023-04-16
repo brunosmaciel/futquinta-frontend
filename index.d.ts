@@ -6,6 +6,7 @@ export type GeneralRankingAPIType = {
   totalGames: number;
   draws: number;
   gamesRecord: number;
+  picture: string;
 };
 
 /**

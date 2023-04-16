@@ -5,15 +5,17 @@ import { Suspense, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { Game, PlayerProfile } from '../..';
+import { Game, GeneralRankingAPIType, PlayerProfile } from '../..';
 import { LoadingSpin } from '../components/Loading';
 import { getTopScorers } from '../functions/functions';
+import { HomePageGeneralRank } from './HomePageGeneralRank';
 
 type HomeProps = {
   players: PlayerProfile[];
   games: Game[];
+  generalRank: GeneralRankingAPIType[];
 };
-const HomeComponent = ({ players, games }: HomeProps) => {
+const HomeComponent = ({ players, games, generalRank }: HomeProps) => {
   const { push, prefetch } = useRouter();
 
   const topScorers = useCallback(() => {
@@ -22,9 +24,7 @@ const HomeComponent = ({ players, games }: HomeProps) => {
   const scorers = topScorers().slice(0, 3);
 
   return (
-    <div className="container-height  mx-2">
-      {/* //? Last Games */}
-
+    <div className="container-height mx-2  gap-2 ">
       <div className="flex flex-col items-center md:items-start gap-6">
         <h2 className=" font-bold text-lg">Ultimas partidas</h2>
         <div className="flex flex-wrap justify-center gap-2 ">
@@ -107,6 +107,10 @@ const HomeComponent = ({ players, games }: HomeProps) => {
         <Link className="link" href={`/jogadores`}>
           Ver todos os jogadores
         </Link>
+      </div>
+      <div className="divider my-3"></div>
+      <div className=" flex justify-center md:justify-start">
+        <HomePageGeneralRank rank={generalRank} />
       </div>
     </div>
   );
