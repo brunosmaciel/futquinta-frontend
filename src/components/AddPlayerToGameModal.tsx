@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -6,7 +5,6 @@ import { mutate } from 'swr';
 
 import { Game, PlayerProfile } from '../..';
 import { api } from '../services/axios';
-import { SelectPlayers } from './SelectTeams';
 
 export type GamePlayersList = {
   id: number;
@@ -30,12 +28,8 @@ export type Inputs = {
 
 const AddPlayerToGameModal = ({ currentTeam, children, game, players }: ModalProps) => {
   const playersOnTheGame = game.players.map((player) => player.name);
-  const [newPlayer, setNewPlayer] = useState<GamePlayersList>({} as GamePlayersList);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+
+  const { register, handleSubmit } = useForm<Inputs>();
 
   const avaliablePlayers = players.filter((player) => {
     return !playersOnTheGame.includes(player.name);
@@ -57,8 +51,7 @@ const AddPlayerToGameModal = ({ currentTeam, children, game, players }: ModalPro
         `Jogador ${name} adicionado ao  time ${currentTeam === 'WHITE' ? 'Branco' : 'Verde'}`
       );
     } catch (err: any) {
-      console.log(err);
-      toast.error('algum erro aconteceu');
+      toast.error('Internal Server Error');
     }
   };
   return (

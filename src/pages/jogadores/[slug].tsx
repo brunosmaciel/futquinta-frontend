@@ -35,11 +35,14 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
   return (
     <>
       <Head>
-        <title>{player.name}</title>
+        <title>{player.role}</title>
         <meta property="og:url" content={`/jogadores/${player.slug}`} />
       </Head>
       <div className="flex flex-col">
         <div className="flex flex-col items-center gap-5 py-2  w-[90%] mx-auto cursor-pointer">
+          {player?.role === 'GUEST' ? (
+            <span className="indicator-item badge badge-primary">Convidado</span>
+          ) : null}
           <Image
             src={
               currentPlayerProfilePicture === 'WHITE'
@@ -155,7 +158,7 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
           </div>
           <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
             <span className="text-sm">Pos</span>
-            <span className="text-xl font-bold">{rankPosition}</span>
+            <span className="text-xl font-bold">{rankPosition || '-'}</span>
           </div>
           <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
             <span className="text-sm">MVP</span>
@@ -207,12 +210,22 @@ export const getStaticProps: GetStaticProps = async (context) => {
   ]);
 
   const player = data[0].data;
-  const rankPosition = data[1].data.filter((pl) => pl.name === player.name)[0].position;
+  // const rankPosition = data[1].data.filter((pl) => pl.name === player.name)[0].position;
+
+  if (player.role === 'PERMANENT') {
+    const rankPosition = data[1].data.filter((pl) => pl.name === player.name)[0].position;
+    return {
+      props: {
+        player,
+        rankPosition,
+      },
+      revalidate: 10,
+    };
+  }
 
   return {
     props: {
       player,
-      rankPosition,
     },
     revalidate: 10,
   };

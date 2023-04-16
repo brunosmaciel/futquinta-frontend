@@ -2,8 +2,8 @@
 
 import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
-import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import useSWR, { mutate } from 'swr';
@@ -13,7 +13,6 @@ import { LoadingSpin } from '../../../components/Loading';
 import { UpdateProfilePictureModal } from '../../../components/UploadProfilePictureModal';
 import { slugify } from '../../../functions/slugify';
 import { api } from '../../../services/axios';
-import { profilePicturePlaceholder } from '../../../utils/profilePicturePlaceholder';
 import FourOhFour from '../../404';
 
 export type Inputs = {
@@ -32,7 +31,7 @@ const Jogador = () => {
     const { name, isGuest, shirtNumber } = data;
 
     try {
-      const { data } = await api.put<PlayerProfile>(`/players/${player?.id}`, {
+      await api.put<PlayerProfile>(`/players/${player?.id}`, {
         name,
         role: isGuest ? 'GUEST' : 'PERMANENT',
         shirtNumber: +shirtNumber,
@@ -42,7 +41,7 @@ const Jogador = () => {
       mutate(`/players/${slug}`);
       setBtnDisable('btn-disabled');
     } catch (err: any) {
-      console.log(err);
+      toast.error(err.message);
     }
   };
 
@@ -53,12 +52,7 @@ const Jogador = () => {
     }
     setBtnDisable('btn-disabled');
   };
-  const getCurrentProfilePicture = (player: PlayerProfile): string => {
-    if (player.currentPicture === 'WHITE') return player.whiteShirtpicture!;
-    if (player.currentPicture === 'GREEN') return player.greenShirtpicture!;
 
-    return profilePicturePlaceholder(player.slug);
-  };
   if (error) {
     return <FourOhFour />;
   }

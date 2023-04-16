@@ -1,4 +1,5 @@
 import { useForm, useFieldArray } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import Image from 'next/image';
 import { useSWRConfig } from 'swr';
@@ -35,15 +36,15 @@ const UpdateProfilePictureModal = ({ player }: UploadProfilePictureModal) => {
   };
   const currentShirtColorSelection = watch('color');
   const handleUpload = async (data: Inputs) => {
-    const { color, photo, photos } = data;
+    const { color, photo } = data;
     try {
       const formData = new FormData();
       formData.append('shirtColor', color);
       formData.append('avatar', photo[0]);
-      const { data } = await api.post(`players/upload/${player.id}`, formData);
+      await api.post(`players/upload/${player.id}`, formData);
       mutate(`/players/${player.slug}`);
     } catch (err: any) {
-      console.log(err);
+      toast.error(err.message);
     }
   };
   return (
@@ -150,7 +151,7 @@ const UpdateProfilePictureModal = ({ player }: UploadProfilePictureModal) => {
             <div
               className="btn w-fit btn-md mt-6C self-end"
               role="button"
-              onClick={(e) => {
+              onClick={() => {
                 append({
                   file: [] as unknown as FileList,
                   color: currentShirtColorSelection === 'GREEN' ? 'WHITE' : 'GREEN',

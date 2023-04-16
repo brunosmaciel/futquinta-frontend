@@ -1,7 +1,5 @@
 import { createContext, SetStateAction, useState } from 'react';
 
-import { useSWRConfig } from 'swr';
-
 import { api } from '../services/axios';
 
 type ScoreboardType = {

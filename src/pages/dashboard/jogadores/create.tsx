@@ -1,8 +1,5 @@
-import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-
-import { useRouter } from 'next/navigation';
 
 import { PlayerProfile } from '../../../..';
 import { api } from '../../../services/axios';
