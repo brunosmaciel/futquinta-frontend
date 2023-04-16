@@ -56,6 +56,7 @@ const UpdateProfilePictureModal = ({ player }: UploadProfilePictureModal) => {
           width={300}
           height={300}
           className="rounded-full w-32 h-32 border-2 cursor-pointer"
+          priority
         />
       </label>
 
@@ -146,8 +147,9 @@ const UpdateProfilePictureModal = ({ player }: UploadProfilePictureModal) => {
                 </div>
               </div>
             ))}
-            <button
+            <div
               className="btn w-fit btn-md mt-6C self-end"
+              role="button"
               onClick={(e) => {
                 append({
                   file: [] as unknown as FileList,
@@ -156,7 +158,7 @@ const UpdateProfilePictureModal = ({ player }: UploadProfilePictureModal) => {
               }}
             >
               Adicionar outra foto
-            </button>
+            </div>
             <button className="btn btn-primary w-fit" type="submit">
               Salvar
             </button>

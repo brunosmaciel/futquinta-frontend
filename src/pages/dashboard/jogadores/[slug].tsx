@@ -73,13 +73,7 @@ const Jogador = () => {
             {player?.role === 'GUEST' ? (
               <span className="indicator-item badge badge-primary">Convidado</span>
             ) : null}
-            {/* <Image
-              src={getCurrentProfilePicture(player)}
-              alt="Foto de perfil do jogador"
-              width={300}
-              height={300}
-              className="rounded-full w-32 h-32 border-2"
-            /> */}
+
             <UpdateProfilePictureModal player={player} />
 
             <form
