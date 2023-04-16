@@ -35,7 +35,9 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
   return (
     <>
       <Head>
-        <title>{player.role}</title>
+        <title>
+          {player.name} #{player.shirtNumber}
+        </title>
         <meta property="og:url" content={`/jogadores/${player.slug}`} />
       </Head>
       <div className="flex flex-col">
