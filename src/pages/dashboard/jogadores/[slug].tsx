@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import { GetStaticProps } from 'next';
-
-import { PlayerProfile } from '../../../..';
-=======
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { ChangeEvent, useState } from 'react';
@@ -17,7 +12,6 @@ import { PlayerProfile } from '../../../..';
 import { LoadingSpin } from '../../../components/Loading';
 import { UpdateProfilePictureModal } from '../../../components/UploadProfilePictureModal';
 import { slugify } from '../../../functions/slugify';
->>>>>>> refactor-dashboard-player-profile
 import { api } from '../../../services/axios';
 import { profilePicturePlaceholder } from '../../../utils/profilePicturePlaceholder';
 import FourOhFour from '../../404';
@@ -27,13 +21,6 @@ export type Inputs = {
   shirtNumber: string;
   isGuest: boolean;
 };
-<<<<<<< HEAD
-const Jogador = ({ player }: JogadorProps) => {
-  return <h1>{player.name}</h1>;
-};
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { data: player } = await api.get<PlayerProfile>(`/players/${context?.params?.slug}`);
-=======
 const Jogador = () => {
   const { get } = useSearchParams();
   const slug = get('slug');
@@ -94,7 +81,6 @@ const Jogador = () => {
               className="rounded-full w-32 h-32 border-2"
             /> */}
             <UpdateProfilePictureModal player={player} />
->>>>>>> refactor-dashboard-player-profile
 
             <form
               onSubmit={handleSubmit(onSubmit)}
