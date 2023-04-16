@@ -12,7 +12,7 @@ const HomePageGeneralRank = ({ rank }: Props) => {
 
   return (
     <div className="overflow-x-auto ">
-      <table className="table w-full">
+      <table className="table">
         {/* head */}
         <thead>
           <tr>
@@ -24,9 +24,9 @@ const HomePageGeneralRank = ({ rank }: Props) => {
         <tbody>
           {g4rank.map((player) => {
             return (
-              <tr key={player.slug}>
+              <tr key={player.slug} className="">
                 <td>{player.position}</td>
-                <td>
+                <td className="w-96">
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
                       <div className="mask mask-squircle w-12 h-12 cursor-pointer">
@@ -44,7 +44,7 @@ const HomePageGeneralRank = ({ rank }: Props) => {
                     </div>
                   </div>
                 </td>
-                <td className="w-fit text-center">{player.points}</td>
+                <td className="text-center">{player.points}</td>
               </tr>
             );
           })}

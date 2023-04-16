@@ -14,11 +14,7 @@ type HomeProps = {
   generalRank: GeneralRankingAPIType[];
 };
 const Home = ({ players, games, generalRank }: HomeProps) => {
-  return (
-    <Suspense fallback={<LoadingSpin />}>
-      <HomeComponent players={players} games={games} generalRank={generalRank} />
-    </Suspense>
-  );
+  return <HomeComponent players={players} games={games} generalRank={generalRank} />;
 };
 export const getServerSideProps: GetServerSideProps = async () => {
   const promises = await Promise.all([

@@ -109,7 +109,7 @@ const HomeComponent = ({ players, games, generalRank }: HomeProps) => {
         </Link>
       </div>
       <div className="divider my-3"></div>
-      <div className=" flex justify-center md:justify-start">
+      <div className="flex justify-center md:justify-start ">
         <HomePageGeneralRank rank={generalRank} />
       </div>
     </div>
