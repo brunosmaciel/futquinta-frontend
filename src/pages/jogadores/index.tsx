@@ -20,9 +20,8 @@ const Jogadores = () => {
   const guestPlayers = players?.filter((player) => player.role === 'GUEST');
   return (
     <div className="w-[95%] mx-auto">
-      <div className=" flex justify-end">
-        <div className="flex items-center gap-2">
-          <label htmlFor="show-guest">Mostrar convidados</label>
+      <div className=" flex justify-start ">
+        <div className="flex items-center gap-2 w-[90%] mx-auto mb-4">
           <input
             type="checkbox"
             id="show-guest"
@@ -30,6 +29,7 @@ const Jogadores = () => {
             className="checkbox checkbox-primary"
             onChange={() => setShowGuest((prev) => !prev)}
           />
+          <label htmlFor="show-guest">Mostrar convidados</label>
         </div>
       </div>
       <div className="flex flex-col ">
