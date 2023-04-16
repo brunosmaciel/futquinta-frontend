@@ -34,7 +34,7 @@ export type PlayerProfile = {
   greenShirtpicture: string | null;
   whiteShirtpicture: string | null;
   currentPicture: string | null;
-  shirtNumber: number | null;
+  shirtNumber: number;
   slug: string;
   goals: number;
   assists: number;

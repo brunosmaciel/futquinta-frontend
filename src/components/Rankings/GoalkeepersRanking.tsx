@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { PlayerProfile } from '../../..';
-import { getPlayerStats } from '../../functions/getPlayerStats';
+import { getGoalKeeperStats } from '../../functions/getGoalkeeperRank';
 
 export type GeneralPlacingProps = {
   players: PlayerProfile[];
@@ -9,7 +9,7 @@ export type GeneralPlacingProps = {
 const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
   const playerStats = players
     .map((player) => {
-      const stats = getPlayerStats(player);
+      const stats = getGoalKeeperStats(player);
 
       return {
         name: player.name,
@@ -29,7 +29,6 @@ const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
         return -1;
       return 1;
     });
-
   return (
     <div className="goalkeeper-rank-height">
       <div className="overflow-x-auto ">
