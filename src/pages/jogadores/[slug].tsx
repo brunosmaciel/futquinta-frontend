@@ -212,7 +212,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const player = data[0].data;
   // const rankPosition = data[1].data.filter((pl) => pl.name === player.name)[0].position;
 
-  if (player.role === 'PERMANENT') {
+  if (player.role === 'PERMANENT' || player.name === 'Convidados') {
     const rankPosition = data[1].data.filter((pl) => pl.name === player.name)[0].position;
     return {
       props: {
