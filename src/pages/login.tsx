@@ -1,62 +1,67 @@
 import { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import { AuthContext } from '../contexts/AuthContex';
-
+export type LoginInputs = {
+  email: string;
+  password: string;
+};
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { register, handleSubmit } = useForm<LoginInputs>();
   const { signIn } = useContext(AuthContext);
   const [loading, setLoading] = useState<'loading' | 'not_loading'>('not_loading');
-  const router = useRouter();
-  const handleLogin = async () => {
-    setLoading('loading');
-    // TODO: Validade form
-    try {
-      await signIn({ email, password });
+  const [showPassword, setShowPassword] = useState(false);
+  const { push } = useRouter();
 
-      setLoading('not_loading');
-      router.push('/dashboard');
+  const handleLogin = async (data: LoginInputs) => {
+    try {
+      setLoading('loading');
+      await signIn(data);
+      push(`/dashboard/`);
     } catch (err: any) {
-      toast.error('Email ou senha inválidos');
       setLoading('not_loading');
+      console.log(err);
     }
   };
   return (
     <section className="flex justify-center">
-      <div className="form-control ">
-        <label className="label">
-          <span className="label-text">Email</span>
-        </label>
-        <label className="input-group">
-          <span>Email</span>
+      <form className="form-control w-[80%] max-w-[320px]" onSubmit={handleSubmit(handleLogin)}>
+        <div>
+          <label className="label">
+            <span className="label-text">Email</span>
+          </label>
           <input
             type="text"
-            placeholder="Seu email"
-            className="input input-bordered"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Type here"
+            className="input input-bordered input-primary w-full max-w-xs autofill:bg-none"
+            {...register('email')}
+            autoComplete="off"
           />
-        </label>
-        <label className="label">
-          <span className="label-text">Senha</span>
-        </label>
-        <label className="input-group">
-          <span>Senha</span>
+        </div>
+        <div>
+          <label className="label">
+            <span className="label-text">Senha</span>
+          </label>
           <input
-            type="password"
-            placeholder="Sua senha"
-            className="input input-bordered"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Type here"
+            className="input input-bordered input-primary w-full max-w-xs"
+            {...register('password')}
+          />
+        </div>
+        <label className="label cursor-pointer">
+          <span className="label-text">Mostrar senha</span>
+          <input
+            type="checkbox"
+            className="toggle"
+            onChange={() => setShowPassword((prev) => !prev)}
           />
         </label>
-        <button className={`btn btn-primary mt-7 ${loading}`} onClick={handleLogin}>
-          Login
-        </button>
-      </div>
+        <button className={`btn btn-primary mt-7 ${loading}`}>Entrar</button>
+      </form>
     </section>
   );
 };

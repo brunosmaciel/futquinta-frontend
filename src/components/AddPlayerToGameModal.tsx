@@ -32,8 +32,14 @@ const AddPlayerToGameModal = ({ currentTeam, children, game, players }: ModalPro
   const { register, handleSubmit } = useForm<Inputs>();
 
   const avaliablePlayers = players.filter((player) => {
-    return !playersOnTheGame.includes(player.name);
+    if (!playersOnTheGame.includes(player.name)) return player;
+
+    return;
   });
+  const avaliablePermanentPlayers = avaliablePlayers.filter(
+    (player) => player.role === 'PERMANENT'
+  );
+  const avaliableGuestPlayers = avaliablePlayers.filter((player) => player.role === 'GUEST');
 
   const onSubmit = async ({ player, playerFunction }: Inputs) => {
     const { id, name }: GamePlayersList = JSON.parse(player);
@@ -83,7 +89,7 @@ const AddPlayerToGameModal = ({ currentTeam, children, game, players }: ModalPro
               className="select select-bordered select-sm w-full max-w-xs"
             >
               <option key={99999}>Selecione</option>
-              {avaliablePlayers.map((player) => {
+              {avaliablePermanentPlayers.map((player) => {
                 return (
                   <option
                     key={player.id}
@@ -97,6 +103,22 @@ const AddPlayerToGameModal = ({ currentTeam, children, game, players }: ModalPro
                   </option>
                 );
               })}
+              <optgroup label="Convidados">
+                {avaliableGuestPlayers.map((player) => {
+                  return (
+                    <option
+                      key={player.id}
+                      value={JSON.stringify({
+                        id: player.id,
+                        name: player.name,
+                        shirtNumber: String(player.shirtNumber || '00'),
+                      })}
+                    >
+                      {player.name}
+                    </option>
+                  );
+                })}
+              </optgroup>
             </select>
             <div className="flex gap-4">
               <div className="flex items-center gap-2">
