@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { Suspense } from 'react';
-
-import type { GetServerSideProps } from 'next';
+import type { GetStaticProps } from 'next';
 
 import { Game, GeneralRankingAPIType, PlayerProfile } from '../..';
 import { HomeComponent } from '../components/HomePageComponent';
-import { LoadingSpin } from '../components/Loading';
 import { api } from '../services/axios';
 type HomeProps = {
   players: PlayerProfile[];
@@ -16,7 +13,7 @@ type HomeProps = {
 const Home = ({ players, games, generalRank }: HomeProps) => {
   return <HomeComponent players={players} games={games} generalRank={generalRank} />;
 };
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const promises = await Promise.all([
     await api.get('/players').then((res) => res.data),
     await api.get('/games').then((res) => res.data),
@@ -29,6 +26,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       games: promises[1],
       generalRank: promises[2],
     },
+    revalidate: 10,
   };
 };
 export default Home;
