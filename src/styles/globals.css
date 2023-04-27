@@ -10,6 +10,25 @@
 *{
   font-family: 'Oxygen', sans-serif;
 }
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #1C2632; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #191D24; 
+  border-radius: 99999px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 .main-container-height{
   min-height: calc(100vh - 80px);
 }

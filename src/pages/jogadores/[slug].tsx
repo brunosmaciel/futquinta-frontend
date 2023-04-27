@@ -38,7 +38,7 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
     points,
     goalsPerGame,
     mvp,
-    totalGames,
+
     goalsConcededPerGame,
   } = getPlayerStats(player);
   return (

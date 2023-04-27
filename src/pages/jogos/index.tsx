@@ -74,7 +74,7 @@ const Jogos = () => {
                     <h1 className="font-bold my-2">Todos os jogos</h1>
                     {gamesFinished.map((game) => (
                       <div
-                        className="flex flex-col gap-4 my-2 hover:bg-[#191D24] transition-all cursor-pointer"
+                        className=" p-2 flex flex-col gap-4 my-2 hover:bg-[#191D24] transition-all cursor-pointer"
                         key={game.id}
                       >
                         <div className="mx-2 mt-[0.1rem] flex  w-full justify-between">
