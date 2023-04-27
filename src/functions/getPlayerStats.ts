@@ -10,6 +10,7 @@ export interface OutfieldProfileStats {
   defeats: number;
   draws: number;
   goalsPerGame: number;
+  goalsConcededPerGame: number;
   points: number;
   gamesRecord: number;
   mvp: number;
@@ -49,6 +50,7 @@ export function getPlayerStats(player: PlayerProfile): OutfieldProfileStats {
   const mvp = player.MOTM.length;
 
   const goalKeeper = Stats.filter((stat) => stat.function === 'GOALKEEPER');
+
   const goalsConcededOnWhiteTeam = goalKeeper
     .filter((stat) => stat.currentTeam === 'WHITE') // filtrei todos os jogos do X no time Branco
     .map((stat) => stat.Game.greenGoals)
@@ -61,10 +63,12 @@ export function getPlayerStats(player: PlayerProfile): OutfieldProfileStats {
 
   const goalsConceded = goalsConcededOnGreenTeam + goalsConcededOnWhiteTeam;
 
+  const goalsConcededPerGame = (goalsConceded / goalKeeper.length).toFixed(2);
   if (playerFunction === 'GOALKEEPER') {
     return {
       goals,
       goalsConceded,
+      goalsConcededPerGame: +goalsConcededPerGame,
       assists,
       substitutions,
       victories,
@@ -80,6 +84,7 @@ export function getPlayerStats(player: PlayerProfile): OutfieldProfileStats {
   return {
     goals,
     goalsConceded: 0,
+    goalsConcededPerGame: +goalsConcededPerGame,
     assists,
     substitutions,
     victories,

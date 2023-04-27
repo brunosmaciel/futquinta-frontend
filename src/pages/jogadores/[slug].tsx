@@ -29,15 +29,22 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
 
     return 0;
   });
-  const { goals, goalsConceded, victories, defeats, draws, points, goalsPerGame, mvp } =
-    getPlayerStats(player);
-
+  const {
+    goals,
+    goalsConceded,
+    victories,
+    defeats,
+    draws,
+    points,
+    goalsPerGame,
+    mvp,
+    totalGames,
+    goalsConcededPerGame,
+  } = getPlayerStats(player);
   return (
     <>
       <Head>
-        <title>
-          {player.name} #{player.shirtNumber}
-        </title>
+        <title>{`${player.name} #${player.shirtNumber}`}</title>
         <meta property="og:url" content={`/jogadores/${player.slug}`} />
       </Head>
       <div className="flex flex-col">
@@ -124,8 +131,8 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
             </div>
           </div>
         </div>
-        <div className=" w-[85%] max-w-[310px] md:max-w-[700px] mx-auto flex flex-wrap items-center gap-[10px]">
-          <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
+        <div className=" w-[90%] max-w-[400px] md:max-w-[700px] mx-auto flex flex-wrap justify-center items-center gap-[10px]">
+          <div className="player-profile-stats">
             {player.function === 'OUTFIELDPLAYER' ? (
               <>
                 <span className="text-sm">Gols</span>
@@ -138,31 +145,40 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
               </>
             )}
           </div>
-          <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
+          <div className="player-profile-stats">
             <span className="text-sm">Vitorias</span>
             <span className="text-xl font-bold">{victories}</span>
           </div>
-          <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
+          <div className="player-profile-stats">
             <span className="text-sm">Derrotas</span>
             <span className="text-xl font-bold">{defeats}</span>
           </div>
-          <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
+          <div className="player-profile-stats">
             <span className="text-sm">Empates</span>
             <span className="text-xl font-bold">{draws}</span>
           </div>
-          <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
+          <div className="player-profile-stats">
             <span className="text-sm">Pontos</span>
             <span className="text-xl font-bold">{points}</span>
           </div>
-          <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
-            <span className="text-sm">Gols p/j</span>
-            <span className="text-xl font-bold">{goalsPerGame.toFixed(2)}</span>
+          <div className="player-profile-stats">
+            {player.function === 'OUTFIELDPLAYER' ? (
+              <>
+                <span className="text-sm">Gols p/j</span>
+                <span className="text-xl font-bold">{goalsPerGame.toFixed(2)}</span>
+              </>
+            ) : (
+              <>
+                <span className="text-sm">Gols S p/j</span>
+                <span className="text-xl font-bold">{goalsConcededPerGame}</span>
+              </>
+            )}
           </div>
-          <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
+          <div className="player-profile-stats">
             <span className="text-sm">Pos</span>
             <span className="text-xl font-bold">{rankPosition || '-'}</span>
           </div>
-          <div className=" bg-[#191D24] w-[68px] h-[68px]  p-2 rounded-lg flex flex-col items-center">
+          <div className="player-profile-stats">
             <span className="text-sm">MVP</span>
             <span className="text-xl font-bold">{mvp}</span>
           </div>

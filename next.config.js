@@ -3,6 +3,7 @@ module.exports = {
   reactStrictMode: true,
   env: {
     BASE_URL: process.env.BASE_URL,
+    REBUILD_PLAYER_PROFILE_HOOK: process.env.REBUILD_PLAYER_PROFILE_HOOK,
   },
   images: {
     domains: [

@@ -103,7 +103,9 @@ const SingleGame = () => {
       await api.post<Game>(`/games/${id}/finish`, {
         winnerTeam: getWinnerTeam(greenGoals, whiteGoals),
       });
+      await api(process.env.REBUILD_PLAYER_PROFILE_HOOK || '');
       await mutate(`/games/${id}`);
+
       setIsLoading('not_loading');
     } catch (err: any) {
       toast.error(err.message);
