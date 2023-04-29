@@ -6,3 +6,4 @@
 - [x] Opção de marcar gol para o goleiro
 - [ ] Fazer o Menu fechar quando trocar de pagina
 - [ ] Tirar o SSG da pagina de jogadores 
+- [ ] Feature para gerenciar o estado do jogo (alternar entre IN_PROGRESS e FINISHED)

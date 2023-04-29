@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import type { GetStaticProps } from 'next';
 
 import { Game, GeneralRankingAPIType, PlayerProfile } from '../..';
-import { HomeComponent } from '../components/HomePageComponent';
+import { HomeComponent } from '../components/Home/HomePageComponent';
 import { api } from '../services/axios';
 type HomeProps = {
   players: PlayerProfile[];
