@@ -13,6 +13,7 @@ const Jogadores = () => {
   const [isShowingGuest, setShowGuest] = useState<boolean>(false);
 
   const { push } = useRouter();
+
   if (isLoading) {
     return <LoadingSpin />;
   }
