@@ -21,7 +21,10 @@ export const getStaticProps: GetStaticProps = async () => {
     const arraySorted = inputArray.sort(() => Math.random() - 0.5);
     return arraySorted;
   }
-  const players = shuffleArray(promises[0]).slice(0, 3);
+  const players = shuffleArray(promises[0].filter((player) => player.role === 'PERMANENT')).slice(
+    0,
+    3
+  );
   const games = promises[1].slice(0, 3);
   const generalRankPlayers = promises[2].slice(0, 4);
 
@@ -31,7 +34,7 @@ export const getStaticProps: GetStaticProps = async () => {
       games,
       generalRankPlayers,
     },
-    revalidate: 10,
+    revalidate: 10, //12 horas
   };
 };
 export default Home;
