@@ -4,10 +4,9 @@ import { useRouter } from 'next/navigation';
 import { GeneralRankingAPIType } from '../../..';
 
 export type Props = {
-  rank: GeneralRankingAPIType[];
+  players: GeneralRankingAPIType[];
 };
-const Ranking = ({ rank }: Props) => {
-  const g4rank = rank.slice(0, 4);
+const Ranking = ({ players }: Props) => {
   const { push } = useRouter();
 
   return (
@@ -23,7 +22,7 @@ const Ranking = ({ rank }: Props) => {
             </tr>
           </thead>
           <tbody>
-            {g4rank.map((player) => {
+            {players.map((player) => {
               return (
                 <tr key={player.slug} className="">
                   <td>{player.position}</td>

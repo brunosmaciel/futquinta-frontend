@@ -15,7 +15,7 @@ const Rankings = () => {
   const tabsDiv = useRef<HTMLDivElement | null>(null);
 
   if (isLoading) {
-    <LoadingSpin />;
+    return <LoadingSpin />;
   }
   const handleTabChange = (e: any) => {
     const index = Array.from(e.target.parentNode.children).indexOf(e.target);

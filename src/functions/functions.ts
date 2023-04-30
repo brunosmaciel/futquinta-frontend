@@ -1,4 +1,4 @@
-import { PlayerProfile } from '../..';
+import { GetTopScorersType, PlayerProfile } from '../..';
 import { getPlayerStats } from './getPlayerStats';
 
 const getGoalsPerGame = (totalOfGames: number, goals: number): string => {
@@ -28,7 +28,7 @@ const getProfileImage = ({
   }
   return `https://ui-avatars.com/api/?name=${name}?bold=true`;
 };
-export function getTopScorers(players: PlayerProfile[]) {
+export function getTopScorers(players: PlayerProfile[]): GetTopScorersType[] {
   const topScorerRankingArray = players
     .filter((player) => player.name !== 'Convidados' && player.role === 'PERMANENT')
     .map((player) => {

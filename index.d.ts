@@ -107,6 +107,31 @@ export type MOTM = {
   Game: Game[];
 };
 
+export type GetTopScorersType = {
+  id: number;
+  name: string;
+  slug: string;
+  currentPicture: string | null;
+  whiteShirtpicture: string | null;
+  greenShirtpicture: string | null;
+  shirtNumber: number;
+  goals: number;
+  goalsConceded: number;
+  assists: number;
+  substitutions: number;
+  victories: number;
+  defeats: number;
+  draws: number;
+  goalsPerGame: number;
+  goalsConcededPerGame: number;
+  points: number;
+  gamesRecord: number;
+  mvp: number;
+  totalGames: number;
+  substitutionPerGame?: number;
+  mostTeamPlayed?: number;
+};
+
 /**
  * Enums
  */

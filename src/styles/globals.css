@@ -114,8 +114,8 @@ body .Toastify__progress-bar--success {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  min-width: 110px;
-  min-height: 110px;
+  min-width: 120px;
+  min-height: 120px;
   border-radius: 50%;
   border: 3px solid;
   border-color: #15803D transparent;
