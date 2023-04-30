@@ -6,7 +6,11 @@
   .player-profile-stats {
     @apply bg-[#191D24] w-[78px] h-[78px]  p-2 rounded-lg flex flex-col items-center
   }
+  .link-active{
+    @apply bg-primary
+  }
 }
+
 *{
   font-family: 'Oxygen', sans-serif;
 }
