@@ -34,15 +34,15 @@ export const PlayerContainer = ({ player }: PlayerContainerProps) => {
         </h1>
       </div>
       <div className="flex gap-2">
-        <span className="tooltip" data-tip="Excluir">
-          <DeletePlayerModal player={player}>
-            <TrashIcon size={18} className="cursor-pointer" />
-          </DeletePlayerModal>
-        </span>
         <span className="tooltip" data-tip="Editar">
           <Link href={`/dashboard/jogadores/${player.slug}`}>
             <EditIcon className="cursor-pointer" size={18} />
           </Link>
+        </span>
+        <span className="tooltip" data-tip="Excluir">
+          <DeletePlayerModal player={player}>
+            <TrashIcon size={18} className="cursor-pointer" />
+          </DeletePlayerModal>
         </span>
       </div>
     </div>

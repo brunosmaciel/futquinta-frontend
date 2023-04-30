@@ -6,7 +6,9 @@ type RecoverUserDataResponse = {
   exp: number;
 };
 async function recoverUserData() {
-  return (await api('/users/me')) as RecoverUserDataResponse;
+  const { data } = await api('/users/me');
+
+  return data;
 }
 
 export { recoverUserData };

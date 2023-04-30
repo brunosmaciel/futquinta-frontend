@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { setCookie, parseCookies, destroyCookie } from 'nookies';
 
@@ -39,12 +40,16 @@ const AuthProvider = ({ children }: any) => {
   useEffect(() => {
     const { token } = parseCookies();
 
-    if (token) {
-      recoverUserData().then(({ email }) => {
-        setUser({
-          email,
-        });
+    const getUser = async () => {
+      const data = await recoverUserData();
+
+      setUser({
+        email: data.email,
       });
+    };
+
+    if (token) {
+      getUser();
     }
   }, []);
 
@@ -65,7 +70,6 @@ const AuthProvider = ({ children }: any) => {
 
       router.push('/dashboard');
     } catch (err: any) {
-      console.log(err);
       throw new Error(err.response.data.message);
     }
   };

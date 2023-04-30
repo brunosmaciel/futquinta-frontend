@@ -39,7 +39,7 @@ const Layout = ({ children }: LayoutProps) => {
             <SideBar />
           </>
 
-          <main className=" main w-full boder-2 main-content">{children}</main>
+          <main className="main w-full md:w-[70%]  main-content ">{children}</main>
         </main>
       </>
     );
