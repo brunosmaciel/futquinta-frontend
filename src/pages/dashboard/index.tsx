@@ -130,7 +130,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   return {
-    props: {},
+    redirect: {
+      destination: '/dashboard/jogos',
+      permanent: false,
+    },
   };
 };
 

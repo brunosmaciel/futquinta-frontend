@@ -35,7 +35,7 @@ export default function CreatePlayer() {
       {photo && photo.length > 0 ? (
         <img src={URL.createObjectURL(photo[0])} alt="" className="w-36 h-36 rounded-full my-5" />
       ) : null}
-      <h1 className="mb-4">{name ? name : 'Criar novo jogador'}</h1>
+      <h1 className="mb-4">{'Criar novo jogador'}</h1>
       <div className="form-control w-[320px]  mx-auto gap-2">
         <label className="input-group input-group-vertical ">
           <span>Nome</span>

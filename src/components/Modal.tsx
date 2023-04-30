@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { VscTrash } from 'react-icons/vsc';
 
-import { useSWRConfig } from 'swr';
+import { mutate, useSWRConfig } from 'swr';
 
 import { Game } from '../..';
 import { api } from '../services/axios';
@@ -14,14 +14,13 @@ type ModalPorps = {
 const Modal = ({ children, game }: ModalPorps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<'loading' | 'not_loading'>('not_loading');
-  const { mutate } = useSWRConfig();
 
   const handleDeleteGame = async () => {
     try {
       setIsLoading('loading');
       await api.delete(`/games/${game.id}`);
 
-      await mutate('/games');
+      await mutate(`/games?status=${game.status.toLocaleLowerCase()}`);
       setIsLoading('not_loading');
       setIsOpen(false);
     } catch (err) {
