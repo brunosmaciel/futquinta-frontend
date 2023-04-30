@@ -24,7 +24,7 @@ const Ranking = ({ players }: Props) => {
           <tbody>
             {players.map((player) => {
               return (
-                <tr key={player.slug} className="">
+                <tr key={player.slug}>
                   <td>{player.position}</td>
                   <td className="w-96">
                     <div className="flex items-center space-x-3">

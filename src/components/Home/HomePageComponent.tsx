@@ -12,7 +12,7 @@ type HomeProps = {
 };
 const HomeComponent = ({ players, games, generalRankPlayers }: HomeProps) => {
   return (
-    <div className="container-height mx-2  gap-2">
+    <main className="container-height mx-2  gap-2">
       <div className="flex flex-col items-center md:items-start gap-6">
         <h2 className="font-bold text-lg">Ultimas partidas</h2>
         <div className="flex flex-wrap justify-center gap-2 ">
@@ -48,7 +48,7 @@ const HomeComponent = ({ players, games, generalRankPlayers }: HomeProps) => {
       </div>
       <div className="divider"></div>
       <Ranking players={generalRankPlayers} />
-    </div>
+    </main>
   );
 };
 
