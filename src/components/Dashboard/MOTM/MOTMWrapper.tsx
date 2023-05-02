@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { mutate } from 'swr';
 
 import { Game } from '../../../..';
+import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
 import { EditMOTM } from './EditMOTM';
 
@@ -26,6 +27,7 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const whitePlayers = game.players.filter((player) => player.currentTeam == 'WHITE');
   const greenPlayers = game.players.filter((player) => player.currentTeam == 'GREEN');
+  const { loadingClass, setButtonLoading } = useButtonLoading();
   const onSubmit = async (data: MOTMInputs) => {
     if (data.greenMOTM === 'Selecione' || data.greenMOTM === 'Selecione') {
       toast.warn('É necessário selecionar o craque do jogo das duas equipes');
@@ -33,7 +35,7 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
     }
     const whiteMOTMData = JSON.parse(data.whiteMOTM) as CreateMOTMType;
     const greenMOTMData = JSON.parse(data.greenMOTM) as CreateMOTMType;
-
+    setButtonLoading(true);
     try {
       await Promise.all([
         await api.post(`/motm/${whiteMOTMData.gameId}/${whiteMOTMData.playerId}`, {
@@ -43,14 +45,16 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
           team: greenMOTMData.team,
         }),
       ]);
-      mutate(`/games/${game.id}`);
+      await mutate(`/games/${game.id}`);
+      setButtonLoading(false);
     } catch (err: any) {
       toast.error(err.message);
+      setButtonLoading(false);
     }
   };
 
   return (
-    <>
+    <div className="">
       {editMode === true ? (
         <>
           <EditMOTM game={game} setEditMode={setEditMode} />
@@ -123,7 +127,7 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
             {game.MOTM.length === 2 ? (
               <>
                 <button
-                  className={`btn btn-xs btn-outline`}
+                  className={`btn btn-xs btn-outline ${loadingClass}`}
                   type="submit"
                   onClick={() => setEditMode(true)}
                 >
@@ -132,7 +136,7 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
               </>
             ) : (
               <>
-                <button className={`btn btn-xs btn-outline`} type="submit">
+                <button className={`btn btn-xs btn-outline ${loadingClass}`} type="submit">
                   Salvar{' '}
                 </button>
               </>
@@ -140,6 +144,6 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
           </form>
         </>
       )}
-    </>
+    </div>
   );
 };

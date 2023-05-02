@@ -60,7 +60,13 @@ const GamePicure = ({ game }: GamePictureProps) => {
       )}
 
       {/* Put this part before </body> tag */}
-      <input type="checkbox" id="my-modal-3" className="modal-toggle" checked={isOpen} />
+      <input
+        type="checkbox"
+        id="my-modal-3"
+        className="modal-toggle"
+        checked={isOpen}
+        onChange={() => ''}
+      />
       <div className="modal">
         <div className="modal-box relative">
           <button

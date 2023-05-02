@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { mutate } from 'swr';
 
 import { Game } from '../../../..';
+import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
 export type EditMOTMType = {
   playerId: number;
@@ -26,17 +27,21 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
   const greenPlayers = game.players.filter((player) => player.currentTeam == 'GREEN');
   const currentWhiteMOTM = game.MOTM.filter((motm) => motm.team === 'WHITE')[0];
   const currentGreenMOTM = game.MOTM.filter((motm) => motm.team === 'GREEN')[0];
+  const { setButtonLoading, loadingClass } = useButtonLoading();
 
   const handleEditMOTM = async (data: EditMOTMInputs) => {
     const newWhiteMOTM: EditMOTMType = JSON.parse(data.whiteMOTM);
     const newGreenMOTM: EditMOTMType = JSON.parse(data.greenMOTM);
 
     // User doesn`t update any field
+    setButtonLoading(true);
     if (
       currentGreenMOTM.player.name === newGreenMOTM.name &&
       currentWhiteMOTM.player.name === newWhiteMOTM.name
     ) {
       setEditMode(false);
+      setButtonLoading(false);
+      return;
     }
     // User update both fields
     if (
@@ -57,10 +62,10 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
           await api.delete(`/motm/${currentGreenMOTM.id}`),
         ]);
 
-        mutate(`/games/${game.id}`);
+        await mutate(`/games/${game.id}`);
+        setButtonLoading(false);
         setEditMode(false);
       } catch (err: any) {
-        console.log(err);
         toast.error(err.message);
       }
     }
@@ -73,8 +78,9 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
 
         await api.delete(`/motm/${currentWhiteMOTM.id}`);
 
-        mutate(`/games/${game.id}`);
+        await mutate(`/games/${game.id}`);
         setEditMode(false);
+        setButtonLoading(false);
       } catch (err: any) {
         toast.error(err.message);
       }
@@ -88,13 +94,13 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
 
         await api.delete(`/motm/${currentGreenMOTM.id}`);
 
-        mutate(`/games/${game.id}`);
+        await mutate(`/games/${game.id}`);
         setEditMode(false);
+        setButtonLoading(false);
       } catch (err: any) {
         toast.error(err.message);
       }
     }
-    console.log('Nenhum mudou');
   };
   return (
     <>
@@ -164,15 +170,15 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
         </div>
 
         <div className="flex gap-2">
-          <button className={`btn btn-xs btn-outline`} type="submit">
-            Salvar{' '}
+          <button className={`btn btn-xs btn-outline ${loadingClass}`} type="submit">
+            Salvar
           </button>
           <button
             className={`btn btn-xs btn-outline`}
             onClick={() => setEditMode(false)}
             type="submit"
           >
-            Fechar{' '}
+            Fechar
           </button>
         </div>
       </form>

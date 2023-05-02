@@ -16,13 +16,9 @@ const HomeComponent = ({ players, games, generalRankPlayers }: HomeProps) => {
       <div className="flex flex-col items-center md:items-start gap-6">
         <h2 className="font-bold text-lg">Ultimas partidas</h2>
         <div className="flex flex-wrap justify-center gap-2 ">
-          {games.map((game) => {
-            return (
-              <>
-                <GameContainer key={game.id} game={game} />
-              </>
-            );
-          })}
+          {games.map((game) => (
+            <GameContainer key={game.id} game={game} />
+          ))}
         </div>
         <div>
           <Link className="link" href={`/jogos`}>
@@ -34,13 +30,9 @@ const HomeComponent = ({ players, games, generalRankPlayers }: HomeProps) => {
       <div className="flex flex-col items-center md:items-start">
         <h2 className="font-bold text-lg">Principais jogadores</h2>
         <div className="flex flex-wrap gap-2 justify-center my-4">
-          {players.map((player) => {
-            return (
-              <>
-                <PlayerContainer key={player.id} player={player} />
-              </>
-            );
-          })}
+          {players.map((player) => (
+            <PlayerContainer key={player.id} player={player} />
+          ))}
         </div>
         <Link className="link" href={`/jogadores`}>
           Ver todos os jogadores

@@ -111,7 +111,7 @@ const Jogador = () => {
                   />
                 </div>
               </div>
-              <button className={`btn btn-primary w-fit ${IsBtnDisable} `}>Salvar</button>
+              <button className={`btn btn-primary w-fit ${IsBtnDisable}`}>Salvar</button>
             </form>
             <h1 className="text-xl font-bold"></h1>
           </div>

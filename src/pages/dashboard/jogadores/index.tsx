@@ -1,8 +1,7 @@
-import { PlusCircleIcon } from 'lucide-react';
-import Link from 'next/link';
 import useSWR from 'swr';
 
 import { PlayerProfile } from '../../../..';
+import { CreatePlayerModal } from '../../../components/Dashboard/Players/CreatePlayerModal';
 import { PlayerContainer } from '../../../components/Dashboard/Players/PlayerContainer';
 import { LoadingSpin } from '../../../components/Loading';
 import FourOhFour from '../../404';
@@ -16,12 +15,7 @@ const Jogadores = () => {
   return (
     <div>
       <div className="flex items-center py-2 border-b-[1px] border-neutral-900 w-[94%] mx-auto">
-        <button className="btn btn-ghost gap-2">
-          <Link href="/dashboard/jogadores/create" className="flex items-center gap-2">
-            <PlusCircleIcon size={40} />
-            Novo jogador
-          </Link>
-        </button>
+        <CreatePlayerModal>Novo jogador</CreatePlayerModal>
       </div>
       {data?.map((player) => {
         return <PlayerContainer key={player.id} player={player} />;

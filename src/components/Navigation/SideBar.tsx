@@ -32,16 +32,14 @@ export const SideBar = () => {
   return (
     <aside className="sidebar w-fit h-[50%]  flex flex-col side-bar-fixed side-bar">
       <ul className="menu bg-base-100 p-2 rounded-box w-fit">
-        {menus.map(({ path, icon, title }) => {
+        {menus.map(({ path, icon, title }, index) => {
           return (
-            <>
-              <li>
-                <Link href={path} className={asPath.includes(path) ? 'link-active' : ''}>
-                  {icon}
-                  <span className="hidden md:block">{title}</span>
-                </Link>
-              </li>
-            </>
+            <li key={index}>
+              <Link href={path} className={asPath.includes(path) ? 'link-active' : ''}>
+                {icon}
+                <span className="hidden md:block">{title}</span>
+              </Link>
+            </li>
           );
         })}
       </ul>
