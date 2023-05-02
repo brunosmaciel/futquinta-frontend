@@ -66,18 +66,14 @@ const AddPlayerToGameModal = ({ currentTeam, children, game, players }: ModalPro
       {children}
 
       {/* Put this part before </body> tag */}
-      <input
-        type="checkbox"
-        id={`my-modal-${currentTeam.toLocaleLowerCase()}`}
-        className="modal-toggle"
-      />
+      <input type="checkbox" id={`my-modal-${currentTeam}`} className="modal-toggle" />
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box relative">
           <h3 className="font-bold text-lg">
             Adicionar jogador no time {currentTeam === 'WHITE' ? 'Branco' : 'Verde'}
           </h3>
           <label
-            htmlFor={`my-modal-${currentTeam.toLocaleLowerCase()}`}
+            htmlFor={`my-modal-${currentTeam}`}
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
@@ -142,17 +138,8 @@ const AddPlayerToGameModal = ({ currentTeam, children, game, players }: ModalPro
               </div>
             </div>
             <button className="btn btn-accent w-fit" type="submit">
-              Salvar
+              Adicionar
             </button>
-
-            <div className="modal-action">
-              <label
-                htmlFor={`my-modal-${currentTeam.toLocaleLowerCase()}`}
-                className="btn btn-neutral"
-              >
-                Fechar
-              </label>
-            </div>
           </form>
         </div>
       </div>

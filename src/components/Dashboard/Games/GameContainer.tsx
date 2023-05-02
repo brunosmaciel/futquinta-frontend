@@ -2,8 +2,8 @@ import { VscEdit } from 'react-icons/vsc';
 
 import { useRouter } from 'next/router';
 
-import { Game } from '../../..';
-import { Modal } from '../Modal';
+import { Game } from '../../../..';
+import { Modal } from '../../Modal';
 export type GameContainerProps = {
   game: Game;
 };

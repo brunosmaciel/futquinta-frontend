@@ -45,7 +45,7 @@ const GamePicure = ({ game }: GamePictureProps) => {
             alt="alt"
             src={game.gamePicture}
             className="w-max border-[1px] rounded-lg cursor-pointer"
-            width={320}
+            width={120}
             height={30}
             quality={100}
             onClick={() => setIsOpen((prev) => !prev)}

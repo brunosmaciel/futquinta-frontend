@@ -14,7 +14,7 @@ const getProfileImage = ({
     return greenShirtpicture!;
   }
 
-  return `https://ui-avatars.com/api/?name=${slug.replace('-', '')}?bold=true`;
+  return `https://ui-avatars.com/api/?name=${slug.replace('-', '')}&background=191D24&color=fff`;
 };
 
 export { getProfileImage };

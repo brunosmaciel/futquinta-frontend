@@ -16,7 +16,7 @@ export type GamePlayerStatsProps = {
   setGreenGoals: React.Dispatch<SetStateAction<number>>;
 };
 const GamePlayerStats = ({
-  player: { goals, name, substituition, function: playerFunction, gameId, id, currentTeam, player },
+  player: { goals, name, function: playerFunction, gameId, id, currentTeam, player },
 }: GamePlayerStatsProps) => {
   const { mutate } = useSWRConfig();
   const { whiteGoals, greenGoals } = useContext(ScoreboardContext);
@@ -48,28 +48,10 @@ const GamePlayerStats = ({
       console.log(err);
     }
   };
-  const handleIncrementSubstitution = async (e: any) => {
-    if (playerFunction === 'GOALKEEPER') return;
 
-    try {
-      if (e.target.value === '0') {
-        await api.put(`/stats/${gameId}/${id}`, {
-          substituition: Number(e.target.value),
-        });
-
-        return;
-      }
-      await api.put(`/stats/${gameId}/${id}`, {
-        substituition: Number(e.target.value) || substituition,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const goalsConceded = currentTeam === 'GREEN' ? whiteGoals : greenGoals;
   const handleRemovePlayer = async () => {
     try {
-      console.log(id);
       await api.delete(`/stats/${id}`);
       mutate(`/games/${gameId}`);
       toast.success(`Jogador ${player.name} removido com sucesso`, { autoClose: 1000 });
@@ -109,46 +91,7 @@ const GamePlayerStats = ({
       <div className="collapse-content bg-base-100 text-primary-content peer-checked:bg-base-300 peer-checked:text-base-300-content flex justify-between">
         <div className="stats shadow">
           <div className="stat">
-            {playerFunction === 'GOALKEEPER' ? (
-              <>
-                <div className="stat-title">Gols S.</div>
-                <input
-                  type="number"
-                  className="input text-[36px]"
-                  defaultValue={goalsConceded}
-                  size={20}
-                  min={0}
-                  onChange={() => ''}
-                />
-              </>
-            ) : (
-              <>
-                <div className="stat-title">Gols</div>
-                <input
-                  type="number"
-                  className="input text-[36px]"
-                  defaultValue={goals}
-                  size={20}
-                  min={0}
-                  onChange={handleIncrementGoals}
-                />
-              </>
-            )}
-          </div>
-
-          <div className="stat">
-            <div className="stat-title">Substituições</div>
-            <input
-              type="number"
-              className="input text-[36px]"
-              size={20}
-              min={0}
-              placeholder={String(substituition)}
-              onChange={handleIncrementSubstitution}
-            />
-          </div>
-          {player.function === 'GOALKEEPER' ? (
-            <div className="stat">
+            <>
               <div className="stat-title">Gols</div>
               <input
                 type="number"
@@ -158,8 +101,8 @@ const GamePlayerStats = ({
                 min={0}
                 onChange={handleIncrementGoals}
               />
-            </div>
-          ) : null}
+            </>
+          </div>
         </div>
         <div className="flex items-end justify-end">
           <button className="btn btn-circle btn-outline btn-sm" onClick={handleRemovePlayer}>

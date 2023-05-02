@@ -24,7 +24,7 @@ export const PlayerContainer = ({ player }: PlayerContainerType) => {
     if (currentPicture === 'GREEN') {
       return greenShirt!;
     }
-    return `https://ui-avatars.com/api/?name=${slug.replace('-', '')}?bold=true`;
+    return `https://ui-avatars.com/api/?name=${slug.replace('-', '')}&background=1C2632&color=fff`;
   }
   return (
     <div

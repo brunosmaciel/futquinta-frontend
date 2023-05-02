@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { PlayerProfile } from '../../../..';
-import { getProfileImage } from '../../../functions/functions';
+import { getProfileImage } from '../../../functions/getProfileImage';
 import { DeletePlayerModal } from './DeletePlayerModal';
 
 type PlayerContainerProps = {

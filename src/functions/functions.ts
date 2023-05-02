@@ -14,20 +14,7 @@ export const getGamesRecord = (totalOfGames: number, vic: number, draw: number):
 
   return +record;
 };
-const getProfileImage = ({
-  currentPicture,
-  whiteShirtpicture,
-  greenShirtpicture,
-  name,
-}: PlayerProfile): string => {
-  if (currentPicture === 'WHITE') {
-    return whiteShirtpicture!;
-  }
-  if (currentPicture === 'GREEN') {
-    return greenShirtpicture!;
-  }
-  return `https://ui-avatars.com/api/?name=${name}?bold=true`;
-};
+
 export function getTopScorers(players: PlayerProfile[]): GetTopScorersType[] {
   const topScorerRankingArray = players
     .filter((player) => player.name !== 'Convidados' && player.role === 'PERMANENT')
@@ -59,4 +46,4 @@ export function getTopScorers(players: PlayerProfile[]): GetTopScorersType[] {
 
   return topScorerRankingArray;
 }
-export { getGoalsPerGame, getProfileImage };
+export { getGoalsPerGame };
