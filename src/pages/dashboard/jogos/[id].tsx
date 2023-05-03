@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { useSearchParams } from 'next/navigation';
@@ -20,10 +20,12 @@ export default function GamePage() {
   const { get } = useSearchParams();
   const id = get('id');
   const { loadingClass, setButtonLoading } = useButtonLoading();
-  const { players: playersList } = useContext(ChoseTeamContext);
+  const { players: playersList, reset } = useContext(ChoseTeamContext);
   const { data: game, isLoading } = useSWR<Game>(`/games/${id}`);
   const { data } = useSWR<PlayerProfile[]>('/players');
-
+  useEffect(() => {
+    reset();
+  }, []);
   if (isLoading) return <LoadingSpin />;
   const handleStartGame = async () => {
     setButtonLoading(true);

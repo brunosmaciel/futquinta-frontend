@@ -14,7 +14,7 @@ type ChoseTeamProps = {
 };
 export const ChoseTeam = ({ player, team }: ChoseTeamProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
-  const { add } = useContext(ChoseTeamContext);
+  const { add, remove } = useContext(ChoseTeamContext);
   const { getValues, register } = useForm<Inputs>();
   const handleClick = ({ name, id }: PlayerProfile) => {
     const { playerFunction } = getValues();
@@ -27,6 +27,10 @@ export const ChoseTeam = ({ player, team }: ChoseTeamProps) => {
     };
     add(data);
     setIsSelected(true);
+  };
+  const handleRemovePlayer = () => {
+    remove(player.name, team);
+    setIsSelected(false);
   };
   return (
     <div key={player.id} className=" flex  mt-2 h-auto items-center justify-start">
@@ -61,7 +65,7 @@ export const ChoseTeam = ({ player, team }: ChoseTeamProps) => {
         >
           {isSelected ? <CheckIcon /> : <PlusIcon />}
         </button>
-        <button className="btn btn-ghost btn-md" onClick={() => setIsSelected(false)}>
+        <button className="btn btn-ghost btn-md" onClick={handleRemovePlayer}>
           <Trash2Icon />
         </button>
       </div>
