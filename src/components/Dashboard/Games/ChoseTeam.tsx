@@ -33,7 +33,12 @@ export const ChoseTeam = ({ player, team }: ChoseTeamProps) => {
     setIsSelected(false);
   };
   return (
-    <div key={player.id} className=" flex  mt-2 h-auto items-center justify-start">
+    <div
+      key={player.id}
+      className={`flex transition-all mt-2 h-auto items-center justify-start p-2 rounded-md ${
+        isSelected ? 'bg-base-300' : ''
+      }`}
+    >
       <h1>{player.name}</h1>
       <div className="flex items-center flex-1">
         <form className="flex justify-end gap-2 w-full">
@@ -59,7 +64,7 @@ export const ChoseTeam = ({ player, team }: ChoseTeamProps) => {
           </div>
         </form>
         <button
-          className={`btn btn-cicle btn-md $`}
+          className={`btn btn-cicle btn-ghost btn-md $`}
           onClick={() => handleClick(player)}
           disabled={isSelected}
         >
