@@ -15,7 +15,7 @@ type ChoseTeamProps = {
 export const ChoseTeam = ({ player, team }: ChoseTeamProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [wasChosen, setWasChosen] = useState<boolean>(false);
-  const { add, remove, players, alreadyChosen } = useContext(ChoseTeamContext);
+  const { add, remove, players } = useContext(ChoseTeamContext);
   const { getValues, register } = useForm<Inputs>();
   useEffect(() => {
     const alreadyIn = players.some((item) => item.name === player.name);

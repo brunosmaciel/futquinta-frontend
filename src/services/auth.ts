@@ -5,8 +5,8 @@ type RecoverUserDataResponse = {
   iat: number;
   exp: number;
 };
-async function recoverUserData() {
-  const { data } = await api('/users/me');
+async function recoverUserData(): Promise<RecoverUserDataResponse> {
+  const { data } = await api<RecoverUserDataResponse>('/users/me');
 
   return data;
 }

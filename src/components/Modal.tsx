@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { VscTrash } from 'react-icons/vsc';
 
-import { mutate, useSWRConfig } from 'swr';
+import { mutate } from 'swr';
 
 import { Game } from '../..';
 import { api } from '../services/axios';

@@ -1,13 +1,12 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { SetStateAction, useContext, useEffect } from 'react';
+import { SetStateAction, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { useSWRConfig } from 'swr';
 
 import { Game, PlayerStats } from '../..';
-import { ScoreboardContext } from '../contexts/ScoreboardContext';
 import { api } from '../services/axios';
 
 export type GamePlayerStatsProps = {
@@ -16,10 +15,10 @@ export type GamePlayerStatsProps = {
   setGreenGoals: React.Dispatch<SetStateAction<number>>;
 };
 const GamePlayerStats = ({
-  player: { goals, name, function: playerFunction, gameId, id, currentTeam, player },
+  player: { goals, name, gameId, id, currentTeam, player },
 }: GamePlayerStatsProps) => {
   const { mutate } = useSWRConfig();
-  const { whiteGoals, greenGoals } = useContext(ScoreboardContext);
+
   useEffect(() => {
     console.log('component mounted on goals change');
   }, []);
@@ -49,7 +48,6 @@ const GamePlayerStats = ({
     }
   };
 
-  const goalsConceded = currentTeam === 'GREEN' ? whiteGoals : greenGoals;
   const handleRemovePlayer = async () => {
     try {
       await api.delete(`/stats/${id}`);
