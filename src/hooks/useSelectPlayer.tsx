@@ -13,13 +13,16 @@ type ChoseTeamContextProps = {
   remove: (name: string, team: 'WHITE' | 'GREEN') => void;
   reset: () => void;
   players: GamePlayersList[];
+  alreadyChosen: boolean;
 };
 export const ChoseTeamContext = createContext({} as ChoseTeamContextProps);
 export function ChoseTeamContextProvider({ children }: { children: React.ReactNode }) {
   const [players, setPlayers] = useState<GamePlayersList[]>([]);
+  const [alreadyChosen, setAlreadyChosen] = useState<boolean>(false);
   const reset = () => {
     setPlayers([]);
   };
+
   const add = (player: GamePlayersList) => {
     setPlayers((prev) => [...prev, player]);
   };
@@ -33,7 +36,7 @@ export function ChoseTeamContextProvider({ children }: { children: React.ReactNo
   };
 
   return (
-    <ChoseTeamContext.Provider value={{ reset, remove, add, players }}>
+    <ChoseTeamContext.Provider value={{ alreadyChosen, reset, remove, add, players }}>
       {children}
     </ChoseTeamContext.Provider>
   );

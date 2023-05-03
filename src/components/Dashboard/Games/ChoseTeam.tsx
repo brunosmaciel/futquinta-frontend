@@ -1,7 +1,7 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { CheckIcon, PlusIcon, Trash2Icon } from 'lucide-react';
+import { CheckIcon, PlusIcon, Trash2Icon, BanIcon } from 'lucide-react';
 
 import { PlayerProfile } from '../../../..';
 import { ChoseTeamContext, GamePlayersList } from '../../../hooks/useSelectPlayer';
@@ -14,8 +14,17 @@ type ChoseTeamProps = {
 };
 export const ChoseTeam = ({ player, team }: ChoseTeamProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
-  const { add, remove } = useContext(ChoseTeamContext);
+  const [wasChosen, setWasChosen] = useState<boolean>(false);
+  const { add, remove, players, alreadyChosen } = useContext(ChoseTeamContext);
   const { getValues, register } = useForm<Inputs>();
+  useEffect(() => {
+    const alreadyIn = players.some((item) => item.name === player.name);
+    if (alreadyIn) {
+      setWasChosen(true);
+      return;
+    }
+    setWasChosen(false);
+  }, [players]);
   const handleClick = ({ name, id }: PlayerProfile) => {
     const { playerFunction } = getValues();
 
@@ -35,7 +44,7 @@ export const ChoseTeam = ({ player, team }: ChoseTeamProps) => {
   return (
     <div
       key={player.id}
-      className={`flex transition-all mt-2 h-auto items-center justify-start p-2 rounded-md ${
+      className={`flex transition-colors mt-2 h-auto items-center justify-start px-2 rounded-md ${
         isSelected ? 'bg-base-300' : ''
       }`}
     >
@@ -64,11 +73,13 @@ export const ChoseTeam = ({ player, team }: ChoseTeamProps) => {
           </div>
         </form>
         <button
-          className={`btn btn-cicle btn-ghost btn-md $`}
+          className={`btn btn-cicle btn-ghost btn-md ${wasChosen ? 'btn-disabled' : ''}`}
           onClick={() => handleClick(player)}
           disabled={isSelected}
         >
-          {isSelected ? <CheckIcon /> : <PlusIcon />}
+          {isSelected ? <CheckIcon /> : <>{wasChosen ? <BanIcon size={15} /> : <PlusIcon />}</>}
+
+          {}
         </button>
         <button className="btn btn-ghost btn-md" onClick={handleRemovePlayer}>
           <Trash2Icon />
