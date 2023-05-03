@@ -13,6 +13,7 @@
     "next": "latest",
     "nookies": "^2.5.2",
     "react": "18.2.0",
+    "react-datepicker": "^4.11.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.5",
     "react-icons": "^4.7.1",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@types/node": "18.11.3",
     "@types/react": "18.0.21",
+    "@types/react-datepicker": "^4.11.2",
     "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "@typescript-eslint/parser": "^4.9.0",

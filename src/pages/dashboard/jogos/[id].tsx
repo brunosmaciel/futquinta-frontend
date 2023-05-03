@@ -23,15 +23,25 @@ export default function GamePage() {
   const { players: playersList, reset } = useContext(ChoseTeamContext);
   const { data: game, isLoading } = useSWR<Game>(`/games/${id}`);
   const { data } = useSWR<PlayerProfile[]>('/players');
+
   useEffect(() => {
     reset();
   }, []);
   if (isLoading) return <LoadingSpin />;
-  const handleStartGame = async () => {
+  const handleStartGame = async (newGameDate?: Date) => {
+    const currentGameDate = new Date(game?.gameDate || '').toLocaleDateString();
+
     setButtonLoading(true);
     try {
       await api.post(`/stats/${id}`, {
         players: [...playersList],
+      });
+      api.put(`/games/${game?.id}`, {
+        gameDate: newGameDate
+          ? currentGameDate !== newGameDate?.toLocaleDateString()
+            ? newGameDate.toISOString()
+            : game?.gameDate
+          : game?.gameDate,
       });
 
       await mutate(`/games/${id}`);
@@ -70,13 +80,17 @@ export default function GamePage() {
   return (
     <>
       {game?.status === 'NOT_STARTED' ? (
-        <ChoseTeamWrapper handleStartGame={handleStartGame} players={data || []} />
+        <ChoseTeamWrapper
+          handleStartGame={handleStartGame}
+          players={data || []}
+          currentGameDate={new Date(game.gameDate)}
+        />
       ) : (
         <>
           {game && (
             <div className="flex flex-col items-start md:items-center h-full ">
               {game.status === 'FINISHED' && <GamePicure game={game} />}
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center  w-full">
                 <GameScore game={game} />
 
                 {game.status === 'IN_PROGRESS' && (

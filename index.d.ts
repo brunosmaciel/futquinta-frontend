@@ -70,6 +70,7 @@ export type Game = {
   players: PlayerStats[];
   MOTM: MOTM[];
   gamePicture: string | null;
+  gameDate: Date;
 };
 
 /**

@@ -43,6 +43,24 @@
   }
   
 }
+@layer inputDate {
+  .input-date{
+    @apply bg-base-300 text-secondary  h-auto w-auto
+  }
+  .input-date::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    width: 25px;
+    height: 25px;
+}
+  
+}
+
+  
+  
+  
+  
+
+
 
 *{
   font-family: 'Oxygen', sans-serif;

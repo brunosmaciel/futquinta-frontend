@@ -54,7 +54,7 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
   };
 
   return (
-    <div className="">
+    <div className="flex items-center w-auto">
       {editMode === true ? (
         <>
           <EditMOTM game={game} setEditMode={setEditMode} />
@@ -62,11 +62,11 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
       ) : (
         <>
           <form
-            className=" scale-in-hor-left  flex w-96 flex-col self-center items-center gap-4 "
+            className="scale-in-hor-left flex w-96 flex-col self-center items-center gap-4"
             onSubmit={handleSubmit(onSubmit)}
           >
             <h1 className="font-bold text-xl">Craque do jogo</h1>
-            <div className=" h-22 bg-[#131A21] flex gap-2 rounded-2xl justify-between px-4 py-2 ">
+            <div className=" w-full h-22 bg-[#131A21] flex gap-2 rounded-2xl justify-between px-4 py-2 ">
               {game.MOTM.length === 2 ? (
                 <h1 className="min-w-[205px]">
                   {game.MOTM.filter((motm) => motm.team === 'WHITE')[0].player.name}
@@ -75,8 +75,8 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
                 <>
                   <select
                     {...register('whiteMOTM')}
-                    className="select min-w-[205px]
-            select-bordered select-sm w-30 max-w-xs"
+                    className="select max-w-[205px]
+            select-bordered select-sm flex-1"
                   >
                     <option>{'Selecione'}</option>
                     {whitePlayers?.map((player) => (
@@ -105,7 +105,7 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
               ) : (
                 <select
                   {...register('greenMOTM')}
-                  className="select select-bordered select-sm w-30 max-w-xs"
+                  className="select select-bordered select-sm flex-1 max-w-[205px]"
                 >
                   <option>{'Selecione'}</option>
                   {greenPlayers?.map((player) => (
