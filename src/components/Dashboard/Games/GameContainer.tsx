@@ -3,7 +3,9 @@ import { VscEdit } from 'react-icons/vsc';
 import { useRouter } from 'next/router';
 
 import { Game } from '../../../..';
+import { getGameDate } from '../../../functions/getGameDate';
 import { Modal } from '../../Modal';
+
 export type GameContainerProps = {
   game: Game;
 };
@@ -14,7 +16,7 @@ const GameContainer = ({ game }: GameContainerProps) => {
     <div className="mx-2 mt-[0.1rem] flex  w-full justify-between" key={game.id}>
       <div className="flex">
         <div className="flex flex-col items-center w-12">
-          <p>{new Date(game.createdAt).toLocaleDateString('pt-BR').slice(0, 5)}</p>
+          <p>{getGameDate(game.gameDate).slice(0, 5)}</p>
           <p>19:15</p>
         </div>
         <div className="divider divider-horizontal"></div>

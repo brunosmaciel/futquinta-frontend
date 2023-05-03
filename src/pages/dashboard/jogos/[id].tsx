@@ -28,20 +28,14 @@ export default function GamePage() {
     reset();
   }, []);
   if (isLoading) return <LoadingSpin />;
-  const handleStartGame = async (newGameDate?: Date) => {
-    const currentGameDate = new Date(game?.gameDate || '').toLocaleDateString();
-
+  const handleStartGame = async (newGameDate?: string) => {
     setButtonLoading(true);
     try {
       await api.post(`/stats/${id}`, {
         players: [...playersList],
       });
-      api.put(`/games/${game?.id}`, {
-        gameDate: newGameDate
-          ? currentGameDate !== newGameDate?.toLocaleDateString()
-            ? newGameDate.toISOString()
-            : game?.gameDate
-          : game?.gameDate,
+      await api.put<Game>(`/games/${game?.id}`, {
+        gameDate: newGameDate || game?.gameDate,
       });
 
       await mutate(`/games/${id}`);

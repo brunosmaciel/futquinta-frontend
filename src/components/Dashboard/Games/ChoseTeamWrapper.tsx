@@ -5,7 +5,7 @@ import { ChoseTeam } from './ChoseTeam';
 export type ChoseTeamProps = {
   players: PlayerProfile[];
   currentGameDate: Date;
-  handleStartGame: (newGameDate?: Date) => void;
+  handleStartGame: (newGameDate?: string) => void;
 };
 
 type Inputs = {
@@ -18,7 +18,7 @@ export const ChoseTeamWrapper = ({ players, handleStartGame, currentGameDate }: 
   return (
     <div className=" flex flex-col w-full">
       <div className="self-center w-full flex flex-col items-center gap-4">
-        <div className="flex flex-col ">
+        <div className="flex flex-col cursor-pointer">
           <input
             {...register('gameDate', {
               valueAsDate: true,
@@ -26,13 +26,13 @@ export const ChoseTeamWrapper = ({ players, handleStartGame, currentGameDate }: 
             type="date"
             id="gameDate"
             lang="pt-BR"
-            className="input input-date text-white"
+            className="input input-date text-white cursor-pointer"
             defaultValue={new Date(currentGameDate).toISOString().slice(0, 10)}
           />
 
           <h1 className=" text-3xl ">Selecione os times</h1>
         </div>
-        <button className="btn btn-primary" onClick={() => handleStartGame(gameDate)}>
+        <button className="btn btn-primary" onClick={() => handleStartGame(gameDate.toISOString())}>
           Iniciar partida
         </button>
       </div>

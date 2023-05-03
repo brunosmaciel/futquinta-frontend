@@ -9,6 +9,7 @@ import useSWR from 'swr';
 import { Game } from '../../..';
 import { GameScore } from '../../components/Dashboard/GameScore';
 import { LoadingSpin } from '../../components/Loading';
+import { getGameDate } from '../../functions/getGameDate';
 import FourOhFour from '../404';
 const Jogo = () => {
   const { get } = useSearchParams();
@@ -119,7 +120,7 @@ const Jogo = () => {
           <div className=" mt-5 w-[95%] lg:w-[70%] flex gap-2 items-center">
             <ImCalendar />
             <p>
-              <i>{new Date(data.createdAt).toLocaleDateString('pt-BR').slice(0, 10)}</i>
+              <i>{getGameDate(data.gameDate).slice(0, 10)}</i>
             </p>
           </div>
           <div className="w-[95%] lg:w-[70%] my-8">
