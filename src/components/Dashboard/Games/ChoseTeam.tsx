@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, memo } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { CheckIcon, PlusIcon, Trash2Icon, BanIcon } from 'lucide-react';
@@ -12,7 +12,7 @@ type ChoseTeamProps = {
   player: PlayerProfile;
   team: 'WHITE' | 'GREEN';
 };
-export const ChoseTeam = ({ player, team }: ChoseTeamProps) => {
+export const ChoseTeam = memo(({ player, team }: ChoseTeamProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [wasChosen, setWasChosen] = useState<boolean>(false);
   const { add, remove, players } = useContext(ChoseTeamContext);
@@ -41,6 +41,7 @@ export const ChoseTeam = ({ player, team }: ChoseTeamProps) => {
     remove(player.name, team);
     setIsSelected(false);
   };
+
   return (
     <div
       key={player.id}
@@ -87,4 +88,4 @@ export const ChoseTeam = ({ player, team }: ChoseTeamProps) => {
       </div>
     </div>
   );
-};
+});

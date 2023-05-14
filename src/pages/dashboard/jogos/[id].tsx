@@ -30,6 +30,7 @@ export default function GamePage() {
   if (isLoading) return <LoadingSpin />;
   const handleStartGame = async (newGameDate?: string) => {
     setButtonLoading(true);
+
     try {
       await api.post(`/stats/${id}`, {
         players: [...playersList],
@@ -75,6 +76,7 @@ export default function GamePage() {
     <>
       {game?.status === 'NOT_STARTED' ? (
         <ChoseTeamWrapper
+          loadingClass={loadingClass}
           handleStartGame={handleStartGame}
           players={data || []}
           currentGameDate={new Date(game.gameDate)}

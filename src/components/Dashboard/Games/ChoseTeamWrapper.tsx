@@ -1,17 +1,24 @@
 import { useForm } from 'react-hook-form';
 
 import { PlayerProfile } from '../../../..';
+import { Button } from '../../Button';
 import { ChoseTeam } from './ChoseTeam';
 export type ChoseTeamProps = {
   players: PlayerProfile[];
   currentGameDate: Date;
   handleStartGame: (newGameDate?: string) => void;
+  loadingClass: string;
 };
 
 type Inputs = {
   gameDate: Date;
 };
-export const ChoseTeamWrapper = ({ players, handleStartGame, currentGameDate }: ChoseTeamProps) => {
+export const ChoseTeamWrapper = ({
+  players,
+  handleStartGame,
+  currentGameDate,
+  loadingClass,
+}: ChoseTeamProps) => {
   const { register, watch } = useForm<Inputs>();
   const gameDate = watch('gameDate');
 
@@ -32,9 +39,13 @@ export const ChoseTeamWrapper = ({ players, handleStartGame, currentGameDate }: 
 
           <h1 className=" text-3xl ">Selecione os times</h1>
         </div>
-        <button className="btn btn-primary" onClick={() => handleStartGame(gameDate.toISOString())}>
+        <Button
+          loadingClass={loadingClass}
+          className="btn btn-primary"
+          onClick={() => handleStartGame(gameDate.toISOString())}
+        >
           Iniciar partida
-        </button>
+        </Button>
       </div>
       <div className="flex flex-wrap gap-10">
         <div className="flex-1">
