@@ -79,7 +79,7 @@ export default function GamePage() {
           loadingClass={loadingClass}
           handleStartGame={handleStartGame}
           players={data || []}
-          currentGameDate={new Date(game.gameDate)}
+          currentGameDate={game.gameDate}
         />
       ) : (
         <>

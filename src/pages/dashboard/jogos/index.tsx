@@ -23,15 +23,11 @@ const Game = () => {
   const router = useRouter();
 
   const handleCreateGame = async () => {
-    const today = new Date();
-    const day = today.getDay();
-    const month = today.getMonth();
-    const year = today.getFullYear();
     try {
       setIsLoading('loading');
 
       const { data } = await api.post<Game>('/games', {
-        gameDate: new Date(year, month, day, 0, 0, 0, 0), // ano, mês (0-11), dia, hora, minuto, segundo, milissegundo
+        gameDate: new Date(Date.now()),
       });
 
       router.push(`/dashboard/jogos/${data.id}`);

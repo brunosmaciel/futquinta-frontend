@@ -1,11 +1,13 @@
 import { useForm } from 'react-hook-form';
 
+import { formatInTimeZone } from 'date-fns-tz';
+
 import { PlayerProfile } from '../../../..';
 import { Button } from '../../Button';
 import { ChoseTeam } from './ChoseTeam';
 export type ChoseTeamProps = {
   players: PlayerProfile[];
-  currentGameDate: Date;
+  currentGameDate: string;
   handleStartGame: (newGameDate?: string) => void;
   loadingClass: string;
 };
@@ -34,7 +36,7 @@ export const ChoseTeamWrapper = ({
             id="gameDate"
             lang="pt-BR"
             className="input input-date text-white cursor-pointer"
-            defaultValue={new Date(currentGameDate).toISOString().slice(0, 10)}
+            defaultValue={formatInTimeZone(currentGameDate, 'America/Sao_Paulo', 'yyyy-MM-dd')}
           />
 
           <h1 className=" text-3xl ">Selecione os times</h1>
