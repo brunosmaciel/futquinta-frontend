@@ -55,9 +55,12 @@ export const ChoseTeamWrapper = ({
             {' '}
             <p className="w-6 h-6 rounded-full bg-white"></p>Equipe Branca
           </h1>
-          {players.map((player) => (
-            <ChoseTeam key={player.id} player={player} team={'WHITE'} />
-          ))}
+          {players
+            .sort((a, b) => (a.name < b.name ? 1 : -1))
+            .sort((a, b) => (a.function > b.function ? 1 : -1))
+            .map((player) => (
+              <ChoseTeam key={player.id} player={player} team={'WHITE'} />
+            ))}
         </div>
 
         <div className="flex-1">
