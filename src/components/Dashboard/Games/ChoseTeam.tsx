@@ -41,18 +41,19 @@ export const ChoseTeam = memo(({ player, team }: ChoseTeamProps) => {
     remove(player.name, team);
     setIsSelected(false);
   };
+  const isSelected2 = players.some((el) => el.name === player.name);
 
   return (
     <div
       key={player.id}
       className={`flex transition-colors mt-2 h-auto items-center justify-start px-2 rounded-md ${
-        isSelected ? 'bg-base-300' : ''
+        isSelected2 ? 'bg-base-300' : ''
       }`}
     >
       <h1>{player.name}</h1>
       <div className="flex items-center flex-1">
         <form className="flex justify-end gap-2 w-full">
-          <div className="flex ">
+          <div className="flex gap-[1px] ">
             <input
               type="radio"
               value="GOALKEEPER"
