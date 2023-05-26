@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { ImCalendar } from 'react-icons/im';
 
+import { formatInTimeZone } from 'date-fns-tz';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -9,7 +10,6 @@ import useSWR from 'swr';
 import { Game } from '../../..';
 import { GameScore } from '../../components/Dashboard/GameScore';
 import { LoadingSpin } from '../../components/Loading';
-import { getGameDate } from '../../functions/getGameDate';
 import FourOhFour from '../404';
 const Jogo = () => {
   const { get } = useSearchParams();
@@ -120,7 +120,7 @@ const Jogo = () => {
           <div className=" mt-5 w-[95%] lg:w-[70%] flex gap-2 items-center">
             <ImCalendar />
             <p>
-              <i>{getGameDate(data.gameDate).slice(0, 10)}</i>
+              <i>{formatInTimeZone(data.gameDate, 'America/Sao_Paulo', 'dd/MM/yyyy')}</i>
             </p>
           </div>
           <div className="w-[95%] lg:w-[70%] my-8">

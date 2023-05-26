@@ -1,3 +1,4 @@
+import { formatInTimeZone } from 'date-fns-tz';
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import useSWR from 'swr';
@@ -36,9 +37,7 @@ const Jogos = () => {
                       <div className="mx-2 mt-[0.1rem] flex  w-full justify-between" key={game.id}>
                         <div className="flex">
                           <div className="flex flex-col items-center w-12">
-                            <p>
-                              {new Date(game.createdAt).toLocaleDateString('pt-BR').slice(0, 5)}
-                            </p>
+                            <p>{formatInTimeZone(game.gameDate, 'America/Sao_Paulo', 'dd/MM')}</p>
                             <p>19:15</p>
                           </div>
                           <div className="divider divider-horizontal"></div>
@@ -80,9 +79,7 @@ const Jogos = () => {
                         <div className="mx-2 mt-[0.1rem] flex  w-full justify-between">
                           <div className="flex">
                             <div className="flex flex-col items-center w-12">
-                              <p>
-                                {new Date(game.createdAt).toLocaleDateString('pt-BR').slice(0, 5)}
-                              </p>
+                              <p>{formatInTimeZone(game.gameDate, 'America/Sao_Paulo', 'dd/MM')}</p>
                               <p>19:15</p>
                             </div>
                             <div className="divider divider-horizontal"></div>
