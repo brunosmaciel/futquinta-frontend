@@ -115,7 +115,7 @@ export const ChoseTeamWrapper = ({
                 .sort((a, b) => (a.function > b.function ? 1 : -1))
                 .filter((player) => player.name.includes(filterValue.charAt(0).toUpperCase()))
                 .map((player) => (
-                  <ChoseTeam key={player.id} player={player} team={'WHITE'} />
+                  <ChoseTeam key={player.id} player={player} team={'GREEN'} />
                 ))}
             </>
           ) : (
@@ -124,7 +124,7 @@ export const ChoseTeamWrapper = ({
                 .sort((a, b) => (a.name < b.name ? 1 : -1))
                 .sort((a, b) => (a.function > b.function ? 1 : -1))
                 .map((player) => (
-                  <ChoseTeam key={player.id} player={player} team={'WHITE'} />
+                  <ChoseTeam key={player.id} player={player} team={'GREEN'} />
                 ))}
             </>
           )}
