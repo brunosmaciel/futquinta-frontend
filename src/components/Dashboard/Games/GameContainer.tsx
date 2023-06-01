@@ -1,5 +1,6 @@
 import { VscEdit } from 'react-icons/vsc';
 
+import { formatInTimeZone } from 'date-fns-tz';
 import { useRouter } from 'next/router';
 
 import { Game } from '../../../..';
@@ -16,7 +17,7 @@ const GameContainer = ({ game }: GameContainerProps) => {
     <div className="mx-2 mt-[0.1rem] flex  w-full justify-between" key={game.id}>
       <div className="flex">
         <div className="flex flex-col items-center w-12">
-          <p>{getGameDate(game.gameDate).slice(0, 5)}</p>
+          <p>{formatInTimeZone(game.gameDate, 'America/Sao_Paulo', 'dd/MM')}</p>
           <p>19:15</p>
         </div>
         <div className="divider divider-horizontal"></div>

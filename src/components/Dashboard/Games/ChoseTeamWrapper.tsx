@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 
+import { addHours } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 
 import { PlayerProfile } from '../../../..';
@@ -54,7 +55,7 @@ export const ChoseTeamWrapper = ({
         <Button
           loadingClass={loadingClass}
           className="btn btn-primary"
-          onClick={() => handleStartGame(gameDate.toISOString())}
+          onClick={() => handleStartGame(`${addHours(gameDate, 12)}`)}
         >
           Iniciar partida
         </Button>
