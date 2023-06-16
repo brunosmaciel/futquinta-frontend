@@ -6,6 +6,7 @@ module.exports = {
     REBUILD_PLAYER_PROFILE_HOOK: process.env.REBUILD_PLAYER_PROFILE_HOOK,
   },
   images: {
+    dangerouslyAllowSVG: true,
     domains: [
       'ui-avatars.com',
       'res.cloudinary.com',
