@@ -38,20 +38,6 @@ export const ChoseTeamWrapper = ({
   return (
     <div className=" flex flex-col w-full">
       <div className="self-center w-full flex flex-col items-center gap-4">
-        <div className="flex flex-col cursor-pointer">
-          <input
-            {...register('gameDate', {
-              valueAsDate: true,
-            })}
-            type="date"
-            id="gameDate"
-            lang="pt-BR"
-            className="input input-date text-white cursor-pointer"
-            defaultValue={formatInTimeZone(currentGameDate, 'America/Sao_Paulo', 'yyyy-MM-dd')}
-          />
-
-          <h1 className=" text-3xl ">Selecione os times</h1>
-        </div>
         <Button
           loadingClass={loadingClass}
           className="btn btn-primary"

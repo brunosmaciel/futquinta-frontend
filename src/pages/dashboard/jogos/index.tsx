@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { setHours } from 'date-fns';
 import { PlusCircleIcon } from 'lucide-react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
@@ -7,6 +8,7 @@ import { parseCookies } from 'nookies';
 import useSWR from 'swr';
 
 import { Game } from '../../../..';
+import { CreateGameModal } from '../../../components/Dashboard/Games/CreateGameModal';
 import { GameContainer } from '../../../components/Dashboard/Games/GameContainer';
 import { Wrapper } from '../../../components/Dashboard/Games/GameContainerWrapper';
 import { LoadingSpin } from '../../../components/Loading';
@@ -22,16 +24,19 @@ const Game = () => {
 
   const router = useRouter();
 
-  const handleCreateGame = async () => {
+  const handleCreateGame = async (date: string) => {
+    const gameDate = `${date}T19:15:00`;
+
     try {
       setIsLoading('loading');
 
       const { data } = await api.post<Game>('/games', {
-        gameDate: new Date(Date.now()),
+        gameDate,
       });
 
       router.push(`/dashboard/jogos/${data.id}`);
     } catch (err: any) {
+      console.log(err);
       setIsLoading('not_loading');
     }
   };
@@ -40,14 +45,10 @@ const Game = () => {
   return (
     <main className="container mx-auto flex-grow lg:w-[80%] ">
       <div className="flex items-center justify-start ">
-        <button className={`btn btn-ghost gap-2 ${loadingButton}`} onClick={handleCreateGame}>
-          {loadingButton === 'loading' ? (
-            ''
-          ) : (
-            <PlusCircleIcon size={40} className="new-game-button" />
-          )}
+        <CreateGameModal isLoading={loadingButton} handleCreateGame={handleCreateGame}>
+          <PlusCircleIcon size={40} className="new-game-button" />
           Nova partida
-        </button>
+        </CreateGameModal>
       </div>
 
       {inProgressGames && inProgressGames.length > 0 ? (

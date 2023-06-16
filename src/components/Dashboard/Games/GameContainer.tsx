@@ -4,7 +4,6 @@ import { formatInTimeZone } from 'date-fns-tz';
 import { useRouter } from 'next/router';
 
 import { Game } from '../../../..';
-import { getGameDate } from '../../../functions/getGameDate';
 import { Modal } from '../../Modal';
 
 export type GameContainerProps = {

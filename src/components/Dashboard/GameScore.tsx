@@ -7,7 +7,7 @@ export type GameScore = {
   game: Game;
 };
 const GameScore = ({ game }: GameScore) => {
-  const { whiteGoals, greenGoals, setWhiteGoals, setGreenGoals } = useContext(ScoreboardContext);
+  const { setWhiteGoals, setGreenGoals } = useContext(ScoreboardContext);
   useEffect(() => {
     const white = game?.players
       .filter((player) => player.currentTeam === 'WHITE')
