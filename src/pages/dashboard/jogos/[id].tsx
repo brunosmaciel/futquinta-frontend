@@ -28,17 +28,13 @@ export default function GamePage() {
     reset();
   }, []);
   if (isLoading) return <LoadingSpin />;
-  const handleStartGame = async (newGameDate?: string) => {
+  const handleStartGame = async () => {
     setButtonLoading(true);
 
     try {
       await api.post(`/stats/${id}`, {
         players: [...playersList],
       });
-      await api.put<Game>(`/games/${game?.id}`, {
-        gameDate: newGameDate || game?.gameDate,
-      });
-
       await mutate(`/games/${id}`);
       setButtonLoading(false);
     } catch (err: any) {

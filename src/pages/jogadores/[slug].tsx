@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { formatInTimeZone } from 'date-fns-tz';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -193,7 +194,7 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
             <div key={stat.Game.id} className="">
               <div className="flex my-2  p-[3px] w-[85%] max-w-[310px] md:max-w-[700px] mx-auto">
                 <div className="flex flex-col items-center w-12">
-                  <p>{new Date(stat.Game.createdAt).toLocaleDateString('pt-BR').slice(0, 5)}</p>
+                  <p>{formatInTimeZone(stat.Game.gameDate, 'America/Sao_Paulo', 'dd/MM')}</p>
                   <p>19:15</p>
                 </div>
                 <div className="divider divider-horizontal"></div>
