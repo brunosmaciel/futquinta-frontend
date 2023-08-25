@@ -49,11 +49,12 @@ const Layout = ({ children }: LayoutProps) => {
       <Head>
         <title>FutQuintaScore</title>
       </Head>
-      <NavBar />
+      <NavBar>
+        <main className="container mx-auto min-h-screen flex flex-col justify-between main-container-height">
+          {children}
+        </main>
+      </NavBar>
 
-      <main className="container mx-auto min-h-screen flex flex-col justify-between main-container-height">
-        {children}
-      </main>
       <Footer />
     </>
   );
