@@ -4,68 +4,60 @@
 
 @layer components {
   .player-profile-stats {
-    @apply bg-[#191D24] w-[78px] h-[78px]  p-2 rounded-lg flex flex-col items-center
+    @apply bg-[#191D24] w-[78px] h-[78px]  p-2 rounded-lg flex flex-col items-center;
   }
-  .link-active{
-    @apply bg-primary
+  .link-active {
+    @apply bg-primary;
   }
-  .dashboard-h{
+  .dashboard-h {
     min-height: calc(100vh - 64px);
   }
-  .side-bar-config-button-gap{
+  .side-bar-config-button-gap {
     gap: calc(100vh - 164px);
   }
   .side-bar-fixed {
     position: sticky;
     top: 10px;
   }
-  .container-grid {  display: grid;
-    grid-template-columns: repeat(5,1fr);
+  .container-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     grid-auto-rows: max-content;
     grid-template-areas:
-      "navbar navbar navbar navbar navbar"
-      "sidebar main main main main";
+      'navbar navbar navbar navbar navbar'
+      'sidebar main main main main';
   }
-  
-  .logo { 
-    grid-area: navbar; 
-    
+
+  .logo {
+    grid-area: navbar;
   }
-  
-  .sidebar { grid-area: sidebar;}
-  
-  .main { grid-area: main; }
-  
 
+  .sidebar {
+    grid-area: sidebar;
+  }
 
-  .new-game-button{
+  .main {
+    grid-area: main;
+  }
+
+  .new-game-button {
     transform: rotateX('angle');
   }
-  
 }
 @layer inputDate {
-  .input-date{
-    @apply bg-base-300 text-secondary  h-auto w-auto
+  .input-date {
+    @apply bg-base-300 text-secondary  h-auto w-auto;
   }
   .input-date::-webkit-calendar-picker-indicator {
     filter: invert(1);
     width: 25px;
     height: 25px;
     cursor: pointer;
+  }
 }
-  
-}
 
-  
-  
-  
-  
-
-
-
-*{
+* {
   font-family: 'Oxygen', sans-serif;
-  
 }
 ::-webkit-scrollbar {
   width: 10px;
@@ -73,91 +65,86 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #1C2632; 
+  background: #1c2632;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #191D24; 
+  background: #191d24;
   border-radius: 99999px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
-.main-container-height{
+.main-container-height {
   min-height: calc(100vh - 80px);
 }
-.container-height{
+.container-height {
   min-height: calc(100vh - 95px);
-} 
-.poligon{
+}
+.poligon {
   -webkit-clip-path: ellipse(50% 50% at 50% 50%);
   clip-path: ellipse(50% 50% at 50% 50%);
 }
-.goalkeeper-rank-height{
+.goalkeeper-rank-height {
   min-height: calc(100vh - 120px);
 }
 
-input[type='number']{
+input[type='number'] {
   all: unset;
   width: 40px;
   font-size: 36px;
 }
-.logo{
+.logo {
   font-family: 'Bangers', cursive;
 }
 
-.dashboard-players-grid{
+.dashboard-players-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 5px;
 }
-.dashboard-players-stats-grid{
+.dashboard-players-stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 10px;
 }
-.home-page-games-grid{
+.home-page-games-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   gap: 10px;
-
 }
-.home-page-players-grid{
+.home-page-players-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   gap: 10px;
-
 }
-@media (min-width: 600px)
-{
-  .home-page-games-grid{
+@media (min-width: 600px) {
+  .home-page-games-grid {
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   }
 }
-body .Toastify .Toastify__toast-container .Toastify__toast--success{
-  background-color: black
+body .Toastify .Toastify__toast-container .Toastify__toast--success {
+  background-color: black;
 }
-body .Toastify .Toastify__toast-container .Toastify__toast--error{
-  background-color: #191D24;
+body .Toastify .Toastify__toast-container .Toastify__toast--error {
+  background-color: #191d24;
   border-radius: 20px;
   font-family: 'Oxygen', sans-serif;
 }
 body .Toastify__progress-bar--error {
   background-color: #ff000096;
-
 }
 body .Toastify__progress-bar--success {
-  background-color: #15803D;
-
+  background-color: #15803d;
 }
 .loader {
   min-width: 100px;
   min-height: 100px;
-  
-  border: 3px solid #FFF;
+
+  border: 3px solid #fff;
   border-radius: 50%;
   display: inline-block;
   position: absolute;
@@ -165,7 +152,7 @@ body .Toastify__progress-bar--success {
   animation: rotation 1.5s linear infinite;
 }
 .loader::after {
-  content: '';  
+  content: '';
   box-sizing: border-box;
   position: absolute;
   left: 50%;
@@ -175,7 +162,7 @@ body .Toastify__progress-bar--success {
   min-height: 120px;
   border-radius: 50%;
   border: 3px solid;
-  border-color: #15803D transparent;
+  border-color: #15803d transparent;
 }
 
 @keyframes rotation {
@@ -185,26 +172,30 @@ body .Toastify__progress-bar--success {
   100% {
     transform: rotate(360deg);
   }
-} 
-
-.reset-input{
-  border: none;
-  outline: none;
-  
 }
 
-.fade-in-out{
+.reset-input {
+  border: none;
+  outline: none;
+}
+
+.fade-in-out {
   animation: blink-2 1s ease-in-out infinite alternate-reverse;
 }
 
+@keyframes blink-2 {
+  0% {
+    opacity: 0.2;
+  }
 
-@keyframes blink-2{
-  0%{opacity:0.2}
-  
-  100%{opacity:1}}
+  100% {
+    opacity: 1;
+  }
+}
 
-  
-  .scale-in-hor-left{animation:scale-in-hor-left .5s cubic-bezier(.25,.46,.45,.94) both}
+.scale-in-hor-left {
+  animation: scale-in-hor-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
 
 /* ----------------------------------------------
  * Generated by Animista on 2023-5-2 17:49:55
@@ -213,4 +204,15 @@ body .Toastify__progress-bar--success {
  * w: http://animista.net, t: @cssanimista
  * ---------------------------------------------- */
 
- @keyframes scale-in-hor-left{0%{transform:scaleX(0);transform-origin:0 0;opacity:1}100%{transform:scaleX(1);transform-origin:0 0;opacity:1}}
+@keyframes scale-in-hor-left {
+  0% {
+    transform: scaleX(0);
+    transform-origin: 0 0;
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: 0 0;
+    opacity: 1;
+  }
+}

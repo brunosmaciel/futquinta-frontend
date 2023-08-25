@@ -1,19 +1,16 @@
 import { useCallback } from 'react';
-import { ImCalendar } from 'react-icons/im';
+import { ShirtIcon } from 'lucide-react';
 
-import { formatInTimeZone } from 'date-fns-tz';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 
 import { Game } from '../../..';
-import { GameScore } from '../../components/Dashboard/GameScore';
 import { LoadingSpin } from '../../components/Loading';
 import FourOhFour from '../404';
 import { Score } from '../../components/Game/Score';
 import BallIcon from '../../components/ui/BallIcon';
-import { GamePicure } from '../../components/GamePicture';
 import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder';
 const Jogo = () => {
   const { get } = useSearchParams();
@@ -87,6 +84,7 @@ const Jogo = () => {
               </div>
               {whitePlayers.map((player) => (
                 <div
+                  key={player.id}
                   onClick={() => push(`/jogadores/${player.player.slug}`)}
                   className=" transition-all hover:translate-y-1 cursor-pointer my-2 hover:bg-base-200 rounded-md p-2 flex items-center gap-4"
                 >
@@ -100,10 +98,11 @@ const Jogo = () => {
                       />
                     </div>
                   </div>
-                  <p className="text-xl font-bold flex-1 flex items-center gap-5">
-                    #{player.player.shirtNumber} - {player.name}
+                  <p className="text-lg flex-1 flex items-center gap-2 ">
+                    <ShirtIcon size={18} />
+                    {player.player.shirtNumber} - {player.name}
                     {whiteMOTM?.player.name === player.name ? (
-                      <div className="badge badge-secondary">Craque</div>
+                      <div className=" ml-5 badge badge-secondary">Craque</div>
                     ) : null}
                   </p>
                   <div className=" w-10 flex items-center justify-between gap-2">
@@ -119,7 +118,10 @@ const Jogo = () => {
                 <span>Verde</span>
               </div>
               {greenPlayers.map((player) => (
-                <div className=" transition-all hover:translate-y-0.5 cursor-pointer my-2 hover:bg-base-200 rounded-md p-2 flex items-center gap-5">
+                <div
+                  key={player.id}
+                  className=" transition-all hover:translate-y-0.5 cursor-pointer my-2 hover:bg-base-200 rounded-md p-2 flex items-center gap-5"
+                >
                   <div className="avatar">
                     <div className="w-16 mask mask-squircle">
                       <img
@@ -130,10 +132,11 @@ const Jogo = () => {
                       />
                     </div>
                   </div>
-                  <p className="text-xl font-bold flex-1 flex items-center gap-5">
-                    #{player.player.shirtNumber} - {player.name}
+                  <p className="text-lg flex-1 flex items-center gap-2 ">
+                    <ShirtIcon size={18} />
+                    {player.player.shirtNumber} - {player.name}
                     {greenMOTM?.player.name === player.name ? (
-                      <div className="badge badge-primary">Craque</div>
+                      <div className="badge badge-primary ml-5">Craque</div>
                     ) : null}
                   </p>
                   <div className=" w-10 flex items-center justify-between gap-2">

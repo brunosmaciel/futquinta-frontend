@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form';
 
 import { addHours } from 'date-fns';
-import { formatInTimeZone } from 'date-fns-tz';
 
 import { PlayerProfile } from '../../../..';
 import { Button } from '../../Button';
@@ -18,12 +17,7 @@ type Inputs = {
   filter: string;
   showGuest: boolean;
 };
-export const ChoseTeamWrapper = ({
-  players,
-  handleStartGame,
-  currentGameDate,
-  loadingClass,
-}: ChoseTeamProps) => {
+export const ChoseTeamWrapper = ({ players, handleStartGame, loadingClass }: ChoseTeamProps) => {
   const { register, watch } = useForm<Inputs>();
   const gameDate = watch('gameDate');
   const isShowingGuests = watch('showGuest');
