@@ -10,6 +10,7 @@ import { GeneralRankingAPIType, PlayerProfile } from '../../..';
 import { getPlayerStats } from '../../functions/getPlayerStats';
 import { api } from '../../services/axios';
 import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder';
+import { PlayerProfileImage } from '../../components/PlayerProfileImage';
 
 export type JogadorProps = {
   player: PlayerProfile;
@@ -42,6 +43,7 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
 
     goalsConcededPerGame,
   } = getPlayerStats(player);
+
   return (
     <>
       <Head>
@@ -53,18 +55,8 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
           {player?.role === 'GUEST' ? (
             <span className="indicator-item badge badge-primary">Convidado</span>
           ) : null}
-          <Image
-            src={
-              currentPlayerProfilePicture === 'WHITE'
-                ? player.whiteShirtpicture || profilePicturePlaceholder(player.slug)
-                : player.greenShirtpicture || profilePicturePlaceholder(player.slug)
-            }
-            alt="Foto de perfil do jogador"
-            width={300}
-            height={300}
-            className="rounded-full w-32 h-32 border-2"
-            onClick={() => setIsOpen(true)}
-          />
+          <PlayerProfileImage player={player} setIsOpen={setIsOpen} />
+
           <h1 className="text-xl font-bold">
             {player.name} #{player.shirtNumber || '00'}
           </h1>

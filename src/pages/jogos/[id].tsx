@@ -11,6 +11,10 @@ import { Game } from '../../..';
 import { GameScore } from '../../components/Dashboard/GameScore';
 import { LoadingSpin } from '../../components/Loading';
 import FourOhFour from '../404';
+import { Score } from '../../components/Game/Score';
+import BallIcon from '../../components/ui/BallIcon';
+import { GamePicure } from '../../components/GamePicture';
+import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder';
 const Jogo = () => {
   const { get } = useSearchParams();
   const id = get('id');
@@ -50,8 +54,8 @@ const Jogo = () => {
     return <LoadingSpin />;
   }
   if (data) {
-    const whiteMOTM = data.MOTM.filter((player) => player.team === 'WHITE')[0];
-    const greenMOTM = data.MOTM.filter((player) => player.team === 'GREEN')[0];
+    const whiteMOTM = data.MOTM.find((player) => player.team === 'WHITE');
+    const greenMOTM = data.MOTM.find((player) => player.team === 'GREEN');
 
     const whitePlayers = getWhitePlayers(data);
     const greenPlayers = getGreenPlayers(data);
@@ -68,178 +72,77 @@ const Jogo = () => {
           <meta property="og:image:height" content="300" />
         </Head>
         <div className="flex flex-col items-center">
-          {data.gamePicture && (
-            <>
-              <Image
-                alt="alt"
-                src={data.gamePicture}
-                className="w-max border-[1px] rounded-lg"
-                width={320}
-                height={30}
-                quality={100}
-              />
-            </>
-          )}
-
-          {/*//TODO add this code later */
-          /*  */}
-          <GameScore game={data} />
-          {data.MOTM.length >= 2 && (
-            <>
-              <div className=" flex w-96 flex-col self-center items-center gap-4 ">
-                <h1 className="font-bold text-xl">Melhores da partida</h1>
-                <div className="w-[90%] h-22 bg-[#131A21] flex rounded-2xl justify-between px-4 py-2 ">
-                  <div className="flex items-center gap-2">
-                    <img
-                      src={
-                        whiteMOTM.player.whiteShirtpicture ||
-                        `https://ui-avatars.com/api/?name=${whiteMOTM.player.slug}?bold=true`
-                      }
-                      alt=""
-                      className="w-10 h-10 rounded-full cursor-pointer"
-                      onClick={() => push(`/jogadores/${whiteMOTM.player.slug}`)}
-                    />
-                    <h1>{whiteMOTM.player.name}</h1>
-                  </div>
-                  <div className="bg-white w-[2px]"></div>
-                  <div className="flex items-center gap-2">
-                    <h1>{greenMOTM.player.name}</h1>
-                    <img
-                      src={
-                        greenMOTM.player.greenShirtpicture ||
-                        `https://ui-avatars.com/api/?name=${greenMOTM.player.slug}?bold=true`
-                      }
-                      alt=""
-                      className="w-10 h-10 rounded-full"
-                    />
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-          <div className=" mt-5 w-[95%] lg:w-[70%] flex gap-2 items-center">
-            <ImCalendar />
-            <p>
-              <i>{formatInTimeZone(data.gameDate, 'America/Sao_Paulo', 'dd/MM/yyyy')}</i>
-            </p>
+          <div className="p-2 w-full max-w-[520px]  h-auto">
+            <img
+              className="w-full h-full rounded-md drop-shadow-2xl"
+              src="https://res.cloudinary.com/dqpvzpoui/image/upload/v1692369682/1692369681015_1878.jpeg.jpg"
+            />
           </div>
-          <div className="w-[95%] lg:w-[70%] my-8">
-            <div className="border border-base-300 bg-base-100 p-4 flex items-center gap-10 text-xl overflow-x-hidden">
-              <div className="h-10 w-10 rounded-full bg-white"></div>
-              <h1 className="font-bold">Branco</h1>
-            </div>
-            {whitePlayers.map(
-              ({
-                name,
-                id,
-                goals,
-                substituition,
-                function: playerFunction,
-                player: { whiteShirtpicture, slug },
-              }) => (
-                <div className="collapse collapse-arrow" key={id}>
-                  <input type="checkbox" className="peer" />
-                  <div className="collapse-title bg-base-100 border border-base-300  text-primary-content peer-checked:bg-base-300 peer-checked:text-base-300-content">
-                    <div className="avatar placeholder flex gap-8 items-center">
-                      <div className="bg-neutral-focus text-neutral-content rounded-full w-8">
-                        <img
-                          src={
-                            whiteShirtpicture ||
-                            `https://ui-avatars.com/api/?name=${slug}?bold=true`
-                          }
-                          alt="Avatar do jogador"
-                        />
-                      </div>
-                      <h1 className="text-[16px] text-info">{name}</h1>
+          <Score greenGoals={data?.greenGoals} whiteGoals={data?.whiteGoals} />
+          <div className="flex flex-col lg:flex-row mt-4 h-full w-full">
+            <div className="p-2 w-full lg:w-1/2">
+              <div className="w-full  p-2 flex items-center gap-4 font-bold ">
+                <div className="h-10 w-10 bg-secondary rounded-full"></div>
+                <span className="text-xl">Branco</span>
+              </div>
+              {whitePlayers.map((player) => (
+                <div
+                  onClick={() => push(`/jogadores/${player.player.slug}`)}
+                  className=" transition-all hover:translate-y-1 cursor-pointer my-2 hover:bg-base-200 rounded-md p-2 flex items-center gap-4"
+                >
+                  <div className="avatar">
+                    <div className="w-16 mask mask-squircle">
+                      <img
+                        src={
+                          player.player.whiteShirtpicture ||
+                          profilePicturePlaceholder(player.player.slug)
+                        }
+                      />
                     </div>
                   </div>
-                  {/* // ? Collapse Content */}
-                  <div className=" text-info collapse-content bg-base-100  peer-checked:bg-base-300 peer-checked:text-base-300-content pl-18 gap-2 flex justify-center">
-                    <div className="bg-[#191D24]  w-[100px] h-[68px]  p-2 rounded-lg flex flex-col items-center ">
-                      {playerFunction === 'GOALKEEPER' ? (
-                        <>
-                          <span className="text-sm">Gols S</span>
-                          <span className="text-xl font-bold">{data.greenGoals}</span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="text-sm">Gols</span>
-                          <span className="text-xl font-bold">{goals}</span>
-                        </>
-                      )}
-                    </div>
-                    <div className="bg-[#191D24]  w-[100px] h-[68px]  p-2 rounded-lg flex flex-col items-center ">
-                      <span className="text-sm">Substituições</span>
-                      <span className="text-xl font-bold">{substituition}</span>
-                    </div>
-                    {playerFunction === 'GOALKEEPER' ? (
-                      <div className="bg-[#191D24]  w-[100px] h-[68px]  p-2 rounded-lg flex flex-col items-center ">
-                        <span className="text-sm">Gols</span>
-                        <span className="text-xl font-bold">{goals}</span>
-                      </div>
+                  <p className="text-xl font-bold flex-1 flex items-center gap-5">
+                    #{player.player.shirtNumber} - {player.name}
+                    {whiteMOTM?.player.name === player.name ? (
+                      <div className="badge badge-secondary">Craque</div>
                     ) : null}
+                  </p>
+                  <div className=" w-10 flex items-center justify-between gap-2">
+                    <BallIcon className="w-5 h-5 text-white" />
+                    <span className="text-lg font-bold">{player.goals}</span>
                   </div>
                 </div>
-              )
-            )}
-            <div className="border border-base-300 bg-base-100 p-4 flex items-center gap-10 text-xl overflow-x-hidden">
-              <div className="h-10 w-10 rounded-full bg-green-600"></div>
-              <h1 className="font-bold">Verde</h1>
+              ))}
             </div>
-            {greenPlayers.map(
-              ({
-                name,
-                id,
-                goals,
-                substituition,
-                function: playerFunction,
-                player: { greenShirtpicture, slug },
-              }) => (
-                <div className="collapse collapse-arrow" key={id}>
-                  <input type="checkbox" className="peer" />
-                  <div className="collapse-title bg-base-100 border border-base-300  text-primary-content peer-checked:bg-base-300 peer-checked:text-base-300-content">
-                    <div className="avatar placeholder flex gap-8 items-center">
-                      <div className="bg-neutral-focus text-neutral-content rounded-full w-8">
-                        <img
-                          src={
-                            greenShirtpicture ||
-                            `https://ui-avatars.com/api/?name=${slug}?bold=true`
-                          }
-                          alt="Avatar do jogador"
-                        />
-                      </div>
-                      <h1 className="text-[16px]">{name}</h1>
+            <div className="p-2 w-full lg:w-1/2">
+              <div className="w-full  p-2 flex items-center gap-4 font-bold ">
+                <div className="h-10 w-10 bg-primary rounded-full"></div>
+                <span>Verde</span>
+              </div>
+              {greenPlayers.map((player) => (
+                <div className=" transition-all hover:translate-y-0.5 cursor-pointer my-2 hover:bg-base-200 rounded-md p-2 flex items-center gap-5">
+                  <div className="avatar">
+                    <div className="w-16 mask mask-squircle">
+                      <img
+                        src={
+                          player.player.greenShirtpicture ||
+                          profilePicturePlaceholder(player.player.slug)
+                        }
+                      />
                     </div>
                   </div>
-                  {/* // ? Collapse Content */}
-                  <div className="collapse-content bg-base-100 text-primary-content peer-checked:bg-base-300 peer-checked:text-base-300-content pl-18 gap-2 flex justify-center">
-                    <div className="bg-[#191D24]  w-[100px] h-[68px]  p-2 rounded-lg flex flex-col items-center ">
-                      {playerFunction === 'GOALKEEPER' ? (
-                        <>
-                          <span className="text-sm">Gols S</span>
-                          <span className="text-xl font-bold">{data.whiteGoals}</span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="text-sm">Gols</span>
-                          <span className="text-xl font-bold">{goals}</span>
-                        </>
-                      )}
-                    </div>
-                    <div className="bg-[#191D24]  w-[100px] h-[68px]  p-2 rounded-lg flex flex-col items-center ">
-                      <span className="text-sm">Substituições</span>
-                      <span className="text-xl font-bold">{substituition}</span>
-                    </div>
-                    {playerFunction === 'GOALKEEPER' ? (
-                      <div className="bg-[#191D24]  w-[100px] h-[68px]  p-2 rounded-lg flex flex-col items-center ">
-                        <span className="text-sm">Gols</span>
-                        <span className="text-xl font-bold">{goals}</span>
-                      </div>
+                  <p className="text-xl font-bold flex-1 flex items-center gap-5">
+                    #{player.player.shirtNumber} - {player.name}
+                    {greenMOTM?.player.name === player.name ? (
+                      <div className="badge badge-primary">Craque</div>
                     ) : null}
+                  </p>
+                  <div className=" w-10 flex items-center justify-between gap-2">
+                    <BallIcon className="w-5 h-5 text-white" />
+                    <span className="text-lg font-bold">{player.goals}</span>
                   </div>
                 </div>
-              )
-            )}
+              ))}
+            </div>
           </div>
         </div>
       </>
