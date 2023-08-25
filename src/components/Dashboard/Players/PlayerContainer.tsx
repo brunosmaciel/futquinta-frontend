@@ -1,4 +1,4 @@
-import { EditIcon, TrashIcon } from 'lucide-react';
+import { PenSquare, TrashIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -36,7 +36,7 @@ export const PlayerContainer = ({ player }: PlayerContainerProps) => {
       <div className="flex gap-2">
         <span className="tooltip" data-tip="Editar">
           <Link href={`/dashboard/jogadores/${player.slug}`}>
-            <EditIcon className="cursor-pointer" size={18} />
+            <PenSquare className="cursor-pointer" size={18} />
           </Link>
         </span>
         <span className="tooltip" data-tip="Excluir">
