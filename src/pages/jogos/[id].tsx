@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { ShirtIcon } from 'lucide-react';
+import { CalendarIcon, ShirtIcon } from 'lucide-react';
 
 import Head from 'next/head';
 import Image from 'next/image';
@@ -12,6 +12,7 @@ import FourOhFour from '../404';
 import { Score } from '../../components/Game/Score';
 import BallIcon from '../../components/ui/BallIcon';
 import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder';
+import { formatInTimeZone } from 'date-fns-tz';
 const Jogo = () => {
   const { get } = useSearchParams();
   const id = get('id');
@@ -75,7 +76,12 @@ const Jogo = () => {
               src="https://res.cloudinary.com/dqpvzpoui/image/upload/v1692369682/1692369681015_1878.jpeg.jpg"
             />
           </div>
+          <div className=" mt-4 gap-2 w-full flex items-center justify-center">
+            <CalendarIcon size={20} />
+            <span>{formatInTimeZone(data.gameDate, 'America/Sao_Paulo', 'dd/MM/yyyy')}</span>
+          </div>
           <Score greenGoals={data?.greenGoals} whiteGoals={data?.whiteGoals} />
+
           <div className="flex flex-col lg:flex-row mt-4 h-full w-full">
             <div className="p-2 w-full lg:w-1/2">
               <div className="w-full  p-2 flex items-center gap-4 font-bold ">
