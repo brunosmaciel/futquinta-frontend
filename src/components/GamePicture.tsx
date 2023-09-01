@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-
+import { CameraIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useSWRConfig } from 'swr';
 
@@ -77,17 +77,23 @@ const GamePicure = ({ game }: GamePictureProps) => {
           </button>
           <h3 className="font-bold text-lg">Foto do jogo</h3>
           <form className="flex flex-col gap-2" onSubmit={handleSubmit(handleUpload)}>
-            <label htmlFor="game-photo" className="btn btn-secondary w-fit mt-4">
-              Enviar aquivo
-            </label>
+            {photoPreview && photoPreview.length === 0 && (
+              <label
+                htmlFor="game-photo"
+                className="hover:bg-base-200/10  transition-all cursor-pointer flex items-center justify-center w-full h-48 border-2 mt-4 border-dashed border-primary rounded-lg"
+              >
+                <CameraIcon size={60} />
+              </label>
+            )}
+
             <input type="file" id="game-photo" className="hidden" {...register('photo')} />
             {photoPreview && photoPreview.length > 0 ? (
               <>
                 <Image
                   alt="alt"
                   src={URL.createObjectURL(photoPreview[0])}
-                  className="w-max border-[1px] rounded-lg cursor-pointer"
-                  width={320}
+                  className="mt-4  border-[1px] rounded-lg cursor-pointer w-full max-w-xs"
+                  width={280}
                   height={30}
                   quality={100}
                   onClick={() => setIsOpen((prev) => !prev)}

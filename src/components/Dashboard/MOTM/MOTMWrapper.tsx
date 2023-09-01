@@ -68,7 +68,7 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
             <h1 className="font-bold text-xl">Craque do jogo</h1>
             <div className=" w-full h-22 bg-[#131A21] flex gap-2 rounded-2xl justify-between px-4 py-2 ">
               {game.MOTM.length === 2 ? (
-                <h1 className="min-w-[205px]">
+                <h1 className="w-1/2 ">
                   {game.MOTM.filter((motm) => motm.team === 'WHITE')[0].player.name}
                 </h1>
               ) : (
@@ -98,7 +98,7 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
               <div className="bg-white w-[2px]"></div>
               {game.MOTM.length === 2 ? (
                 <>
-                  <h1 className="min-w-[205px]">
+                  <h1 className="w-1/2 text-end">
                     {game.MOTM.filter((motm) => motm.team === 'GREEN')[0].player.name}
                   </h1>
                 </>

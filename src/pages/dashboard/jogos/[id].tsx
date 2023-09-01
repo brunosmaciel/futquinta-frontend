@@ -1,7 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-import { useSearchParams } from 'next/navigation';
 import useSWR, { mutate } from 'swr';
 
 import { Game, PlayerProfile } from '../../../..';
@@ -16,10 +15,11 @@ import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { ChoseTeamContext } from '../../../hooks/useSelectPlayer';
 import { api } from '../../../services/axios';
 
-export default function GamePage() {
-  const { get } = useSearchParams();
-  const id = get('id');
-  const { loadingClass, setButtonLoading } = useButtonLoading();
+interface IGamePageProps {
+  id: number;
+}
+export default function GamePage({ id }: IGamePageProps) {
+  const { loadingClass, setButtonLoading, isButtonLoading } = useButtonLoading();
   const { players: playersList, reset } = useContext(ChoseTeamContext);
   const { data: game, isLoading } = useSWR<Game>(`/games/${id}`);
   const { data } = useSWR<PlayerProfile[]>('/players');
@@ -59,12 +59,13 @@ export default function GamePage() {
       await api.post<Game>(`/games/${id}/finish`, {
         winnerTeam: getWinnerTeam(greenGoals, whiteGoals),
       });
-      await api(process.env.REBUILD_PLAYER_PROFILE_HOOK || '');
+
+      process.env.NODE_ENV === 'production' &&
+        (await api(process.env.REBUILD_PLAYER_PROFILE_HOOK || ''));
       await mutate(`/games/${id}`);
 
       setButtonLoading(false);
     } catch (err: any) {
-      toast.error(err.message);
       setButtonLoading(false);
     }
   };
@@ -72,7 +73,7 @@ export default function GamePage() {
     <>
       {game?.status === 'NOT_STARTED' ? (
         <ChoseTeamWrapper
-          loadingClass={loadingClass}
+          isLoading={isButtonLoading}
           handleStartGame={handleStartGame}
           players={data || []}
           currentGameDate={game.gameDate}
@@ -126,3 +127,11 @@ export default function GamePage() {
     </>
   );
 }
+
+export const getServerSideProps = (ctx: any) => {
+  return {
+    props: {
+      id: ctx.params.id,
+    },
+  };
+};

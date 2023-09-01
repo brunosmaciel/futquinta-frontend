@@ -111,7 +111,7 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
         <h1 className="font-bold text-md">
           <i>Editar</i>
         </h1>
-        <div className="w-full h-22 bg-[#131A21] flex gap-2 rounded-2xl justify-between px-4 py-2 ">
+        <div className="w-full h-22  bg-[#131A21] flex gap-2 rounded-2xl justify-between px-4 py-2 ">
           <select
             className="select flex-1
     select-bordered select-sm "

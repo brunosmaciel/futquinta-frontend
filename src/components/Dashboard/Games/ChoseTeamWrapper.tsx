@@ -9,7 +9,7 @@ export type ChoseTeamProps = {
   players: PlayerProfile[];
   currentGameDate: string;
   handleStartGame: (newGameDate?: string) => void;
-  loadingClass: string;
+  isLoading: boolean;
 };
 
 type Inputs = {
@@ -17,7 +17,7 @@ type Inputs = {
   filter: string;
   showGuest: boolean;
 };
-export const ChoseTeamWrapper = ({ players, handleStartGame, loadingClass }: ChoseTeamProps) => {
+export const ChoseTeamWrapper = ({ players, handleStartGame, isLoading }: ChoseTeamProps) => {
   const { register, watch } = useForm<Inputs>();
   const gameDate = watch('gameDate');
   const isShowingGuests = watch('showGuest');
@@ -33,7 +33,7 @@ export const ChoseTeamWrapper = ({ players, handleStartGame, loadingClass }: Cho
     <div className=" flex flex-col w-full">
       <div className="self-center w-full flex flex-col items-center gap-4">
         <Button
-          loadingClass={loadingClass}
+          isLoading={isLoading}
           className="btn btn-primary"
           onClick={() => handleStartGame(`${addHours(gameDate, 12)}`)}
         >

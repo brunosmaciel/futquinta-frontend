@@ -1,9 +1,10 @@
-import { HTMLAttributes } from 'react';
+import { ComponentProps, HTMLAttributes } from 'react';
+import { cn } from '../utils/cn';
 
-interface CustomButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  loadingClass: string;
+interface IButtonProps extends ComponentProps<'button'> {
+  isLoading?: boolean;
 }
 
-export const Button = (props: CustomButtonProps) => {
-  return <button className={props.loadingClass} {...props}></button>;
+export const Button = ({ isLoading, className, ...props }: IButtonProps) => {
+  return <button className={cn(className, isLoading && 'loading')} {...props}></button>;
 };

@@ -6,6 +6,7 @@ import { mutate } from 'swr';
 import { PlayerStats } from '../../../..';
 import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
+import { cn } from '../../../utils/cn';
 type PlayerInGameContainerProps = {
   playerStats: PlayerStats;
 };
@@ -55,9 +56,11 @@ export const PlayerInGameContainer = ({ playerStats }: PlayerInGameContainerProp
       setButtonLoading(false);
     }
   };
+  const currentTeamColorClassname =
+    playerStats.currentTeam === 'GREEN' ? 'border-b-primary' : 'border-b-secondary';
   return (
     <>
-      <div className="mt-2 border-b-[2px] border-base-300 p-[4px] flex h-fit">
+      <div className={cn('mt-2 border-b-2  p-4 flex h-fit', currentTeamColorClassname)}>
         <div className="flex flex-col justify-between flex-1">
           <span className="cursor-pointer w-fit tooltip">
             <div className="dropdown">
@@ -105,7 +108,7 @@ export const PlayerInGameContainer = ({ playerStats }: PlayerInGameContainerProp
               </>
             )}
           </div>
-          <div className="stats shadow bg-base-300">
+          <div className="stats shadow bg-base-200/50">
             <div className="stat">
               <div className="stat-title text-sm">Gols</div>
               <div className="stat-value text-center text-lg">{playerStats.goals}</div>
