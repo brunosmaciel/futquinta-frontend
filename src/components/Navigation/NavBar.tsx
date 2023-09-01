@@ -1,10 +1,10 @@
 import { ReactNode, useContext, useEffect, useRef } from 'react';
 
+import { MedalIcon, ShirtIcon } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { AuthContext } from '../../contexts/AuthContex';
-import { useRouter } from 'next/router';
-import { MedalIcon, ShirtIcon } from 'lucide-react';
 import BallIcon from '../ui/BallIcon';
 
 export const NavBar = ({ children }: { children: ReactNode }) => {
@@ -59,13 +59,13 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
             <ul className="menu menu-horizontal">
               {/* Navbar menu content here */}
               <li>
-                <a>Jogadores</a>
+                <Link href="/jogadores">Jogadores</Link>
               </li>
               <li>
-                <a>Partidas</a>
+                <Link href="/jogos">Partidas</Link>
               </li>
               <li>
-                <a>Rankings</a>
+                <Link href="/rankings">Rankings</Link>
               </li>
             </ul>
           </div>
@@ -86,7 +86,6 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
           </div>
         </div>
         {children}
-        Content
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>

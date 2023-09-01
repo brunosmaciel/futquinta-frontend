@@ -1,18 +1,18 @@
 import { useCallback } from 'react';
-import { CalendarIcon, ShirtIcon } from 'lucide-react';
 
+import { formatInTimeZone } from 'date-fns-tz';
+import { CalendarIcon, ShirtIcon } from 'lucide-react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 
 import { Game } from '../../..';
-import { LoadingSpin } from '../../components/Loading';
-import FourOhFour from '../404';
 import { Score } from '../../components/Game/Score';
+import { LoadingSpin } from '../../components/Loading';
 import BallIcon from '../../components/ui/BallIcon';
 import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder';
-import { formatInTimeZone } from 'date-fns-tz';
+import FourOhFour from '../404';
 const Jogo = () => {
   const { get } = useSearchParams();
   const id = get('id');

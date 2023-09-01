@@ -1,7 +1,9 @@
 import { SetStateAction } from 'react';
+
+import Image from 'next/image';
+
 import { PlayerProfile } from '../..';
 import { profilePicturePlaceholder } from '../utils/profilePicturePlaceholder';
-import Image from 'next/image';
 interface IPlayerProfileImageProps {
   player: PlayerProfile;
   setIsOpen: (value: SetStateAction<boolean>) => void;

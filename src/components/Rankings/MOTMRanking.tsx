@@ -27,12 +27,15 @@ const MOTMRanking = ({ players }: GeneralPlacingProps) => {
 
   return (
     <>
+      <div className="justify-between mx-1 my-4 text-[12px] font-light italic flex  lg:justify-normal lg:gap-10 ">
+        <div className="h-[44px] invisible flex flex-col gap-2"></div>
+      </div>
       <div className="overflow-x-auto">
         {playerStats && (
-          <table className="table table-zebra w-full">
+          <table className="table  w-full max-w-3xl">
             {/* head */}
             <thead>
-              <tr>
+              <tr className="border-none">
                 <th></th>
                 <th>Atleta</th>
                 <th>Pontos</th>
@@ -42,8 +45,12 @@ const MOTMRanking = ({ players }: GeneralPlacingProps) => {
             <tbody>
               {/* row 1 */}
               {playerStats.map(({ slug, name, mvp, totalGames }, i) => (
-                <tr key={slug}>
-                  <th>{i + 1}°</th>
+                <tr
+                  key={slug}
+                  data-willbeawarded={i + 1 <= 1}
+                  className=" border-l-4  gap-2 hover transition-all data-[willbeawarded=true]:border-l-green-500 border-transparent "
+                >
+                  <th className="w-16">{i + 1} °</th>
                   <td>
                     <Link href={`/jogadores/${slug}`} className="cursor-pointer">
                       {name}

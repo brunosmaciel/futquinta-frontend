@@ -7,10 +7,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { GeneralRankingAPIType, PlayerProfile } from '../../..';
+import { PlayerProfileImage } from '../../components/PlayerProfileImage';
 import { getPlayerStats } from '../../functions/getPlayerStats';
 import { api } from '../../services/axios';
 import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder';
-import { PlayerProfileImage } from '../../components/PlayerProfileImage';
 
 export type JogadorProps = {
   player: PlayerProfile;
