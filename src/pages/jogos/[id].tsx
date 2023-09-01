@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { formatInTimeZone } from 'date-fns-tz';
 import { CalendarIcon, ShirtIcon } from 'lucide-react';
 import Head from 'next/head';
+
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
@@ -65,17 +66,23 @@ const Jogo = () => {
           <meta property="og:url" content={`/jogos/${data.id}`} />
           <meta property="og:type" content="blog" />
           <meta name="twitter:card" content="summary_large_image" />
-          <meta property="og:image" content={data.gamePicture || ''} />
           <meta property="og:image:width" content="300" />
           <meta property="og:image:height" content="300" />
         </Head>
         <div className="flex flex-col items-center">
-          <div className="p-2 w-full max-w-[520px]  h-auto">
-            <img
-              className="w-full h-full rounded-md drop-shadow-2xl"
-              src="https://res.cloudinary.com/dqpvzpoui/image/upload/v1692369682/1692369681015_1878.jpeg.jpg"
-            />
-          </div>
+          {data.gamePicture && (
+            <div className="p-2 w-full max-w-[520px] rounded-lg h-auto mx-auto">
+              <Image
+                priority
+                className="w-full h-full rounded-md drop-shadow-lg"
+                src={data.gamePicture}
+                alt="Foto da partida"
+                width={768}
+                height={768}
+              />
+            </div>
+          )}
+
           <div className=" mt-4 gap-2 w-full flex items-center justify-center">
             <CalendarIcon size={20} />
             <span>{formatInTimeZone(data.gameDate, 'America/Sao_Paulo', 'dd/MM/yyyy')}</span>
