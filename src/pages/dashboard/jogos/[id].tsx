@@ -73,17 +73,20 @@ export default function GamePage({ id }: IGamePageProps) {
   return (
     <>
       {game?.status === 'NOT_STARTED' ? (
-        <ChoseTeamWrapper
-          isLoading={isButtonLoading}
-          handleStartGame={handleStartGame}
-          players={data || []}
-          currentGameDate={game.gameDate}
-        />
+        <>
+          <ChoseTeamWrapper
+            isLoading={isButtonLoading}
+            handleStartGame={handleStartGame}
+            players={data || []}
+            currentGameDate={game.gameDate}
+          />
+        </>
       ) : (
         <>
           {game && (
             <div className="flex flex-col items-start md:items-center h-full ">
               {game.status === 'FINISHED' && <GamePicure game={game} />}
+
               <div className="flex flex-col items-center  w-full">
                 <GameScore game={game} />
 

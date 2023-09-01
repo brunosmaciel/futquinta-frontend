@@ -4,6 +4,9 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 
 import { AuthContext } from '../contexts/AuthContex';
+import { Button } from '../components/Button';
+import { useButtonLoading } from '../hooks/useButtonLoading';
+import { toast } from 'react-hot-toast';
 export type LoginInputs = {
   email: string;
   password: string;
@@ -11,56 +14,71 @@ export type LoginInputs = {
 const Login = () => {
   const { register, handleSubmit } = useForm<LoginInputs>();
   const { signIn } = useContext(AuthContext);
-  const [loading, setLoading] = useState<'loading' | 'not_loading'>('not_loading');
+  const { isButtonLoading, setButtonLoading } = useButtonLoading();
   const [showPassword, setShowPassword] = useState(false);
   const { push } = useRouter();
 
   const handleLogin = async (data: LoginInputs) => {
     try {
-      setLoading('loading');
+      setButtonLoading(true);
       await signIn(data);
       push(`/dashboard/`);
     } catch (err: any) {
-      setLoading('not_loading');
+      toast.error('Credenciais inválidas');
+      setButtonLoading(false);
     }
   };
   return (
-    <section className="flex justify-center">
-      <form className="form-control w-[80%] max-w-[320px]" onSubmit={handleSubmit(handleLogin)}>
-        <div>
-          <label className="label">
-            <span className="label-text">Email</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Type here"
-            className="input input-bordered input-primary w-full max-w-xs autofill:bg-none"
-            {...register('email')}
-            autoComplete="off"
-          />
+    <>
+      <section className="flex flex-col gap-4 justify-center items-center  h-full">
+        <div className="text-center text-3xl font-bold -tracking-tight border-b-2 border-primary w-52">
+          <h1>Bem Vindo</h1>
         </div>
-        <div>
-          <label className="label">
-            <span className="label-text">Senha</span>
+        <form
+          className="w-full max-w-xs flex flex-col items-center"
+          onSubmit={handleSubmit(handleLogin)}
+        >
+          <div className="form-control w-full max-w-xs">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Email"
+              className="input input-bordered w-full max-w-xs"
+              {...register('email')}
+              autoComplete="off"
+            />
+          </div>
+          <div className="form-control w-full max-w-xs">
+            <label className="label">
+              <span className="label-text">Senha</span>
+            </label>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Senha"
+              className="input input-bordered w-full max-w-xs"
+              {...register('password')}
+            />
+          </div>
+
+          <label className="label cursor-pointer mt-2 flex justify-between gap-2  w-full max-w-xs">
+            <span className="label-text">Mostrar senha</span>
+            <input
+              type="checkbox"
+              className="toggle"
+              onChange={() => setShowPassword((prev) => !prev)}
+            />
           </label>
-          <input
-            type={showPassword ? 'text' : 'password'}
-            placeholder="Type here"
-            className="input input-bordered input-primary w-full max-w-xs"
-            {...register('password')}
-          />
-        </div>
-        <label className="label cursor-pointer">
-          <span className="label-text">Mostrar senha</span>
-          <input
-            type="checkbox"
-            className="toggle"
-            onChange={() => setShowPassword((prev) => !prev)}
-          />
-        </label>
-        <button className={`btn btn-primary mt-7 ${loading}`}>Entrar</button>
-      </form>
-    </section>
+          <Button
+            isLoading={false}
+            className={`btn btn-primary flex items-center justify-center mt-4 w-full`}
+          >
+            Entrar
+          </Button>
+        </form>
+      </section>
+    </>
   );
 };
 

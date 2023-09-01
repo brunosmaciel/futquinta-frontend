@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import { setHours } from 'date-fns';
-import { PlusCircleIcon } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
@@ -13,6 +12,7 @@ import { GameContainer } from '../../../components/Dashboard/Games/GameContainer
 import { Wrapper } from '../../../components/Dashboard/Games/GameContainerWrapper';
 import { LoadingSpin } from '../../../components/Loading';
 import { api } from '../../../services/axios';
+import { toast } from 'react-hot-toast';
 export type GameProps = {
   games: Game[];
 };
@@ -21,6 +21,11 @@ const Game = () => {
   const { data: finishedGames } = useSWR<Game[]>('/games?status=finished');
   const { data: inProgressGames } = useSWR<Game[]>('/games?status=in_progress');
   const { data: notStartedGames, isLoading } = useSWR<Game[]>('/games?status=not_started');
+  const nextFixtureNumber =
+    (finishedGames?.length || 0) +
+    (inProgressGames?.length || 0) +
+    (notStartedGames?.length || 0) +
+    1;
 
   const router = useRouter();
 
@@ -32,11 +37,12 @@ const Game = () => {
 
       const { data } = await api.post<Game>('/games', {
         gameDate,
+        fixture: 1,
       });
 
       router.push(`/dashboard/jogos/${data.id}`);
     } catch (err: any) {
-      console.log(err);
+      console.log(err.response.data);
       setIsLoading('not_loading');
     }
   };
@@ -45,10 +51,7 @@ const Game = () => {
   return (
     <main className="container mx-auto flex-grow lg:w-[80%] ">
       <div className="flex items-center justify-start ">
-        <CreateGameModal isLoading={loadingButton} handleCreateGame={handleCreateGame}>
-          <PlusCircleIcon size={40} className="new-game-button" />
-          Nova partida
-        </CreateGameModal>
+        <CreateGameModal nextFixture={nextFixtureNumber} />
       </div>
 
       {inProgressGames && inProgressGames.length > 0 ? (

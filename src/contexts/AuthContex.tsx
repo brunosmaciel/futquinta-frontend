@@ -5,6 +5,7 @@ import { setCookie, parseCookies, destroyCookie } from 'nookies';
 
 import { recoverUserData } from '../services/auth';
 import { api } from '../services/axios';
+import { toast } from 'react-hot-toast';
 type User = {
   email: string;
 };
@@ -66,8 +67,8 @@ const AuthProvider = ({ children }: any) => {
       api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
       setUser(user);
-
-      router.push('/dashboard');
+      await router.push('/dashboard');
+      toast.success('Bem vindo ' + user.email);
     } catch (err: any) {
       throw new Error(err.response.data.message);
     }

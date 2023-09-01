@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 
 import type { AppProps } from 'next/app';
 import { SWRConfig } from 'swr';
@@ -26,7 +26,20 @@ function MyApp({ Component, pageProps }: AppProps) {
               fetcher,
             }}
           >
-            <ToastContainer theme="dark" />
+            <Toaster
+              toastOptions={{
+                className: 'text-red-500',
+                style: {
+                  background: '#064e3b',
+                  color: '#fff',
+                },
+                error: {
+                  style: {
+                    background: '#FC222D',
+                  },
+                },
+              }}
+            />
             <Layout>
               <Component {...pageProps} />
             </Layout>

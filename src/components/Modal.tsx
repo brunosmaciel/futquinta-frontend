@@ -5,6 +5,7 @@ import { mutate } from 'swr';
 
 import { Game } from '../..';
 import { api } from '../services/axios';
+import { toast } from 'react-hot-toast';
 
 type ModalPorps = {
   children: React.ReactNode;
@@ -23,6 +24,7 @@ const Modal = ({ children, game }: ModalPorps) => {
       await mutate(`/games?status=${game.status.toLocaleLowerCase()}`);
       setIsLoading('not_loading');
       setIsOpen(false);
+      toast.success('Partida apagada com sucesso');
     } catch (err) {
       return;
     }
@@ -56,10 +58,10 @@ const Modal = ({ children, game }: ModalPorps) => {
           <div className="modal-action">
             <label
               htmlFor="my-modal"
-              className={`btn btn-warning ${isLoading}`}
+              className={`btn btn-primary ${isLoading}`}
               onClick={handleDeleteGame}
             >
-              Excluir mesmo assim
+              Sim
             </label>
           </div>
         </div>

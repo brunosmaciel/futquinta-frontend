@@ -71,6 +71,7 @@ export type Game = {
   MOTM: MOTM[];
   gamePicture: string | null;
   gameDate: string;
+  fixture: number;
 };
 
 /**
