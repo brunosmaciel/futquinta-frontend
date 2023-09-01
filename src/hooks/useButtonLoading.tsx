@@ -1,19 +1,12 @@
 import { useState } from 'react';
 
 const useButtonLoading = () => {
-  const [loadingClass, setLoadingClass] = useState<'loading' | 'not_loading'>('not_loading');
-
+  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const setButtonLoading = (state: boolean) => {
-    if (state === true) {
-      setLoadingClass('loading');
-    }
-    if (state === false) {
-      setLoadingClass('not_loading');
-    }
-    return;
+    setIsButtonLoading(state);
   };
-  const isButtonLoading = loadingClass === 'loading' ? true : false;
-  return { setButtonLoading, loadingClass, isButtonLoading };
+
+  return { setButtonLoading, isButtonLoading };
 };
 
 export { useButtonLoading };

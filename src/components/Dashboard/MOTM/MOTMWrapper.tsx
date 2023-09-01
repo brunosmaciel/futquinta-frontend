@@ -8,6 +8,7 @@ import { Game } from '../../../..';
 import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
 import { EditMOTM } from './EditMOTM';
+import { Button } from '../../Button';
 
 export type MOTMWrapperProps = {
   game: Game;
@@ -27,7 +28,7 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const whitePlayers = game.players.filter((player) => player.currentTeam == 'WHITE');
   const greenPlayers = game.players.filter((player) => player.currentTeam == 'GREEN');
-  const { loadingClass, setButtonLoading } = useButtonLoading();
+  const { isButtonLoading, setButtonLoading } = useButtonLoading();
   const onSubmit = async (data: MOTMInputs) => {
     if (data.greenMOTM === 'Selecione' || data.greenMOTM === 'Selecione') {
       toast.warn('É necessário selecionar o craque do jogo das duas equipes');
@@ -126,19 +127,24 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
             </div>
             {game.MOTM.length === 2 ? (
               <>
-                <button
-                  className={`btn btn-xs btn-outline ${loadingClass}`}
+                <Button
+                  isLoading={isButtonLoading}
+                  className={`btn btn-xs btn-outline `}
                   type="submit"
                   onClick={() => setEditMode(true)}
                 >
                   Editar
-                </button>
+                </Button>
               </>
             ) : (
               <>
-                <button className={`btn btn-xs btn-outline ${loadingClass}`} type="submit">
+                <Button
+                  isLoading={isButtonLoading}
+                  className={`btn btn-xs btn-outline `}
+                  type="submit"
+                >
                   Salvar{' '}
-                </button>
+                </Button>
               </>
             )}
           </form>

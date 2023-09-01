@@ -7,11 +7,12 @@ import { PlayerStats } from '../../../..';
 import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
 import { cn } from '../../../utils/cn';
+import { Button } from '../../Button';
 type PlayerInGameContainerProps = {
   playerStats: PlayerStats;
 };
 export const PlayerInGameContainer = ({ playerStats }: PlayerInGameContainerProps) => {
-  const { loadingClass, setButtonLoading, isButtonLoading } = useButtonLoading();
+  const { setButtonLoading, isButtonLoading } = useButtonLoading();
   const handleRemovePlayer = async () => {
     try {
       await api.delete(`/stats/${playerStats.id}`);
@@ -86,25 +87,28 @@ export const PlayerInGameContainer = ({ playerStats }: PlayerInGameContainerProp
           <div>
             {isButtonLoading ? (
               <div className="max-w-[96px]">
-                <button
-                  className={`btn btn-ghost btn-circle ${loadingClass}`}
+                <Button
+                  isLoading={isButtonLoading}
+                  className={`btn btn-ghost btn-circle `}
                   onClick={handleIncrementGoals}
-                ></button>
+                ></Button>
               </div>
             ) : (
               <>
-                <button
-                  className={`btn btn-ghost btn-circle ${loadingClass}`}
+                <Button
+                  isLoading={isButtonLoading}
+                  className={`btn btn-ghost btn-circle `}
                   onClick={handleIncrementGoals}
                 >
                   <PlusIcon />
-                </button>
-                <button
-                  className={`btn btn-ghost btn-circle ${loadingClass}`}
+                </Button>
+                <Button
+                  isLoading={isButtonLoading}
+                  className={`btn btn-ghost btn-circle `}
                   onClick={handleDecrementGoals}
                 >
                   <MinusIcon />
-                </button>
+                </Button>
               </>
             )}
           </div>

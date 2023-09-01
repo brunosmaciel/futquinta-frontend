@@ -2,11 +2,11 @@ import { Button } from '../components/Button';
 import { useButtonLoading } from '../hooks/useButtonLoading';
 
 export default function Loading() {
-  const { loadingClass, setButtonLoading } = useButtonLoading();
+  const { setButtonLoading, isButtonLoading } = useButtonLoading();
 
   return (
     <Button
-      loadingClass={loadingClass}
+      isLoading={isButtonLoading}
       className="btn-primary"
       onClick={() => setButtonLoading(true)}
     >

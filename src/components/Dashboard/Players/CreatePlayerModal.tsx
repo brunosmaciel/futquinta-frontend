@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { PlusCircleIcon } from 'lucide-react';
+import { Plus } from 'lucide-react';
 
 import { PlayerProfile } from '../../../..';
 import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
+import { Button } from '../../Button';
 type Inputs = {
   name: string;
   photo: FileList;
@@ -14,13 +15,11 @@ type Inputs = {
   color: string;
   number: string;
 };
-type CreatePlayerModalProps = {
-  children: React.ReactNode;
-};
-export const CreatePlayerModal = ({ children }: CreatePlayerModalProps) => {
+
+export const CreatePlayerModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { register, handleSubmit, formState } = useForm<Inputs>();
-  const { loadingClass, setButtonLoading } = useButtonLoading();
+  const { isButtonLoading, setButtonLoading } = useButtonLoading();
 
   const onSubmit: SubmitHandler<Inputs> = async ({ guest, name, number }) => {
     setButtonLoading(true);
@@ -43,10 +42,17 @@ export const CreatePlayerModal = ({ children }: CreatePlayerModalProps) => {
   };
   return (
     <>
-      <label onClick={() => setIsOpen((prev) => !prev)} className="btn flex gap-2">
-        <PlusCircleIcon size={40} />
-        {children}
-      </label>
+      <div
+        className="tooltip  tooltip-left fixed bottom-4 right-4 tooltip-secondary"
+        data-tip="Criar jogador"
+      >
+        <label
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="cursor-pointer text-inherit btn btn-primary btn-circle "
+        >
+          <Plus data-tip="Criar um novo jogador" size={30} />
+        </label>
+      </div>
 
       {/* Put this part before </body> tag */}
       <input
@@ -57,49 +63,48 @@ export const CreatePlayerModal = ({ children }: CreatePlayerModalProps) => {
         onChange={() => ''}
       />
       <div className="modal">
-        <div className="modal-box relative">
-          <label
-            onClick={() => setIsOpen((prev) => !prev)}
-            className="btn btn-sm btn-circle absolute right-2 top-2"
-          >
-            ✕
-          </label>
-          <h3 className="text-lg font-bold mb-2">Novo jogador</h3>
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
-            <div className="form-control w-[320px]  mx-auto gap-2">
-              <label className="input-group input-group-vertical ">
-                <span>Nome</span>
+        <div className="modal-box relative max-w-xs">
+          <div className="flex flex-row-reverse justify-between">
+            <label onClick={() => setIsOpen((prev) => !prev)} className="btn btn-sm btn-circle ">
+              ✕
+            </label>
+          </div>
+          <div className="flex items-center justify-center">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col items-center gap-2 w-full max-w-xs "
+            >
+              <div className="form-control w-full ">
+                <label className="label">
+                  <span className="label-text">Nome</span>
+                </label>
                 <input
                   type="text"
                   placeholder="Nome do jogador"
-                  className="input input-bordered"
+                  className="input input-bordered w-full "
                   {...register('name')}
                 />
-                <span className="mt-4">Número do jogador</span>
+              </div>
+              <div className="form-control w-full ">
+                <label className="label">
+                  <span className="label-text">Camiseta</span>
+                </label>
                 <input
                   type="text"
                   placeholder="Ex: 10"
-                  className="input input-bordered"
+                  className="input input-bordered w-full "
                   {...register('number')}
                   autoComplete="off"
                   pattern="[0-9]*"
                   inputMode="numeric"
                 />
-              </label>
-              <label className="flex items-center gap-4  justify-end">
-                <span className="label-text">Convidado</span>
-                <input {...register('guest')} type="checkbox" className="checkbox" />
-              </label>
+              </div>
 
-              <h1>{formState.errors.photo?.message}</h1>
-              <button
-                type="submit"
-                className={`btn btn-primary w-fit self-center mt-6 ${loadingClass} `}
-              >
+              <Button isLoading={isButtonLoading} className="w-full mt-6 btn btn-primary">
                 Criar
-              </button>
-            </div>
-          </form>
+              </Button>
+            </form>
+          </div>
         </div>
       </div>
     </>

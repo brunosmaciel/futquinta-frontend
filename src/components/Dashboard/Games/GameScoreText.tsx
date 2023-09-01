@@ -6,6 +6,7 @@ import { mutate } from 'swr';
 import { Game } from '../../../..';
 import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
+import { Button } from '../../Button';
 type GameScoreTextProps = {
   team: 'GREEN' | 'WHITE';
   game: Game;
@@ -20,7 +21,7 @@ export const GameScoreText = ({
   team,
   colorClass,
 }: GameScoreTextProps) => {
-  const { loadingClass, setButtonLoading } = useButtonLoading();
+  const { isButtonLoading, setButtonLoading } = useButtonLoading();
   const handleIncrementGoals = async (team: 'WHITE' | 'GREEN') => {
     setButtonLoading(true);
     try {
@@ -48,19 +49,21 @@ export const GameScoreText = ({
       <p>{children}</p>
 
       <div className="flex flex-col sm:flex-row items-center gap-2 ">
-        <button
-          className={`btn btn-circle btn-sm ${loadingClass}`}
+        <Button
+          isLoading={isButtonLoading}
+          className={`btn btn-circle btn-sm `}
           onClick={() => handleIncrementGoals(team)}
         >
-          {loadingClass === 'loading' ? null : <PlusIcon />}
-        </button>
+          {isButtonLoading === true ? null : <PlusIcon />}
+        </Button>
         <div className={`h-14 w-14  rounded-full ${colorClass}`}></div>
-        <button
-          className={`btn btn-circle btn-sm ${loadingClass}`}
+        <Button
+          isLoading={isButtonLoading}
+          className={`btn btn-circle btn-sm `}
           onClick={() => handleDecrementGoals(team)}
         >
-          {loadingClass === 'loading' ? null : <MinusIcon />}
-        </button>
+          {isButtonLoading === true ? null : <MinusIcon />}
+        </Button>
       </div>
     </div>
   );

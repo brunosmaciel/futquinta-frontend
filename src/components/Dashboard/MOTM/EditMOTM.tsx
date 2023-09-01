@@ -7,6 +7,7 @@ import { mutate } from 'swr';
 import { Game } from '../../../..';
 import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
+import { Button } from '../../Button';
 export type EditMOTMType = {
   playerId: number;
   gameId: number;
@@ -27,7 +28,7 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
   const greenPlayers = game.players.filter((player) => player.currentTeam == 'GREEN');
   const currentWhiteMOTM = game.MOTM.filter((motm) => motm.team === 'WHITE')[0];
   const currentGreenMOTM = game.MOTM.filter((motm) => motm.team === 'GREEN')[0];
-  const { setButtonLoading, loadingClass } = useButtonLoading();
+  const { setButtonLoading, isButtonLoading } = useButtonLoading();
 
   const handleEditMOTM = async (data: EditMOTMInputs) => {
     const newWhiteMOTM: EditMOTMType = JSON.parse(data.whiteMOTM);
@@ -170,16 +171,16 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
         </div>
 
         <div className="flex gap-2">
-          <button className={`btn btn-xs btn-outline ${loadingClass}`} type="submit">
+          <Button isLoading={isButtonLoading} className={`btn btn-xs btn-outline `} type="submit">
             Salvar
-          </button>
-          <button
+          </Button>
+          <Button
             className={`btn btn-xs btn-outline`}
             onClick={() => setEditMode(false)}
             type="submit"
           >
             Fechar
-          </button>
+          </Button>
         </div>
       </form>
     </>

@@ -15,7 +15,7 @@ const Jogadores = () => {
   return (
     <div>
       <div className="flex items-center py-2 border-b-[1px] border-neutral-900 w-[94%] mx-auto">
-        <CreatePlayerModal>Novo jogador</CreatePlayerModal>
+        <CreatePlayerModal />
       </div>
       {data
         ?.sort((a, b) => {

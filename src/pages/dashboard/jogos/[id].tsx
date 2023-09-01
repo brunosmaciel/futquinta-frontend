@@ -14,12 +14,13 @@ import { LoadingSpin } from '../../../components/Loading';
 import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { ChoseTeamContext } from '../../../hooks/useSelectPlayer';
 import { api } from '../../../services/axios';
+import { Button } from '../../../components/Button';
 
 interface IGamePageProps {
   id: number;
 }
 export default function GamePage({ id }: IGamePageProps) {
-  const { loadingClass, setButtonLoading, isButtonLoading } = useButtonLoading();
+  const { setButtonLoading, isButtonLoading } = useButtonLoading();
   const { players: playersList, reset } = useContext(ChoseTeamContext);
   const { data: game, isLoading } = useSWR<Game>(`/games/${id}`);
   const { data } = useSWR<PlayerProfile[]>('/players');
@@ -87,12 +88,13 @@ export default function GamePage({ id }: IGamePageProps) {
                 <GameScore game={game} />
 
                 {game.status === 'IN_PROGRESS' && (
-                  <button
-                    className={`btn btn-primary ${loadingClass}`}
+                  <Button
+                    isLoading={isButtonLoading}
+                    className={`btn btn-primary`}
                     onClick={() => hanleFinalizeGame(game)}
                   >
                     Finalizar
-                  </button>
+                  </Button>
                 )}
 
                 {game.status === 'FINISHED' && <MOTMWrapper game={game} />}
