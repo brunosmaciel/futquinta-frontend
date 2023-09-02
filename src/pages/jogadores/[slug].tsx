@@ -12,6 +12,7 @@ import { getPlayerStats } from '../../functions/getPlayerStats';
 import { api } from '../../services/axios';
 import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder';
 import { PlayerProfileGameResult } from '../../components/PlayerProfileGameResult';
+import { useRouter } from 'next/navigation';
 
 export type JogadorProps = {
   player: PlayerProfile;
@@ -19,6 +20,7 @@ export type JogadorProps = {
 };
 const Jogador = ({ player, rankPosition }: JogadorProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const router = useRouter();
 
   const [currentPlayerProfilePicture, setCurrentPlayerProfilePicture] = useState(
     player.currentPicture || ''
@@ -186,6 +188,7 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
           {games.map((stat) => (
             <div
               key={stat.Game.id}
+              onClick={() => router.push(`/jogos/${stat.gameId}`)}
               className="h-14  space-y-2 w-[95%] max-w-[400px] md:max-w-[700px] mx-auto flex gap-2 flex-col justify-center my-4 cursor-pointer hover:-translate-y-1 transition-all"
             >
               <div className="flex my-2 w-full p-2 hover:bg-base-200 transition-all rounded-md ">
