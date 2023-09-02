@@ -5,6 +5,7 @@ import { setCookie, parseCookies, destroyCookie } from 'nookies';
 
 import { recoverUserData } from '../services/auth';
 import { api } from '../services/axios';
+import { localStorageKeys } from '../config/localStorageKeys';
 import { toast } from 'react-hot-toast';
 type User = {
   email: string;
@@ -38,14 +39,20 @@ const AuthProvider = ({ children }: any) => {
   const isLoggedIn = !!user;
 
   useEffect(() => {
-    const { token } = parseCookies();
+    const token = localStorage.getItem(localStorageKeys.ACCESS_TOKEN);
 
     const getUser = async () => {
-      const data = await recoverUserData();
+      try {
+        console.log('oi');
+        const data = await recoverUserData();
 
-      setUser({
-        email: data.email,
-      });
+        setUser({
+          email: data.email,
+        });
+      } catch (err) {
+        logOut();
+        toast.error('Sua sessao expirou');
+      }
     };
 
     if (token) {
@@ -61,20 +68,22 @@ const AuthProvider = ({ children }: any) => {
         email,
         password,
       });
-      setCookie(undefined, 'token', token, {
-        maxAge: 7 * 24 * 60 * 60, // 7d
-      });
+      localStorage.setItem(localStorageKeys.ACCESS_TOKEN, token);
+
       api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
       setUser(user);
-      await router.push('/dashboard');
-      toast.success('Bem vindo ' + user.email);
+
+      router.push('/dashboard');
+      toast.success('Bem vindo');
     } catch (err: any) {
       throw new Error(err.response.data.message);
     }
   };
   const logOut = () => {
-    destroyCookie(undefined, 'token');
+    localStorage.removeItem(localStorageKeys.ACCESS_TOKEN);
+    setUser(null);
+    router.push('/login');
   };
 
   return (

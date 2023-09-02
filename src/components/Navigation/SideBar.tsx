@@ -31,7 +31,7 @@ export const SideBar = () => {
   ];
   return (
     <aside className="sidebar w-fit h-[50%]  flex flex-col side-bar-fixed side-bar">
-      <ul className="menu bg-base-100 p-2 rounded-box w-fit">
+      <ul className="menu bg-base-100 p-2 rounded-box w-fit space-y-2">
         {menus.map(({ path, icon, title }, index) => {
           return (
             <li key={index}>

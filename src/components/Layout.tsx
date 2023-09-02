@@ -8,12 +8,13 @@ import { AuthContext } from '../contexts/AuthContex';
 import { Footer } from './Footer';
 import { NavBar } from './Navigation/NavBar';
 import { SideBar } from './Navigation/SideBar';
+import { Button } from './Button';
 type LayoutProps = {
   children: React.ReactNode;
 };
 const Layout = ({ children }: LayoutProps) => {
   const { pathname } = useRouter();
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
 
   if (pathname.includes('dashboard')) {
     return (
@@ -30,8 +31,11 @@ const Layout = ({ children }: LayoutProps) => {
                 </Link>
               </div>
               <div className="navbar-center hidden lg:flex"></div>
-              <div className="navbar-end hidden lg:flex">
-                <p>Logado como {user?.email}</p>
+              <div className="navbar-end">
+                {/* <p>Logado como {user?.email}</p> */}
+                <Button onClick={() => logOut()} className="ml-2 btn btn-primary btn-sm">
+                  Sair
+                </Button>
               </div>
             </div>
           </div>

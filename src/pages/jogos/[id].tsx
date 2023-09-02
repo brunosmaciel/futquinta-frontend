@@ -82,11 +82,16 @@ const Jogo = () => {
               />
             </div>
           )}
-
+          <div className=" mt-4 gap-2 w-full flex items-center justify-center">
+            <span className="text-2xl font-bold">
+              Rodada <span className="border-b-2 border-primary">{data.fixture}</span>
+            </span>
+          </div>
           <div className=" mt-4 gap-2 w-full flex items-center justify-center">
             <CalendarIcon size={20} />
             <span>{formatInTimeZone(data.gameDate, 'America/Sao_Paulo', 'dd/MM/yyyy')}</span>
           </div>
+
           <Score greenGoals={data?.greenGoals} whiteGoals={data?.whiteGoals} />
 
           <div className="flex flex-col lg:flex-row mt-4 h-full w-full">

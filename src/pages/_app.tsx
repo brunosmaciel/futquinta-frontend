@@ -1,3 +1,4 @@
+'use client';
 import '../styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,35 +19,37 @@ const fetcher = async (url: string) => {
 };
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AuthProvider>
-      <ChoseTeamContextProvider>
-        <ScoreboardProvider>
-          <SWRConfig
-            value={{
-              fetcher,
-            }}
-          >
-            <Toaster
-              toastOptions={{
-                className: 'text-red-500',
-                style: {
-                  background: '#064e3b',
-                  color: '#fff',
-                },
-                error: {
-                  style: {
-                    background: '#FC222D',
-                  },
-                },
+    <>
+      <Toaster
+        toastOptions={{
+          className: 'text-red-500',
+          style: {
+            background: '#064e3b',
+            color: '#fff',
+          },
+          error: {
+            style: {
+              background: '#FC222D',
+            },
+          },
+        }}
+      />
+      <AuthProvider>
+        <ChoseTeamContextProvider>
+          <ScoreboardProvider>
+            <SWRConfig
+              value={{
+                fetcher,
               }}
-            />
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </SWRConfig>
-        </ScoreboardProvider>
-      </ChoseTeamContextProvider>
-    </AuthProvider>
+            >
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </SWRConfig>
+          </ScoreboardProvider>
+        </ChoseTeamContextProvider>
+      </AuthProvider>
+    </>
   );
 }
 

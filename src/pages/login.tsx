@@ -22,7 +22,7 @@ const Login = () => {
     try {
       setButtonLoading(true);
       await signIn(data);
-      push(`/dashboard/`);
+      push(`/dashboard/jogos`);
     } catch (err: any) {
       toast.error('Credenciais inválidas');
       setButtonLoading(false);
@@ -71,8 +71,8 @@ const Login = () => {
             />
           </label>
           <Button
-            isLoading={false}
-            className={`btn btn-primary flex items-center justify-center mt-4 w-full`}
+            isLoading={isButtonLoading}
+            className={`btn btn-primary flex items-center justify-center mt-4 `}
           >
             Entrar
           </Button>

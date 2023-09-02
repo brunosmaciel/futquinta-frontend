@@ -27,25 +27,6 @@ const Game = () => {
     (notStartedGames?.length || 0) +
     1;
 
-  const router = useRouter();
-
-  const handleCreateGame = async (date: string) => {
-    const gameDate = `${date}T19:15:00`;
-
-    try {
-      setIsLoading('loading');
-
-      const { data } = await api.post<Game>('/games', {
-        gameDate,
-        fixture: 1,
-      });
-
-      router.push(`/dashboard/jogos/${data.id}`);
-    } catch (err: any) {
-      console.log(err.response.data);
-      setIsLoading('not_loading');
-    }
-  };
   if (isLoading) return <LoadingSpin />;
 
   return (

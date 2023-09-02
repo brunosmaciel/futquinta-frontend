@@ -36,9 +36,9 @@ const Jogos = () => {
                     {gamesInProgress.map((game) => (
                       <div className="mx-2 mt-[0.1rem] flex  w-full justify-between" key={game.id}>
                         <div className="flex">
-                          <div className="flex flex-col items-center w-12">
+                          <div className="flex flex-col items-center w-24">
                             <p>{formatInTimeZone(game.gameDate, 'America/Sao_Paulo', 'dd/MM')}</p>
-                            <p>19:15</p>
+                            <p className="text-sm">Rodada {game.fixture}</p>
                           </div>
                           <div className="divider divider-horizontal"></div>
                           <div className="">
@@ -78,9 +78,9 @@ const Jogos = () => {
                       >
                         <div className="mx-2 mt-[0.1rem] flex  w-full justify-between">
                           <div className="flex">
-                            <div className="flex flex-col items-center w-12">
+                            <div className="flex flex-col items-center w-24">
                               <p>{formatInTimeZone(game.gameDate, 'America/Sao_Paulo', 'dd/MM')}</p>
-                              <p>19:15</p>
+                              <p className="text-sm">Rodada {game.fixture}</p>
                             </div>
                             <div className="divider divider-horizontal"></div>
                             <div className="">
