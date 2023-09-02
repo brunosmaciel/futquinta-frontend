@@ -1,6 +1,6 @@
 import { ReactNode, useContext, useEffect, useRef } from 'react';
 
-import { MedalIcon, ShirtIcon } from 'lucide-react';
+import { HomeIcon, MedalIcon, ShirtIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -125,6 +125,11 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
           <li className="text-lg mt-2">
             <Link href={`/rankings`}>
               <MedalIcon size={20} /> Rankings
+            </Link>
+          </li>
+          <li className="text-lg mt-2 fixed bottom-5">
+            <Link href={`/`}>
+              <HomeIcon size={20} /> Inicio
             </Link>
           </li>
         </ul>
