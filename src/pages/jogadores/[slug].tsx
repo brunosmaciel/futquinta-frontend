@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { getPlayerGameResult } from '../../utils/getPlayerGameResult';
 import { formatInTimeZone } from 'date-fns-tz';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
@@ -11,6 +11,7 @@ import { PlayerProfileImage } from '../../components/PlayerProfileImage';
 import { getPlayerStats } from '../../functions/getPlayerStats';
 import { api } from '../../services/axios';
 import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder';
+import { PlayerProfileGameResult } from '../../components/PlayerProfileGameResult';
 
 export type JogadorProps = {
   player: PlayerProfile;
@@ -200,7 +201,10 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
                     <p className="text-white">{stat.Game.whiteGoals}</p>
                   </div>
                 </div>
-                <div className=" justify-end flex items-end text-sm ml-auto">
+                <div className=" justify-end flex flex-col items-start gap-2 text-sm ml-auto">
+                  <PlayerProfileGameResult
+                    result={getPlayerGameResult(stat.currentTeam, stat.Game.winnerTeam)}
+                  />
                   <Link href={`/jogos/${stat.Game.id}`} className="link">
                     Ver mais
                   </Link>
