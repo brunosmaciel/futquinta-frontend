@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 
 import { AuthContext } from '../../contexts/AuthContex';
 import BallIcon from '../ui/BallIcon';
+import Logo from '../ui/Logo';
 
 export const NavBar = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
@@ -52,7 +53,8 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
           </div>
           <div className="flex-1 px-2 mx-2">
             <Link className="btn btn-ghost normal-case text-xl " href={'/'}>
-              FutQuinta <span className="logo">Score</span>
+              <Logo className="h-10 w-10" />
+              FutQuinta
             </Link>
           </div>
           <div className="flex-none hidden lg:block">
@@ -92,8 +94,10 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
         <ul className="menu p-4 w-80 min-h-full bg-base-200">
           <div className=" flex items-center gap-2">
             <Link className="btn btn-ghost normal-case text-xl " href={'/'}>
-              FutQuinta <span className="logo">Score</span>
+              <Logo className="h-10 w-10" />
+              FutQuinta
             </Link>
+
             {isLoggedIn ? (
               <div className="navbar-end mr-2">
                 <Link href={'/dashboard'} className="btn btn-outline btn-sm">

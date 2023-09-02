@@ -39,7 +39,10 @@ const HomeComponent = ({ players, games, generalRankPlayers }: HomeProps) => {
         </Link>
       </div>
       <div className="divider"></div>
-      <Ranking players={generalRankPlayers} />
+      <div className="">
+        <h2 className="font-bold text-lg text-center md:text-start">Principais pontuadores</h2>
+        <Ranking players={generalRankPlayers} />
+      </div>
     </main>
   );
 };

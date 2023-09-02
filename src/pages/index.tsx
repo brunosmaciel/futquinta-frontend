@@ -26,7 +26,7 @@ export const getStaticProps: GetStaticProps = async () => {
     3
   );
   const games = promises[1].slice(0, 3);
-  const generalRankPlayers = promises[2].slice(0, 4);
+  const generalRankPlayers = promises[2].slice(0, 5);
 
   return {
     props: {

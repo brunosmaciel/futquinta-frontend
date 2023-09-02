@@ -9,6 +9,7 @@ import { Footer } from './Footer';
 import { NavBar } from './Navigation/NavBar';
 import { SideBar } from './Navigation/SideBar';
 import { Button } from './Button';
+import Logo from './ui/Logo';
 type LayoutProps = {
   children: React.ReactNode;
 };
@@ -27,7 +28,8 @@ const Layout = ({ children }: LayoutProps) => {
             <div className="navbar bg-base-100 px-0 ">
               <div className="navbar-start">
                 <Link className="btn btn-ghost normal-case text-xl " href={'/'}>
-                  FutQuinta <span className="logo">Score</span>
+                  <Logo className="h-10 w-10" />
+                  FutQuinta
                 </Link>
               </div>
               <div className="navbar-center hidden lg:flex"></div>
