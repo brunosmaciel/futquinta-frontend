@@ -178,20 +178,23 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
           </div>
         </div>
         <div className="divider"></div>
-        <div className="w-[95%]">
+        <div className="w-[95%] max-w-[400px] md:max-w-[700px] mx-auto">
           <div className="w-[95%] mx-auto text-lg font-bold mb-4 flex justify-center ">
             <h2>Jogos</h2>
           </div>
 
           {games.map((stat) => (
-            <div key={stat.Game.id} className="">
-              <div className="flex my-2  p-[3px] w-[85%] max-w-[310px] md:max-w-[700px] mx-auto">
-                <div className="flex flex-col items-center w-12">
+            <div
+              key={stat.Game.id}
+              className="h-14  space-y-2 w-[95%] max-w-[400px] md:max-w-[700px] mx-auto flex gap-2 flex-col justify-center my-4 cursor-pointer hover:-translate-y-1 transition-all"
+            >
+              <div className="flex my-2 w-full p-2 hover:bg-base-200 transition-all rounded-md ">
+                <div className="flex flex-col items-center w-24">
                   <p>{formatInTimeZone(stat.Game.gameDate, 'America/Sao_Paulo', 'dd/MM')}</p>
-                  <p>19:15</p>
+                  <p className="text-sm">Rodada {stat.Game.fixture}</p>
                 </div>
                 <div className="divider divider-horizontal"></div>
-                <div className="">
+                <div className="flex-1">
                   <div className="flex justify-between w-20">
                     <p className="text-white">Verde </p>
                     <p className="text-white">{stat.Game.greenGoals}</p>
@@ -201,13 +204,10 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
                     <p className="text-white">{stat.Game.whiteGoals}</p>
                   </div>
                 </div>
-                <div className=" justify-end flex flex-col items-start gap-2 text-sm ml-auto">
+                <div className=" h-full flex items-center justify-center">
                   <PlayerProfileGameResult
                     result={getPlayerGameResult(stat.currentTeam, stat.Game.winnerTeam)}
                   />
-                  <Link href={`/jogos/${stat.Game.id}`} className="link">
-                    Ver mais
-                  </Link>
                 </div>
               </div>
             </div>
