@@ -18,7 +18,7 @@ interface ICreateGameModalProps {
 const createGameSchema = z.object({
   date: z.string().transform((value) => `${value}T19:15:00`),
   fixture: z
-    .number({
+    .string({
       required_error: 'Uma rodada deve ser informada',
     })
     .transform((value) => +value),
@@ -31,7 +31,7 @@ export function CreateGameModal({ nextFixture }: ICreateGameModalProps) {
   const { handleSubmit, formState, register } = useForm<CreateGameSchema>({
     resolver: zodResolver(createGameSchema),
     defaultValues: {
-      fixture: +nextFixture,
+      fixture: nextFixture,
     },
   });
   const createGameModal = useRef<HTMLDialogElement>(null);
@@ -102,7 +102,7 @@ export function CreateGameModal({ nextFixture }: ICreateGameModalProps) {
             </div>
             <div className="form-control w-full ">
               <label className="label">
-                <span className="label-text">Camiseta</span>
+                <span className="label-text">Rodada</span>
               </label>
               <input
                 defaultValue={nextFixture}

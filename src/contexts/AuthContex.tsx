@@ -51,7 +51,7 @@ const AuthProvider = ({ children }: any) => {
         });
       } catch (err) {
         logOut();
-        toast.error('Sua sessao expirou');
+        // toast.error('Sua sessao expirou');
       }
     };
 

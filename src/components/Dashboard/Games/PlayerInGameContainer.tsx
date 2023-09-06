@@ -1,6 +1,15 @@
 import { toast } from 'react-toastify';
 
-import { MinusIcon, MoreHorizontal, PlusIcon, Trash2Icon } from 'lucide-react';
+import {
+  Minus,
+  MinusIcon,
+  MoreHorizontal,
+  Plus,
+  PlusIcon,
+  ShirtIcon,
+  Trash,
+  Trash2Icon,
+} from 'lucide-react';
 import { mutate } from 'swr';
 
 import { PlayerStats } from '../../../..';
@@ -11,13 +20,13 @@ import { Button } from '../../Button';
 type PlayerInGameContainerProps = {
   playerStats: PlayerStats;
 };
-export const PlayerInGameContainer = ({ playerStats }: PlayerInGameContainerProps) => {
+export const PlayerInGameContainer = ({ playerStats: player }: PlayerInGameContainerProps) => {
   const { setButtonLoading, isButtonLoading } = useButtonLoading();
   const handleRemovePlayer = async () => {
     try {
-      await api.delete(`/stats/${playerStats.id}`);
-      mutate(`/games/${playerStats.gameId}`);
-      toast.success(`Jogador ${playerStats.name} removido com sucesso`, { autoClose: 1000 });
+      await api.delete(`/stats/${player.id}`);
+      mutate(`/games/${player.gameId}`);
+      toast.success(`Jogador ${player.name} removido com sucesso`, { autoClose: 1000 });
     } catch (err: any) {
       toast.error('Algum erro qualquer');
     }
@@ -26,13 +35,13 @@ export const PlayerInGameContainer = ({ playerStats }: PlayerInGameContainerProp
     setButtonLoading(true);
     try {
       await Promise.all([
-        await api(`/stats/goals/increment/${playerStats.id}`),
-        await api.put(`/games/goals/increment/${playerStats.gameId}`, {
-          team: playerStats.currentTeam,
+        await api(`/stats/goals/increment/${player.id}`),
+        await api.put(`/games/goals/increment/${player.gameId}`, {
+          team: player.currentTeam,
         }),
       ]);
 
-      await mutate(`/games/${playerStats.gameId}`);
+      await mutate(`/games/${player.gameId}`);
       setButtonLoading(false);
     } catch (err: any) {
       toast.error('Internal Server Error');
@@ -40,17 +49,17 @@ export const PlayerInGameContainer = ({ playerStats }: PlayerInGameContainerProp
     }
   };
   const handleDecrementGoals = async () => {
-    if (playerStats.goals === 0) return;
+    if (player.goals === 0) return;
     setButtonLoading(true);
     try {
       await Promise.all([
-        await api(`/stats/goals/decrement/${playerStats.id}`),
-        await api.put(`/games/goals/decrement/${playerStats.gameId}`, {
-          team: playerStats.currentTeam,
+        await api(`/stats/goals/decrement/${player.id}`),
+        await api.put(`/games/goals/decrement/${player.gameId}`, {
+          team: player.currentTeam,
         }),
       ]);
 
-      await mutate(`/games/${playerStats.gameId}`);
+      await mutate(`/games/${player.gameId}`);
       setButtonLoading(false);
     } catch (err: any) {
       toast.error('Internal Server Error');
@@ -58,65 +67,36 @@ export const PlayerInGameContainer = ({ playerStats }: PlayerInGameContainerProp
     }
   };
   const currentTeamColorClassname =
-    playerStats.currentTeam === 'GREEN' ? 'border-b-primary' : 'border-b-secondary';
+    player.currentTeam === 'GREEN' ? 'border-b-primary' : 'border-b-secondary';
   return (
     <>
-      <div className={cn('mt-2 border-b-2  p-4 flex h-fit', currentTeamColorClassname)}>
-        <div className="flex flex-col justify-between flex-1">
-          <span className="cursor-pointer w-fit tooltip">
-            <div className="dropdown">
-              <label tabIndex={0} className="cursor-pointer">
-                <MoreHorizontal />
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-300 rounded-box w-52"
-              >
-                <li className="">
-                  <a onClick={handleRemovePlayer}>
-                    <Trash2Icon size={14} className="cursor-pointer tooltip" />
-                    <span className="text-[14px]">Apagar</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
+      <div className={cn('mt-2 border-b-2  p-4 flex h-fit  gap-2 ', currentTeamColorClassname)}>
+        <div className=" flex items-center gap-2 h-10">
+          <span className="flex items-center gap-2">
+            <ShirtIcon
+              className={cn(player.currentTeam === 'WHITE' ? 'text-white' : 'text-primary')}
+            />
+            {player.player.shirtNumber}
           </span>
-          <h1 className="font-bold w-fit ">{playerStats.name}</h1>
+          <p className="font-bold">{player.name}</p>
         </div>
-        <div className="flex items-center justify-end gap-2 w-fit">
-          <div>
-            {isButtonLoading ? (
-              <div className="max-w-[96px]">
-                <Button
-                  isLoading={isButtonLoading}
-                  className={`btn btn-ghost btn-circle `}
-                  onClick={handleIncrementGoals}
-                ></Button>
-              </div>
-            ) : (
-              <>
-                <Button
-                  isLoading={isButtonLoading}
-                  className={`btn btn-ghost btn-circle `}
-                  onClick={handleIncrementGoals}
-                >
-                  <PlusIcon />
-                </Button>
-                <Button
-                  isLoading={isButtonLoading}
-                  className={`btn btn-ghost btn-circle `}
-                  onClick={handleDecrementGoals}
-                >
-                  <MinusIcon />
-                </Button>
-              </>
-            )}
-          </div>
-          <div className="stats shadow bg-base-200/50">
-            <div className="stat">
-              <div className="stat-title text-sm">Gols</div>
-              <div className="stat-value text-center text-lg">{playerStats.goals}</div>
+
+        <div className=" flex-1 flex items-center">
+          <div className="flex-1 flex gap-2 items-center justify-center">
+            <button onClick={handleIncrementGoals}>
+              <Plus />
+            </button>
+            <div className="flex flex-col justify-between items-center">
+              <span className="text-lg font-bold">{player.goals}</span>
             </div>
+            <button onClick={handleDecrementGoals}>
+              <Minus />
+            </button>
+          </div>
+          <div>
+            <button onClick={handleRemovePlayer} className="hover:scale-[1.1] transition-all">
+              <Trash />
+            </button>
           </div>
         </div>
       </div>

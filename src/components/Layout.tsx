@@ -34,7 +34,7 @@ const Layout = ({ children }: LayoutProps) => {
               </div>
               <div className="navbar-center hidden lg:flex"></div>
               <div className="navbar-end">
-                {/* <p>Logado como {user?.email}</p> */}
+                <p className="text-sm hidden md:block">{user?.email}</p>
                 <Button onClick={() => logOut()} className="ml-2 btn btn-primary btn-sm">
                   Sair
                 </Button>

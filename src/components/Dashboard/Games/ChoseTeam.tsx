@@ -52,8 +52,8 @@ export const ChoseTeam = memo(({ player, team }: ChoseTeamProps) => {
     >
       <h1>{player.name}</h1>
       <div className="flex items-center flex-1">
-        <form className="flex justify-end gap-2 w-full">
-          <div className="flex gap-[1px] ">
+        <form className="flex justify-end gap-4 w-full">
+          <div className="flex gap-1 ">
             <input
               type="radio"
               value="GOALKEEPER"
@@ -61,9 +61,9 @@ export const ChoseTeam = memo(({ player, team }: ChoseTeamProps) => {
               defaultChecked={player.function === 'GOALKEEPER' ? true : false}
               {...register('playerFunction')}
             />
-            <label htmlFor="">Goleiro</label>
+            <label htmlFor="">G</label>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center gap-1">
             <input
               type="radio"
               value="OUTFIELDPLAYER"
@@ -71,7 +71,7 @@ export const ChoseTeam = memo(({ player, team }: ChoseTeamProps) => {
               defaultChecked={player.function === 'OUTFIELDPLAYER' ? true : false}
               {...register('playerFunction')}
             />
-            <label htmlFor="">Linha</label>
+            <label htmlFor="">L</label>
           </div>
         </form>
         <button
