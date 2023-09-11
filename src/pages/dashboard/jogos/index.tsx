@@ -61,21 +61,5 @@ const Game = () => {
     </main>
   );
 };
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { token } = parseCookies(ctx);
-
-  if (!token) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-};
 
 export default Game;

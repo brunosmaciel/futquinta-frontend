@@ -116,24 +116,5 @@ const Dashboard = () => {
     </div>
   );
 };
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { token } = parseCookies(ctx);
-
-  if (!token) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    redirect: {
-      destination: '/dashboard/jogos',
-      permanent: false,
-    },
-  };
-};
 
 export default Dashboard;
