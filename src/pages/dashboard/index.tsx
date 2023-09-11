@@ -116,5 +116,13 @@ const Dashboard = () => {
     </div>
   );
 };
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  return {
+    redirect: {
+      destination: '/dashboard/jogos',
+      permanent: false,
+    },
+  };
+};
 
 export default Dashboard;
