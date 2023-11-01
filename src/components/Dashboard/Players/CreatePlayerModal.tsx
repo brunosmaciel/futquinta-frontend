@@ -14,6 +14,7 @@ type Inputs = {
   guest: boolean;
   color: string;
   number: string;
+  playerFunction: 'OUTFIELDPLAYER' | 'GOALKEEPER';
 };
 
 export const CreatePlayerModal = () => {
@@ -21,7 +22,9 @@ export const CreatePlayerModal = () => {
   const { register, handleSubmit, formState } = useForm<Inputs>();
   const { isButtonLoading, setButtonLoading } = useButtonLoading();
 
-  const onSubmit: SubmitHandler<Inputs> = async ({ guest, name, number }) => {
+  const onSubmit: SubmitHandler<Inputs> = async ({ guest, name, number, playerFunction }) => {
+    console.log({ playerFunction });
+    return;
     setButtonLoading(true);
     const data = {
       name,
@@ -98,6 +101,18 @@ export const CreatePlayerModal = () => {
                   pattern="[0-9]*"
                   inputMode="numeric"
                 />
+              </div>
+              <div className="form-control w-full ">
+                <label className="label">
+                  <span className="label-text">Posição</span>
+                </label>
+                <select
+                  {...register('playerFunction')}
+                  className="select select-bordered w-full max-w-xs"
+                >
+                  <option value={'OUTFIELDPLAYER'}>Linha</option>
+                  <option value={'GOALKEEPER'}>Goleiro</option>
+                </select>
               </div>
 
               <Button isLoading={isButtonLoading} className="w-full mt-6 btn btn-primary">

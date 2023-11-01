@@ -7,6 +7,7 @@ export type GeneralPlacingProps = {
   players: PlayerProfile[];
 };
 const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
+  const thirtyPerCentGame = 17;
   const playerStats = players
     .map((player) => {
       const stats = getGoalKeeperStats(player);
@@ -14,10 +15,10 @@ const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
       return {
         name: player.name,
         slug: player.slug,
-
         ...stats,
       };
     })
+
     .sort((a, b) => {
       return a.goalsConceded / a.totalGames < b.goalsConceded / b.totalGames ? -1 : 1;
     })
@@ -28,7 +29,20 @@ const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
       )
         return -1;
       return 1;
-    });
+    })
+    .sort((a, b) => {
+      if (
+        a.goalsConceded / a.totalGames === b.goalsConceded / b.totalGames &&
+        a.totalGames > b.totalGames
+      )
+        return -1;
+      return 1;
+    })
+    .filter((player) => player.name !== 'Convidados');
+
+  const goalkeepers1 = playerStats.filter((player) => player.totalGames >= 17);
+  const goalkeepers2 = playerStats.filter((player) => player.totalGames < 17);
+  const goalkeepers = [...goalkeepers1, ...goalkeepers2];
   return (
     <div className="h-screen">
       <div className="h-[44px] justify-between mx-1 my-4 text-[12px] font-light italic flex  lg:justify-normal lg:gap-10 ">
@@ -53,10 +67,10 @@ const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
             </thead>
             <tbody>
               {/* row 1 */}
-              {playerStats.map(({ slug, name, goalsConceded, totalGames }, i) => (
+              {goalkeepers.map(({ slug, name, goalsConceded, totalGames }, i) => (
                 <tr
                   key={slug}
-                  data-willbeawarded={i + 1 <= 1}
+                  data-willbeawarded={i + 1 === 1}
                   className=" border-l-4  gap-2 transition-all hover data-[willbeawarded=true]:border-l-green-500 border-transparent "
                 >
                   <th className="w-16">{i + 1} °</th>
