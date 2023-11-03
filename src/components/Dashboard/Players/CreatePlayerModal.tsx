@@ -15,6 +15,7 @@ type Inputs = {
   color: string;
   number: string;
   playerFunction: 'OUTFIELDPLAYER' | 'GOALKEEPER';
+  isGuest: boolean;
 };
 
 export const CreatePlayerModal = () => {
@@ -22,9 +23,9 @@ export const CreatePlayerModal = () => {
   const { register, handleSubmit, formState } = useForm<Inputs>();
   const { isButtonLoading, setButtonLoading } = useButtonLoading();
 
-  const onSubmit: SubmitHandler<Inputs> = async ({ guest, name, number, playerFunction }) => {
-    console.log({ playerFunction });
-    return;
+  const onSubmit: SubmitHandler<Inputs> = async (formData) => {
+    const { guest, name, number, playerFunction } = formData;
+
     setButtonLoading(true);
     const data = {
       name,
@@ -46,7 +47,7 @@ export const CreatePlayerModal = () => {
   return (
     <>
       <div
-        className="tooltip  tooltip-left fixed bottom-4 right-4 tooltip-secondary"
+        className="tooltip z-50 tooltip-left fixed bottom-4 right-4 tooltip-secondary"
         data-tip="Criar jogador"
       >
         <label
