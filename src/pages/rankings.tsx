@@ -8,6 +8,7 @@ import { GeneralRanking } from '../components/Rankings/GeneralRanking';
 import { GoalkeepersRankings } from '../components/Rankings/GoalkeepersRanking';
 import { MOTMRanking } from '../components/Rankings/MOTMRanking';
 import { TopScorersRanking } from '../components/Rankings/TopScorerRanking';
+import { RecordRanking } from '../components/Rankings/RecordRanking';
 
 const Rankings = () => {
   const { data: players, isLoading } = useSWR<PlayerProfile[]>('/players');
@@ -39,6 +40,9 @@ const Rankings = () => {
             Artilharia
           </a>
           <a className="tab tab-lifted" onClick={handleTabChange}>
+            Aproveitamento
+          </a>
+          <a className="tab tab-lifted" onClick={handleTabChange}>
             Goleiros
           </a>
           <a className="tab tab-lifted" onClick={handleTabChange}>
@@ -47,7 +51,8 @@ const Rankings = () => {
         </div>
         {tab === 1 && <GeneralRanking players={players} />}
         {tab === 2 && <TopScorersRanking players={players} />}
-        {tab === 3 && <GoalkeepersRankings players={goalkeepers} />}
+        {tab === 3 && <RecordRanking />}
+        {tab === 4 && <GoalkeepersRankings players={goalkeepers} />}
         {tab === 4 && <MOTMRanking players={players} />}
       </>
     );
