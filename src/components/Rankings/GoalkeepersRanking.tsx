@@ -7,7 +7,6 @@ export type GeneralPlacingProps = {
   players: PlayerProfile[];
 };
 const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
-  const thirtyPerCentGame = 17;
   const playerStats = players
     .map((player) => {
       const stats = getGoalKeeperStats(player);
@@ -38,11 +37,13 @@ const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
         return -1;
       return 1;
     })
-    .filter((player) => player.name !== 'Convidados');
+    .filter((player) => player.name !== 'Convidados')
+    .filter((player) => player.averageGoalsPerGame > 0);
 
   const goalkeepers1 = playerStats.filter((player) => player.totalGames >= 17);
   const goalkeepers2 = playerStats.filter((player) => player.totalGames < 17);
   const goalkeepers = [...goalkeepers1, ...goalkeepers2];
+
   return (
     <div className="h-screen">
       <div className="h-[44px] justify-between mx-1 my-4 text-[12px] font-light italic flex  lg:justify-normal lg:gap-10 ">
@@ -67,23 +68,25 @@ const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
             </thead>
             <tbody>
               {/* row 1 */}
-              {goalkeepers.map(({ slug, name, goalsConceded, totalGames }, i) => (
-                <tr
-                  key={slug}
-                  data-willbeawarded={i + 1 === 1}
-                  className=" border-l-4  gap-2 transition-all hover data-[willbeawarded=true]:border-l-green-500 border-transparent "
-                >
-                  <th className="w-16">{i + 1} °</th>
-                  <td>
-                    <Link href={`/jogadores/${slug}`} className="cursor-pointer">
-                      {name}
-                    </Link>
-                  </td>
-                  <td>{(goalsConceded / totalGames).toFixed(2).replace('.', ',')}</td>
-                  <td>{totalGames}</td>
-                  <td>{goalsConceded}</td>
-                </tr>
-              ))}
+              {goalkeepers.map(
+                ({ slug, name, goalsConceded, totalGames, averageGoalsPerGame }, i) => (
+                  <tr
+                    key={slug}
+                    data-willbeawarded={i + 1 === 1}
+                    className=" border-l-4  gap-2 transition-all hover data-[willbeawarded=true]:border-l-green-500 border-transparent "
+                  >
+                    <th className="w-16">{i + 1} °</th>
+                    <td>
+                      <Link href={`/jogadores/${slug}`} className="cursor-pointer">
+                        {name}
+                      </Link>
+                    </td>
+                    <td>{averageGoalsPerGame}</td>
+                    <td>{totalGames}</td>
+                    <td>{goalsConceded}</td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
         )}

@@ -16,6 +16,7 @@ export interface OutfieldProfileStats {
   totalGames: number;
   substitutionPerGame?: number;
   mostTeamPlayed?: number;
+  averageGoalsPerGame: number;
 }
 
 export function getGoalKeeperStats(player: PlayerProfile): OutfieldProfileStats {
@@ -62,10 +63,12 @@ export function getGoalKeeperStats(player: PlayerProfile): OutfieldProfileStats 
 
   const goalsConceded = goalsConcededOnGreenTeam + goalsConcededOnWhiteTeam;
 
+  const averageGoalsPerGame = goalsConceded / totalGames || 0.0;
   if (playerFunction === 'GOALKEEPER') {
     return {
       goals,
-      goalsConceded,
+      goalsConceded: goalsConceded || 0.0,
+      averageGoalsPerGame,
       assists,
       substitutions,
       victories,
@@ -81,6 +84,7 @@ export function getGoalKeeperStats(player: PlayerProfile): OutfieldProfileStats 
   return {
     goals,
     goalsConceded: 0,
+    averageGoalsPerGame,
     assists,
     substitutions,
     victories,

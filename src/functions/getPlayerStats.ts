@@ -43,9 +43,9 @@ export function getPlayerStats(player: PlayerProfile): OutfieldProfileStats {
 
   const points = victories * 3 + draws * 1;
 
-  const goalsPerGame = goals / totalGames;
+  const goalsPerGame = goals / totalGames || 0.0;
 
-  const gamesRecord = getGamesRecord(totalGames, victories, draws);
+  const gamesRecord = getGamesRecord(totalGames, victories, draws) || 0.0;
 
   const mvp = player.MOTM.length;
 

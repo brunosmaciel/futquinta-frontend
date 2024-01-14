@@ -12,6 +12,7 @@ export function getGeneralRanking(players: PlayerProfile[]) {
         name,
         slug,
         ...stats,
+        gamesRecord: stats.gamesRecord || 0.0,
       };
     })
     .sort((a, b) => (a.points > b.points ? -1 : 1))
