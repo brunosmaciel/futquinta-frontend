@@ -23,10 +23,11 @@ const MOTMRanking = ({ players }: GeneralPlacingProps) => {
       if (a.mvp === b.mvp && a.totalGames < b.totalGames) return -1;
 
       return 1;
-    });
+    })
+    .filter((player) => player.mvp > 0);
 
   return (
-    <>
+    <div className="h-full w-full">
       <div className="justify-between mx-1 my-4 text-[12px] font-light italic flex  lg:justify-normal lg:gap-10 ">
         <div className="h-[44px] invisible flex flex-col gap-2"></div>
       </div>
@@ -38,7 +39,7 @@ const MOTMRanking = ({ players }: GeneralPlacingProps) => {
               <tr className="border-none">
                 <th></th>
                 <th>Atleta</th>
-                <th>Pontos</th>
+                <th>Votos</th>
                 <th>Jogos</th>
               </tr>
             </thead>
@@ -64,7 +65,7 @@ const MOTMRanking = ({ players }: GeneralPlacingProps) => {
           </table>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

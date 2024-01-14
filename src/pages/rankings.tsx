@@ -53,7 +53,7 @@ const Rankings = () => {
         {tab === 2 && <TopScorersRanking players={players} />}
         {tab === 3 && <RecordRanking />}
         {tab === 4 && <GoalkeepersRankings players={goalkeepers} />}
-        {tab === 4 && <MOTMRanking players={players} />}
+        {tab === 5 && <MOTMRanking players={players} />}
       </>
     );
   }
