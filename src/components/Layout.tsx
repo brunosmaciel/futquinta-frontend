@@ -21,7 +21,7 @@ const Layout = ({ children }: LayoutProps) => {
     return (
       <>
         <Head>
-          <title>FutQuinta - Admin</title>
+          <title>FUTQUINTA - Admin</title>
         </Head>
         <main className="container-grid dashboard-h">
           <div className="logo container mx-auto ">
@@ -29,7 +29,7 @@ const Layout = ({ children }: LayoutProps) => {
               <div className="navbar-start">
                 <Link className="btn btn-ghost normal-case text-xl " href={'/'}>
                   <Logo className="h-10 w-10" />
-                  FutQuinta
+                  FUTQUINTA
                 </Link>
               </div>
               <div className="navbar-center hidden lg:flex"></div>
@@ -53,7 +53,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Head>
-        <title>FutQuintaScore</title>
+        <title>FUTQUINTA</title>
       </Head>
       <NavBar>
         <main className="container mx-auto min-h-screen flex flex-col justify-between main-container-height">

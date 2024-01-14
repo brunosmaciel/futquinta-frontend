@@ -134,6 +134,15 @@ export type GetTopScorersType = {
   mostTeamPlayed?: number;
 };
 
+type RecordRankingType = {
+  id: number;
+  name: string;
+  slug: string;
+  record: number;
+  games: string;
+  picture: string;
+};
+
 /**
  * Enums
  */

@@ -1,49 +1,72 @@
+import { PlayerProfile, Game, GeneralRankingAPIType, RecordRankingType } from '../../..';
+import Image from 'next/image';
+import { CalendarIcon } from 'lucide-react';
+import { formatInTimeZone } from 'date-fns-tz';
+import { ShieldIcon } from '../ShieldIcon';
+import { useRouter } from 'next/router';
+import { GeneralRanking } from './GeneralRanking';
+import { RecordRanking } from './RecordRanking';
 import Link from 'next/link';
-
-import { PlayerProfile, Game, GeneralRankingAPIType } from '../../..';
-import { GameContainer } from './GameContainer';
-import { PlayerContainer } from './PlayerContainer';
-import { Ranking } from './Ranking';
-
 type HomeProps = {
-  players: PlayerProfile[];
+  recordRanking: RecordRankingType[];
   games: Game[];
   generalRankPlayers: GeneralRankingAPIType[];
 };
-const HomeComponent = ({ players, games, generalRankPlayers }: HomeProps) => {
+const HomeComponent = ({ games, generalRankPlayers, recordRanking }: HomeProps) => {
+  const { push } = useRouter();
   return (
-    <main className="container-height mx-2  gap-2">
-      <div className="flex flex-col items-center md:items-start gap-6">
-        <h2 className="font-bold text-lg">Ultimas partidas</h2>
-        <div className="flex flex-wrap justify-center gap-2 ">
-          {games.map((game) => (
-            <GameContainer key={game.id} game={game} />
-          ))}
+    <div className="container  h-full flex flex-col items-center">
+      {/* last game photo and result */}
+      <div
+        onClick={() => push(`/jogos/${games[0].id}`)}
+        className="relative flex items-center justify-center m-3 overflow-hidden shadow-xl  max-w-lg w-[95%] h-40 md:h-60 rounded-2xl"
+      >
+        <div
+          style={{
+            backgroundImage: `url(${games[0].gamePicture || ''})`,
+          }}
+          className="w-full max-w-lg my-2 cursor-pointer h-60 hover:scale-[1.1] absolute  bg-center bg-cover rounded-2xl transition-all duration-500 ease-in-out"
+        ></div>
+      </div>
+      <div className="mt-4">
+        <span className="flex items-center gap-2">
+          <CalendarIcon />
+          <span>{formatInTimeZone(games[0].gameDate, 'America/Sao_Paulo', 'dd/MM/yyyy')}</span>
+        </span>
+      </div>
+      <div className="flex gap-4 text-lg mt-2 items-center text-secondary">
+        <div className="space-x-2 flex items-center">
+          <ShieldIcon className="w-16 h-16" />
+          <p className="text-3xl">{games[0].whiteGoals}</p>
         </div>
         <div>
-          <Link className="link" href={`/jogos`}>
-            Ver todos os jogos
-          </Link>
+          <span>x</span>
+        </div>
+        <div className="gap-2 flex items-center text-primary flex-row-reverse">
+          <ShieldIcon className="w-16 h-16" />
+          <p className="text-white text-3xl font-bold">{games[0].greenGoals}</p>
         </div>
       </div>
+      <Link href={`/jogos/${games[0].id}`} className="link mt-4">
+        Ver jogo completo
+      </Link>
+
       <div className="divider"></div>
-      <div className="flex flex-col items-center md:items-start">
-        <h2 className="font-bold text-lg">Principais jogadores</h2>
-        <div className="flex flex-wrap gap-2 justify-center my-4">
-          {players.map((player) => (
-            <PlayerContainer key={player.id} player={player} />
-          ))}
+
+      <div className="flex flex-col w-full justify-center ">
+        <h1 className="font-bold text-xl border-b-2 pb-1 w-fit self-center">Resumo da temporada</h1>
+        <div className="flex flex-col   lg:flex-row w-full  gap-4 mt-6">
+          <div className="w-full lg:w-1/2  ">
+            <h3 className="text-center">Melhores pontuadores</h3>
+            <GeneralRanking players={generalRankPlayers} />
+          </div>
+          <div className="w-full lg:w-1/2 ">
+            <h3 className="text-center">Melhores aproveitamentos</h3>
+            <RecordRanking players={recordRanking} />
+          </div>
         </div>
-        <Link className="link" href={`/jogadores`}>
-          Ver todos os jogadores
-        </Link>
       </div>
-      <div className="divider"></div>
-      <div className="">
-        <h2 className="font-bold text-lg text-center md:text-start">Principais pontuadores</h2>
-        <Ranking players={generalRankPlayers} />
-      </div>
-    </main>
+    </div>
   );
 };
 
