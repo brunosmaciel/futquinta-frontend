@@ -22,7 +22,7 @@ const GeneralRanking = ({ players }: Props) => {
         <tbody>
           {players.map((player) => {
             return (
-              <tr>
+              <tr key={player.name}>
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="avatar">

@@ -21,7 +21,7 @@ const RecordRanking = ({ players }: Props) => {
         <tbody>
           {players.map((player) => {
             return (
-              <tr>
+              <tr key={player.id}>
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="avatar">
