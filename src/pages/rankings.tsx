@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 
 import useSWR from 'swr';
 
-import { PlayerProfile } from '../..';
+import { Game, PlayerProfile } from '../..';
 import { LoadingSpin } from '../components/Loading';
 import { GeneralRanking } from '../components/Rankings/GeneralRanking';
 import { GoalkeepersRankings } from '../components/Rankings/GoalkeepersRanking';
@@ -12,6 +12,8 @@ import { RecordRanking } from '../components/Rankings/RecordRanking';
 
 const Rankings = () => {
   const { data: players, isLoading } = useSWR<PlayerProfile[]>('/players');
+  const { data: games } = useSWR<Game[]>('/games');
+  const totalNumberOfGames = games?.length;
   const [tab, setTab] = useState<number>(1);
   const tabsDiv = useRef<HTMLDivElement | null>(null);
 
@@ -52,7 +54,9 @@ const Rankings = () => {
         {tab === 1 && <GeneralRanking players={players} />}
         {tab === 2 && <TopScorersRanking players={players} />}
         {tab === 3 && <RecordRanking />}
-        {tab === 4 && <GoalkeepersRankings players={goalkeepers} />}
+        {tab === 4 && (
+          <GoalkeepersRankings numberOfGames={totalNumberOfGames || 0} players={goalkeepers} />
+        )}
         {tab === 5 && <MOTMRanking players={players} />}
       </>
     );

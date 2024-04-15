@@ -5,8 +5,11 @@ import { getGoalKeeperStats } from '../../functions/getGoalkeeperRank';
 
 export type GeneralPlacingProps = {
   players: PlayerProfile[];
+  numberOfGames: number;
 };
-const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
+const GoalkeepersRankings = ({ players, numberOfGames }: GeneralPlacingProps) => {
+  const gamesFilter = Math.ceil(numberOfGames * (40 / 100));
+
   const playerStats = players
     .map((player) => {
       const stats = getGoalKeeperStats(player);
@@ -39,9 +42,8 @@ const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
     })
     .filter((player) => player.name !== 'Convidados')
     .filter((player) => player.averageGoalsPerGame > 0);
-
-  const goalkeepers1 = playerStats.filter((player) => player.totalGames >= 17);
-  const goalkeepers2 = playerStats.filter((player) => player.totalGames < 17);
+  const goalkeepers1 = playerStats.filter((player) => player.totalGames >= gamesFilter);
+  const goalkeepers2 = playerStats.filter((player) => player.totalGames < gamesFilter);
   const goalkeepers = [...goalkeepers1, ...goalkeepers2];
 
   return (
