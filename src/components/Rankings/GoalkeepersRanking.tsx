@@ -81,7 +81,7 @@ const GoalkeepersRankings = ({ players }: GeneralPlacingProps) => {
                         {name}
                       </Link>
                     </td>
-                    <td>{averageGoalsPerGame}</td>
+                    <td>{averageGoalsPerGame.toFixed(2)}</td>
                     <td>{totalGames}</td>
                     <td>{goalsConceded}</td>
                   </tr>

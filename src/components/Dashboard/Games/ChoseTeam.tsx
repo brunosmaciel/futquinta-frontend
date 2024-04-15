@@ -35,6 +35,7 @@ export const ChoseTeam = memo(({ player, team }: ChoseTeamProps) => {
       currentTeam: team,
     };
     add(data);
+
     setIsSelected(true);
   };
   const handleRemovePlayer = () => {
