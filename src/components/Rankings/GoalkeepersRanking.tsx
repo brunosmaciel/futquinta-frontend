@@ -11,6 +11,7 @@ const GoalkeepersRankings = ({ players, numberOfGames }: GeneralPlacingProps) =>
   const gamesFilter = Math.ceil(numberOfGames * (40 / 100));
 
   const playerStats = players
+    .filter((player) => player.role !== 'GUEST')
     .map((player) => {
       const stats = getGoalKeeperStats(player);
 
