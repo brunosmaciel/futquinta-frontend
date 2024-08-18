@@ -53,7 +53,7 @@ const RecordRanking = () => {
             {data?.map(({ id, name, games, record, slug }, i) => (
               <tr
                 key={id}
-                data-willbeawarded={i + 1 <= 3}
+                data-willbeawarded={i + 1 <= 5}
                 className=" border-l-4 hover transition-all gap-2  data-[willbeawarded=true]:border-l-green-500 border-transparent "
               >
                 <th className="w-16">{i + 1} °</th>

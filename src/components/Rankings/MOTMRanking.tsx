@@ -5,8 +5,11 @@ import { getPlayerStats } from '../../functions/getPlayerStats';
 
 export type GeneralPlacingProps = {
   players: PlayerProfile[];
+  totalNumberOfGames: number;
 };
-const MOTMRanking = ({ players }: GeneralPlacingProps) => {
+const MOTMRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps) => {
+  const fortyPerCentGames = Math.floor(totalNumberOfGames * 0.4);
+
   const playerStats = players
     .filter((player) => player.role === 'PERMANENT')
     .map((player) => {
@@ -24,7 +27,8 @@ const MOTMRanking = ({ players }: GeneralPlacingProps) => {
 
       return 1;
     })
-    .filter((player) => player.mvp > 0);
+    .filter((player) => player.mvp > 0)
+    .filter((player) => player.totalGames >= fortyPerCentGames);
 
   return (
     <div className="h-full w-full">

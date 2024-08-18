@@ -1,7 +1,6 @@
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { GeneralRankingAPIType, RecordRankingType } from '../../..';
+import { RecordRankingType } from '../../..';
 
 export type Props = {
   players: RecordRankingType[];
