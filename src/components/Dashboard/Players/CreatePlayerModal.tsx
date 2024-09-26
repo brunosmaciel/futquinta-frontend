@@ -30,6 +30,7 @@ export const CreatePlayerModal = () => {
     const data = {
       name,
       role: guest ? 'GUEST' : 'PERMANENT',
+      function: playerFunction,
       shirtNumber: Number(number),
     };
 
