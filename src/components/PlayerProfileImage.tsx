@@ -12,6 +12,7 @@ interface IPlayerProfileImageProps {
 export function PlayerProfileImage({ player, setIsOpen }: IPlayerProfileImageProps) {
   if (!player.currentPicture) {
     return (
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         className="rounded-full w-32 h-32 border-2"
         src={profilePicturePlaceholder(player.slug)}
@@ -21,17 +22,19 @@ export function PlayerProfileImage({ player, setIsOpen }: IPlayerProfileImagePro
   }
 
   return (
-    <Image
-      src={
-        player.currentPicture === 'WHITE'
-          ? player.whiteShirtpicture || ''
-          : player.greenShirtpicture || ''
-      }
-      alt="Foto de perfil do jogador"
-      width={300}
-      height={300}
-      className="rounded-full w-36 h-36 border-2"
-      onClick={() => setIsOpen(true)}
-    />
+    <div className="border-[#ffbf00] flex items-center justify-center rounded-full w-38 h-38 border-4 bg-red-500">
+      <Image
+        src={
+          player.currentPicture === 'WHITE'
+            ? player.whiteShirtpicture || ''
+            : player.greenShirtpicture || ''
+        }
+        alt="Foto de perfil do jogador"
+        width={300}
+        height={300}
+        className="rounded-full w-36 h-36 border-2"
+        onClick={() => setIsOpen(true)}
+      />
+    </div>
   );
 }
