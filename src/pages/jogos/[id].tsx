@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useCallback } from 'react';
 
 import { formatInTimeZone } from 'date-fns-tz';
@@ -106,8 +107,8 @@ const Jogo = () => {
                   onClick={() => push(`/jogadores/${player.player.slug}`)}
                   className=" transition-all hover:translate-y-1 cursor-pointer my-2 hover:bg-base-200 rounded-md p-2 flex items-center gap-4"
                 >
-                  <div className="avatar">
-                    <div className="w-16 mask mask-squircle">
+                  <div className="avatar border-[#ffbf00] border-2 rounded-3xl">
+                    <div className="w-16 mask mask-squircle ">
                       <img
                         src={
                           player.player.whiteShirtpicture ||
