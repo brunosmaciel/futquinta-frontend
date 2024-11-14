@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useCallback } from 'react';
+import { champions } from '../../../public/campeoes';
 
 import { formatInTimeZone } from 'date-fns-tz';
 import { CalendarIcon, ShirtIcon } from 'lucide-react';
@@ -15,6 +16,7 @@ import { LoadingSpin } from '../../components/Loading';
 import BallIcon from '../../components/ui/BallIcon';
 import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder';
 import FourOhFour from '../404';
+import { cn } from '../../utils/cn';
 const Jogo = () => {
   const { get } = useSearchParams();
   const id = get('id');
@@ -107,7 +109,13 @@ const Jogo = () => {
                   onClick={() => push(`/jogadores/${player.player.slug}`)}
                   className=" transition-all hover:translate-y-1 cursor-pointer my-2 hover:bg-base-200 rounded-md p-2 flex items-center gap-4"
                 >
-                  <div className="avatar border-[#ffbf00] border-2 rounded-3xl">
+                  <div
+                    className={`avatar ${
+                      champions.includes(player.playerId)
+                        ? cn('border-[#ffbf00] border-2 rounded-3xl')
+                        : null
+                    }`}
+                  >
                     <div className="w-16 mask mask-squircle ">
                       <img
                         src={
@@ -141,7 +149,13 @@ const Jogo = () => {
                   key={player.id}
                   className=" transition-all hover:translate-y-0.5 cursor-pointer my-2 hover:bg-base-200 rounded-md p-2 flex items-center gap-5"
                 >
-                  <div className="avatar">
+                  <div
+                    className={`avatar ${
+                      champions.includes(player.playerId)
+                        ? cn('border-[#ffbf00] border-2 rounded-3xl')
+                        : null
+                    }`}
+                  >
                     <div className="w-16 mask mask-squircle">
                       <img
                         src={
