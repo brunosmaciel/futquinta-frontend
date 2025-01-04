@@ -1,5 +1,5 @@
-import { PlayerProfile, Game, GeneralRankingAPIType, RecordRankingType } from '../../..';
-import Image from 'next/image';
+import { Game, GeneralRankingAPIType, RecordRankingType } from '../../..';
+
 import { CalendarIcon } from 'lucide-react';
 import { formatInTimeZone } from 'date-fns-tz';
 import { ShieldIcon } from '../ShieldIcon';
@@ -14,9 +14,15 @@ type HomeProps = {
 };
 const HomeComponent = ({ games, generalRankPlayers, recordRanking }: HomeProps) => {
   const { push } = useRouter();
+  if (games.length === 0)
+    return (
+      <div className=" h-full w-full flex items-center justify-center">
+        {' '}
+        <h1 className="text-5xl font-bold">Em manutenção</h1>
+      </div>
+    );
   return (
     <div className="container  h-full flex flex-col items-center">
-      {/* last game photo and result */}
       <div
         onClick={() => push(`/jogos/${games[0].id}`)}
         className="relative flex items-center justify-center m-3 overflow-hidden shadow-xl  max-w-lg w-[95%] h-40 md:h-60 rounded-2xl"
