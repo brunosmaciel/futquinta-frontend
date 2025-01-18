@@ -199,7 +199,7 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
                 <div className="divider divider-horizontal"></div>
                 <div className="flex-1">
                   <div className="flex justify-between w-20">
-                    <p className="text-white">Verde </p>
+                    <p className="text-white">Preto </p>
                     <p className="text-white">{stat.Game.greenGoals}</p>
                   </div>
                   <div className="flex justify-between w-20">

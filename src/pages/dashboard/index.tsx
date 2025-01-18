@@ -89,7 +89,7 @@ const Dashboard = () => {
                 <div className="w-full flex p-2 gap-2 items-center">
                   <div className="w-4 h-4 bg-green-700 rounded-full"></div>
                   <div className="flex gap-2 text-[14px]">
-                    <span className="w-[45px]">Verde</span>
+                    <span className="w-[45px]">Preto</span>
                     <span>{game.greenGoals}</span>
                   </div>
                 </div>

@@ -16,7 +16,7 @@ export const GameScore = ({ game }: Props) => {
         <p className="w-[12px] sm:w-auto">{game.greenGoals}</p>
       </div>
       <GameScoreText team={'GREEN'} game={game} colorClass={'bg-green-700'}>
-        <span>Time Verde</span>
+        <span>Time Preto</span>
       </GameScoreText>
     </div>
   );

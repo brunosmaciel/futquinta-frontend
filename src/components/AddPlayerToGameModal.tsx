@@ -54,7 +54,7 @@ const AddPlayerToGameModal = ({ currentTeam, children, game, players }: ModalPro
 
       await mutate(`/games/${game.id}`);
       toast.success(
-        `Jogador ${name} adicionado ao  time ${currentTeam === 'WHITE' ? 'Branco' : 'Verde'}`
+        `Jogador ${name} adicionado ao  time ${currentTeam === 'WHITE' ? 'Branco' : 'Preto'}`
       );
     } catch (err: any) {
       toast.error('Internal Server Error');
@@ -70,7 +70,7 @@ const AddPlayerToGameModal = ({ currentTeam, children, game, players }: ModalPro
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box relative">
           <h3 className="font-bold text-lg">
-            Adicionar jogador no time {currentTeam === 'WHITE' ? 'Branco' : 'Verde'}
+            Adicionar jogador no time {currentTeam === 'WHITE' ? 'Branco' : 'Preto'}
           </h3>
           <label
             htmlFor={`my-modal-${currentTeam}`}

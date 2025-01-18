@@ -12,7 +12,7 @@ export const GameHeader = ({ game, players, team }: GameHeaderProps) => {
       <div className="bg-base-100 p-4 flex items-center justify-between gap-10 text-xl overflow-x-hidden">
         <div className="flex items-center gap-10">
           <div className={`h-10 w-10 rounded-full  ${bgColor}`}></div>
-          <h1 className="font-bold">{team === 'WHITE' ? 'Branco' : 'Verde'}</h1>
+          <h1 className="font-bold">{team === 'WHITE' ? 'Branco' : 'Preto'}</h1>
         </div>
         <div>
           <AddPlayerToGameModal currentTeam={team} game={game} players={players || []}>

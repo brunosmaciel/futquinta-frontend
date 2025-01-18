@@ -65,7 +65,7 @@ const Jogo = () => {
     return (
       <>
         <Head>
-          <title>{`Branco ${data.whiteGoals} x ${data.greenGoals} Verde`}</title>
+          <title>{`Branco ${data.whiteGoals} x ${data.greenGoals} Preto`}</title>
           <meta property="og:url" content={`/jogos/${data.id}`} />
           <meta property="og:type" content="blog" />
           <meta name="twitter:card" content="summary_large_image" />
@@ -142,7 +142,7 @@ const Jogo = () => {
             <div className="p-2 w-full lg:w-1/2">
               <div className="w-full  p-2 flex items-center gap-4 font-bold ">
                 <div className="h-10 w-10 bg-primary rounded-full"></div>
-                <span>Verde</span>
+                <span>Preto</span>
               </div>
               {greenPlayers.map((player) => (
                 <div

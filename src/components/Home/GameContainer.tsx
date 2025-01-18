@@ -15,7 +15,7 @@ export const GameContainer = ({ game }: GameContainerType) => {
       </div>
       <div className="flex justify-center mt-2 gap-2 items-center">
         <p className="h-4 w-4 rounded-full bg-green-500"></p>
-        <span className="w-[44px]">Verde</span>
+        <span className="w-[44px]">Preto</span>
         <span>{game.greenGoals}</span>
       </div>
       <div className="flex  mt-[2px] gap-2 justify-center  items-center ">

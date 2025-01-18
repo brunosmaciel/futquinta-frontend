@@ -35,7 +35,7 @@ const GameScore = ({ game }: GameScore) => {
           <p>{game.greenGoals}</p>
         </div>
         <div className="flex flex-col items-center">
-          <p>Verde</p>
+          <p>Preto</p>
           <div className="h-14 w-14  rounded-full bg-green-700"></div>
         </div>
       </div>

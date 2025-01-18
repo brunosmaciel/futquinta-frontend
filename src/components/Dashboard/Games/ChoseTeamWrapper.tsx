@@ -87,7 +87,7 @@ export const ChoseTeamWrapper = ({ players, handleStartGame, isLoading }: ChoseT
         <div className="flex-1">
           <h1 className="text-xl flex items-center gap-2 border-b-[1px]  py-2">
             {' '}
-            <p className="w-6 h-6 rounded-full bg-green-800 "></p>Equipe Verde
+            <p className="w-6 h-6 rounded-full bg-green-800 "></p>Equipe Preto
           </h1>
           {filterValue ? (
             <>

@@ -43,7 +43,7 @@ const Jogos = () => {
                           <div className="divider divider-horizontal"></div>
                           <div className="">
                             <div className="flex justify-between w-20">
-                              <p className="text-white">Verde </p>
+                              <p className="text-white">Preto </p>
                               <p className="text-white">{game.greenGoals}</p>
                             </div>
                             <div className="flex justify-between w-20">
@@ -85,7 +85,7 @@ const Jogos = () => {
                             <div className="divider divider-horizontal"></div>
                             <div className="">
                               <div className="flex justify-between w-20">
-                                <p className="text-white">Verde </p>
+                                <p className="text-white">Preto </p>
                                 <p className="text-white">{game.greenGoals}</p>
                               </div>
                               <div className="flex justify-between w-20">
