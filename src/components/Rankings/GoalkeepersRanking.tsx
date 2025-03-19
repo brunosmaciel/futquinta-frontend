@@ -23,7 +23,7 @@ const GoalkeepersRankings = ({ players, numberOfGames }: GeneralPlacingProps) =>
     })
 
     .sort((a, b) => {
-      return a.goalsConceded / a.totalGames < b.goalsConceded / b.totalGames ? 1 : -1;
+      return a.goalsConceded / a.totalGames > b.goalsConceded / b.totalGames ? 1 : -1;
     })
     .sort((a, b) => {
       if (
