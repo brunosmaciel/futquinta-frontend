@@ -110,11 +110,11 @@ const Jogo = () => {
                   className=" transition-all hover:translate-y-1 cursor-pointer my-2 hover:bg-base-200 rounded-md p-2 flex items-center gap-4"
                 >
                   <div
-                    className={`avatar ${
-                      champions.includes(player.playerId)
+                    className={`avatar ${champions.map((tournamentPlayers) =>
+                      tournamentPlayers.id === player.id
                         ? cn('border-[#ffbf00] border-2 rounded-3xl')
                         : null
-                    }`}
+                    )}`}
                   >
                     <div className="w-16 mask mask-squircle ">
                       <img
@@ -150,11 +150,11 @@ const Jogo = () => {
                   className=" transition-all hover:translate-y-0.5 cursor-pointer my-2 hover:bg-base-200 rounded-md p-2 flex items-center gap-5"
                 >
                   <div
-                    className={`avatar ${
-                      champions.includes(player.playerId)
+                    className={`avatar ${champions.map((tournamentPlayers) =>
+                      tournamentPlayers.id === player.id
                         ? cn('border-[#ffbf00] border-2 rounded-3xl')
                         : null
-                    }`}
+                    )}`}
                   >
                     <div className="w-16 mask mask-squircle">
                       <img
