@@ -95,7 +95,7 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
           <div className=" flex items-center gap-2">
             <Link className="btn btn-ghost normal-case text-xl " href={'/'}>
               <Logo className="h-10 w-10" />
-              FUTQUINTA
+              FUTQUINTA21
             </Link>
 
             {isLoggedIn ? (
