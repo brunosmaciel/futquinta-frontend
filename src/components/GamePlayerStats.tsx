@@ -1,12 +1,11 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-
+import { toast } from 'react-hot-toast';
 import { SetStateAction, useEffect } from 'react';
-import { toast } from 'react-toastify';
 
 import { useSWRConfig } from 'swr';
 
-import { Game, PlayerStats } from '../..';
+import { GameType, PlayerStats } from '../..';
 import { api } from '../services/axios';
 
 export type GamePlayerStatsProps = {
@@ -19,16 +18,13 @@ const GamePlayerStats = ({
 }: GamePlayerStatsProps) => {
   const { mutate } = useSWRConfig();
 
-  useEffect(() => {
-    console.log('component mounted on goals change');
-  }, []);
+  useEffect(() => {}, []);
   const handleIncrementGoals = async (e: any) => {
-    console.log(e.target.value);
     if (e.target.value === '') return;
 
     try {
       if (e.target.value === '0') {
-        await api.put<Game>(`/stats/${gameId}/${id}`, {
+        await api.put<GameType>(`/stats/${gameId}/${id}`, {
           goals: Number(e.target.value),
         });
 
@@ -39,20 +35,18 @@ const GamePlayerStats = ({
       const { data } = await api.put(`/stats/${gameId}/${id}`, {
         goals: Number(e.target.value) || goals,
       });
-      console.log(data);
+
       await mutate(`/games/${gameId}`);
 
       await mutate('/games');
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const handleRemovePlayer = async () => {
     try {
       await api.delete(`/stats/${id}`);
       mutate(`/games/${gameId}`);
-      toast.success(`Jogador ${player.name} removido com sucesso`, { autoClose: 1000 });
+      toast.success(`Jogador ${player.name} removido com sucesso`);
     } catch (err: any) {
       toast.error('Algum erro qualquer');
     }

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import useSWR from 'swr';
 
-import { Game } from '../../../..';
+import { GameType } from '../../../..';
 import { CreateGameModal } from '../../../components/Dashboard/Games/CreateGameModal';
 import { GameContainer } from '../../../components/Dashboard/Games/GameContainer';
 import { Wrapper } from '../../../components/Dashboard/Games/GameContainerWrapper';
@@ -14,13 +14,13 @@ import { LoadingSpin } from '../../../components/Loading';
 import { api } from '../../../services/axios';
 import { toast } from 'react-hot-toast';
 export type GameProps = {
-  games: Game[];
+  games: GameType[];
 };
 const Game = () => {
   const [loadingButton, setIsLoading] = useState<'loading' | 'not_loading'>('not_loading');
-  const { data: finishedGames } = useSWR<Game[]>('/games?status=finished');
-  const { data: inProgressGames } = useSWR<Game[]>('/games?status=in_progress');
-  const { data: notStartedGames, isLoading } = useSWR<Game[]>('/games?status=not_started');
+  const { data: finishedGames } = useSWR<GameType[]>('/games?status=finished');
+  const { data: inProgressGames } = useSWR<GameType[]>('/games?status=in_progress');
+  const { data: notStartedGames, isLoading } = useSWR<GameType[]>('/games?status=not_started');
   const nextFixtureNumber =
     (finishedGames?.length || 0) +
     (inProgressGames?.length || 0) +

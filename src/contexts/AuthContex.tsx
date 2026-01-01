@@ -43,7 +43,6 @@ const AuthProvider = ({ children }: any) => {
 
     const getUser = async () => {
       try {
-        console.log('oi');
         const data = await recoverUserData();
 
         setUser({

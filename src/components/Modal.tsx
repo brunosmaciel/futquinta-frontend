@@ -3,13 +3,13 @@ import { VscTrash } from 'react-icons/vsc';
 
 import { mutate } from 'swr';
 
-import { Game } from '../..';
+import { GameType } from '../..';
 import { api } from '../services/axios';
 import { toast } from 'react-hot-toast';
 
 type ModalPorps = {
   children: React.ReactNode;
-  game: Game;
+  game: GameType;
 };
 
 const Modal = ({ children, game }: ModalPorps) => {

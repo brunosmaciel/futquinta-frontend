@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+
 
 import { AlertCircle } from 'lucide-react';
 import { mutate } from 'swr';
@@ -17,9 +17,9 @@ export const DeletePlayerModal = ({ children, player }: DeletePlayerModalProps) 
 
       mutate('/players');
 
-      toast.success(data);
+      alert(data);
     } catch (err: any) {
-      toast.error('Internal server error');
+      alert('Internal server error');
     }
   };
   return (

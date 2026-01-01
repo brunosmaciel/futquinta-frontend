@@ -6,14 +6,14 @@ import { useRouter } from 'next/navigation';
 import { parseCookies } from 'nookies';
 import useSWR from 'swr';
 
-import { Game, PlayerProfile } from '../../..';
+import { GameType, PlayerProfile } from '../../..';
 import { LoadingSpin } from '../../components/Loading';
 import { api } from '../../services/axios';
 
 const Dashboard = () => {
   const { push } = useRouter();
   const { data: players, isLoading: isFetching } = useSWR<PlayerProfile[]>('/players');
-  const { data: games } = useSWR<Game[]>('/games');
+  const { data: games } = useSWR<GameType[]>('/games');
   const [isLoading, setIsLoading] = useState<'loading' | 'not_loading'>('not_loading');
   const handleCreateGame = async () => {
     try {

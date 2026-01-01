@@ -1,8 +1,8 @@
-import { Game } from '../../../..';
+import { GameType } from '../../../..';
 import { GameScoreText } from './GameScoreText';
 
 type Props = {
-  game: Game;
+  game: GameType;
 };
 export const GameScore = ({ game }: Props) => {
   return (

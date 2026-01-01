@@ -59,7 +59,7 @@ export const ChoseTeam = memo(({ player, team }: ChoseTeamProps) => {
               type="radio"
               value="GOALKEEPER"
               className="radio"
-              defaultChecked={player.function === 'GOALKEEPER' ? true : false}
+              defaultChecked={player.playerPosition === 'GOALKEEPER' ? true : false}
               {...register('playerFunction')}
             />
             <label htmlFor="">G</label>
@@ -69,7 +69,7 @@ export const ChoseTeam = memo(({ player, team }: ChoseTeamProps) => {
               type="radio"
               value="OUTFIELDPLAYER"
               className="radio"
-              defaultChecked={player.function === 'OUTFIELDPLAYER' ? true : false}
+              defaultChecked={player.playerPosition === 'OUTFIELDPLAYER' ? true : false}
               {...register('playerFunction')}
             />
             <label htmlFor="">L</label>

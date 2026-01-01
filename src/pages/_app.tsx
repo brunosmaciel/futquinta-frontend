@@ -1,6 +1,6 @@
 'use client';
 import '../styles/globals.css';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 import { Toaster } from 'react-hot-toast';
 

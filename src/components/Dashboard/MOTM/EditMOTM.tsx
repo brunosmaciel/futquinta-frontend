@@ -1,10 +1,9 @@
 import { SetStateAction, Dispatch } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
 import { mutate } from 'swr';
 
-import { Game } from '../../../..';
+import { GameType } from '../../../..';
 import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
 import { Button } from '../../Button';
@@ -15,7 +14,7 @@ export type EditMOTMType = {
   name: string;
 };
 type EditMOTMProps = {
-  game: Game;
+  game: GameType;
   setEditMode: Dispatch<SetStateAction<boolean>>;
 };
 type EditMOTMInputs = {
@@ -67,7 +66,7 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
         setButtonLoading(false);
         setEditMode(false);
       } catch (err: any) {
-        toast.error(err.message);
+        alert(err.message);
       }
     }
     // User update white motm field
@@ -83,7 +82,7 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
         setEditMode(false);
         setButtonLoading(false);
       } catch (err: any) {
-        toast.error(err.message);
+        alert(err.message);
       }
     }
     // User ser update green motm field
@@ -99,7 +98,7 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
         setEditMode(false);
         setButtonLoading(false);
       } catch (err: any) {
-        toast.error(err.message);
+        alert(err.message);
       }
     }
   };

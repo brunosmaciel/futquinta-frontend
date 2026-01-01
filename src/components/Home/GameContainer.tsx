@@ -1,10 +1,10 @@
 import { formatInTimeZone } from 'date-fns-tz';
 import Link from 'next/link';
 
-import { Game } from '../../..';
+import { GameType } from '../../..';
 
 type GameContainerType = {
-  game: Game;
+  game: GameType;
 };
 export const GameContainer = ({ game }: GameContainerType) => {
   return (

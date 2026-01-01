@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 import { Plus } from 'lucide-react';
 
@@ -14,7 +14,7 @@ type Inputs = {
   guest: boolean;
   color: string;
   number: string;
-  playerFunction: 'OUTFIELDPLAYER' | 'GOALKEEPER';
+  playerPosition: 'OUTFIELDPLAYER' | 'GOALKEEPER';
   isGuest: boolean;
 };
 
@@ -24,13 +24,13 @@ export const CreatePlayerModal = () => {
   const { isButtonLoading, setButtonLoading } = useButtonLoading();
 
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
-    const { guest, name, number, playerFunction } = formData;
+    const { guest, name, number, playerPosition } = formData;
 
     setButtonLoading(true);
     const data = {
       name,
       role: guest ? 'GUEST' : 'PERMANENT',
-      function: playerFunction,
+      playerPosition,
       shirtNumber: Number(number),
     };
 
@@ -109,7 +109,7 @@ export const CreatePlayerModal = () => {
                   <span className="label-text">Posição</span>
                 </label>
                 <select
-                  {...register('playerFunction')}
+                  {...register('playerPosition')}
                   className="select select-bordered w-full max-w-xs"
                 >
                   <option value={'OUTFIELDPLAYER'}>Linha</option>

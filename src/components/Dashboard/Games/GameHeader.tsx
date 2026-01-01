@@ -1,7 +1,7 @@
-import { Game, PlayerProfile } from '../../../..';
+import { GameType, PlayerProfile } from '../../../..';
 import { AddPlayerToGameModal } from '../../AddPlayerToGameModal';
 type GameHeaderProps = {
-  game: Game;
+  game: GameType;
   players: PlayerProfile[];
   team: 'WHITE' | 'GREEN';
 };

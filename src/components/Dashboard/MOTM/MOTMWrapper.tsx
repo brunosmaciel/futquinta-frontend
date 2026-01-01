@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
 import { mutate } from 'swr';
 
-import { Game } from '../../../..';
+import { GameType } from '../../../..';
 import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
 import { EditMOTM } from './EditMOTM';
 import { Button } from '../../Button';
 
 export type MOTMWrapperProps = {
-  game: Game;
+  game: GameType;
 };
 type MOTMInputs = {
   whiteMOTM: string;
@@ -31,7 +30,7 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
   const { isButtonLoading, setButtonLoading } = useButtonLoading();
   const onSubmit = async (data: MOTMInputs) => {
     if (data.greenMOTM === 'Selecione' || data.greenMOTM === 'Selecione') {
-      toast.warn('É necessário selecionar o craque do jogo das duas equipes');
+      alert('É necessário selecionar o craque do jogo das duas equipes');
       return;
     }
     const whiteMOTMData = JSON.parse(data.whiteMOTM) as CreateMOTMType;
@@ -49,7 +48,7 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
       await mutate(`/games/${game.id}`);
       setButtonLoading(false);
     } catch (err: any) {
-      toast.error(err.message);
+      alert(err.message);
       setButtonLoading(false);
     }
   };

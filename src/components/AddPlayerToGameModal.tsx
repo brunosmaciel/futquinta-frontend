@@ -1,9 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
 import { mutate } from 'swr';
 
-import { Game, PlayerProfile } from '../..';
+import { GameType, PlayerProfile } from '../..';
 import { api } from '../services/axios';
 
 export type GamePlayersList = {
@@ -17,7 +16,7 @@ export type GamePlayersList = {
 export type ModalProps = {
   currentTeam: 'WHITE' | 'GREEN';
   children: React.ReactNode;
-  game: Game;
+  game: GameType;
   players: PlayerProfile[];
 };
 
@@ -53,11 +52,9 @@ const AddPlayerToGameModal = ({ currentTeam, children, game, players }: ModalPro
       await api.post(`/stats/${game.id}/${id}`, data);
 
       await mutate(`/games/${game.id}`);
-      toast.success(
-        `Jogador ${name} adicionado ao  time ${currentTeam === 'WHITE' ? 'Branco' : 'Preto'}`
-      );
+      alert('tinha toast aqui');
     } catch (err: any) {
-      toast.error('Internal Server Error');
+      alert('Internal Server Error,tinha toast');
     }
   };
   return (

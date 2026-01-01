@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
-import { Game } from '../../../..';
+import { GameType } from '../../../..';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 
@@ -40,7 +40,7 @@ export function CreateGameModal({ nextFixture }: ICreateGameModalProps) {
     try {
       setButtonLoading(true);
 
-      const { data } = await api.post<Game>('/games', {
+      const { data } = await api.post<GameType>('/games', {
         gameDate: date,
         fixture,
       });
@@ -48,7 +48,6 @@ export function CreateGameModal({ nextFixture }: ICreateGameModalProps) {
       router.push(`/dashboard/jogos/${data.id}`);
       toast.success('Partida criada com sucesso');
     } catch (err: any) {
-      console.log(err.response.data);
       setButtonLoading(false);
     }
 

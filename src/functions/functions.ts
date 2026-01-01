@@ -46,4 +46,17 @@ export function getTopScorers(players: PlayerProfile[]): GetTopScorersType[] {
 
   return topScorerRankingArray;
 }
+
+export function getPlayerRecord(victories: number, draws: number, defeats: number) {
+  const jogos = victories + draws + defeats;
+  const pontosConquistados = victories * 3 + draws;
+  const pontosPossiveis = jogos * 3;
+
+  if (pontosPossiveis === 0) return 0;
+
+  return Number((pontosConquistados / pontosPossiveis) * 100).toFixed(1);
+}
+
+// Exemplo de uso
+
 export { getGoalsPerGame };

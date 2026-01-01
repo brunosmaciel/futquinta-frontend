@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
+
 import { CameraIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useSWRConfig } from 'swr';
 
-import { Game } from '../..';
+import { GameType } from '../..';
 import { api } from '../services/axios';
 
 export type GamePictureProps = {
-  game: Game;
+  game: GameType;
 };
 type GamePictureInput = {
   photo: FileList;

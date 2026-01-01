@@ -1,9 +1,8 @@
 import { useContext, useEffect } from 'react';
-import { toast } from 'react-toastify';
 
 import useSWR, { mutate } from 'swr';
 
-import { Game, PlayerProfile } from '../../../..';
+import { GameType, PlayerProfile } from '../../../..';
 import { ChoseTeamWrapper } from '../../../components/Dashboard/Games/ChoseTeamWrapper';
 import { GameHeader } from '../../../components/Dashboard/Games/GameHeader';
 import { GameScore } from '../../../components/Dashboard/Games/GameScore';
@@ -22,7 +21,7 @@ interface IGamePageProps {
 export default function GamePage({ id }: IGamePageProps) {
   const { setButtonLoading, isButtonLoading } = useButtonLoading();
   const { players: playersList, reset } = useContext(ChoseTeamContext);
-  const { data: game, isLoading } = useSWR<Game>(`/games/${id}`);
+  const { data: game, isLoading } = useSWR<GameType>(`/games/${id}`);
   const { data } = useSWR<PlayerProfile[]>('/players');
 
   useEffect(() => {
@@ -39,11 +38,10 @@ export default function GamePage({ id }: IGamePageProps) {
       await mutate(`/games/${id}`);
       setButtonLoading(false);
     } catch (err: any) {
-      toast.error('Internal Server Error');
       setButtonLoading(false);
     }
   };
-  const hanleFinalizeGame = async ({ greenGoals, whiteGoals }: Game) => {
+  const hanleFinalizeGame = async ({ greenGoals, whiteGoals }: GameType) => {
     function getWinnerTeam(greenGoals: number, whiteGoals: number): 'WHITE' | 'GREEN' | 'DRAW' {
       if (greenGoals > whiteGoals) return 'GREEN';
       if (whiteGoals > greenGoals) return 'WHITE';
@@ -57,7 +55,7 @@ export default function GamePage({ id }: IGamePageProps) {
         whiteGoals,
       });
 
-      await api.post<Game>(`/games/${id}/finish`, {
+      await api.post<GameType>(`/games/${id}/finish`, {
         winnerTeam: getWinnerTeam(greenGoals, whiteGoals),
       });
 

@@ -3,11 +3,11 @@ import { VscEdit } from 'react-icons/vsc';
 import { formatInTimeZone } from 'date-fns-tz';
 import { useRouter } from 'next/router';
 
-import { Game } from '../../../..';
+import { GameType } from '../../../..';
 import { Modal } from '../../Modal';
 
 export type GameContainerProps = {
-  game: Game;
+  game: GameType;
 };
 const GameContainer = ({ game }: GameContainerProps) => {
   const { push } = useRouter();

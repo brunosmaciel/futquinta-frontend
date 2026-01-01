@@ -7,10 +7,10 @@ import { CalendarIcon, ShirtIcon } from 'lucide-react';
 import Head from 'next/head';
 
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import useSWR from 'swr';
 
-import { Game } from '../../..';
+import { GameType } from '../../..';
 import { Score } from '../../components/Game/Score';
 import { LoadingSpin } from '../../components/Loading';
 import BallIcon from '../../components/ui/BallIcon';
@@ -18,13 +18,16 @@ import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder
 import FourOhFour from '../404';
 import { cn } from '../../utils/cn';
 const Jogo = () => {
-  const { get } = useSearchParams();
-  const id = get('id');
+  const params = useParams();
+
+  if (!params) return <FourOhFour />;
+  const { id } = params;
+
   const { push } = useRouter();
 
-  const { data, isLoading, error } = useSWR<Game>(`/games/${id}`);
+  const { data, isLoading, error } = useSWR<GameType>(`/games/${id}`);
   const getWhitePlayers = useCallback(
-    (data: Game) => {
+    (data: GameType) => {
       const filtered = data.players
         .filter((player) => player.currentTeam === 'WHITE')
         .sort((a, b) => {
@@ -37,7 +40,7 @@ const Jogo = () => {
     [data]
   );
   const getGreenPlayers = useCallback(
-    (data: Game) => {
+    (data: GameType) => {
       const filtered = data.players
         .filter((player) => player.currentTeam === 'GREEN')
         .sort((a, b) => {

@@ -1,4 +1,5 @@
 {
     "editor.formatOnSave": true,
-    "window.zoomLevel": 1
+    "window.zoomLevel": 1,
+    "postman.settings.dotenv-detection-notification-visibility": false
 }

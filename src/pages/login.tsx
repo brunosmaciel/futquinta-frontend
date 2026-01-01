@@ -21,10 +21,12 @@ const Login = () => {
   const handleLogin = async (data: LoginInputs) => {
     try {
       setButtonLoading(true);
+
       await signIn(data);
       push(`/dashboard/jogos`);
     } catch (err: any) {
       toast.error('Credenciais inválidas');
+
       setButtonLoading(false);
     }
   };

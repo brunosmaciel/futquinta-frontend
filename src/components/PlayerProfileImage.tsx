@@ -1,6 +1,9 @@
 import { SetStateAction } from 'react';
 import { champions } from '../../public/campeoes';
 import { TournamentChampionsBadge } from '../components/tournamentChampionsBadge';
+import { Crown } from 'lucide-react';
+import coroa from '../../public/crown.svg'
+
 
 import Image from 'next/image';
 
@@ -33,6 +36,9 @@ export function PlayerProfileImage({ player, setIsOpen }: IPlayerProfileImagePro
             tournarmentPlayer.id === player.id ? cn('border-[#ffbf00] border-4') : null
         )}`}
       >
+    {player.slug === 'otavio' && <div className="absolute top-16 md:top-2 z-10  rounded-full p-[1px] shadow-md">
+      <Image src={coroa} alt='1' className="w-24 h-24 text-white" />
+    </div>}
         <Image
           src={
             player.currentPicture === 'WHITE'

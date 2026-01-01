@@ -7,7 +7,6 @@ import { AuthContext } from '../contexts/AuthContex';
 import { useButtonLoading } from '../hooks/useButtonLoading';
 import { Button } from '../components/Button';
 import { api } from '../services/axios';
-import { toast } from 'react-toastify';
 export type LoginInputs = {
   email: string;
   password: string;
@@ -29,7 +28,7 @@ const Registrar = () => {
       });
 
       if (!signupData) {
-        toast.error('Erro desconhecido ao criar sua conta');
+       alert('Erro desconhecido ao criar sua conta');
 
         return;
       }

@@ -1,18 +1,17 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { getPlayerGameResult } from '../../utils/getPlayerGameResult';
 import { formatInTimeZone } from 'date-fns-tz';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
 
 import { GeneralRankingAPIType, PlayerProfile } from '../../..';
 import { PlayerProfileImage } from '../../components/PlayerProfileImage';
-import { getPlayerStats } from '../../functions/getPlayerStats';
 import { api } from '../../services/axios';
-import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder';
 import { PlayerProfileGameResult } from '../../components/PlayerProfileGameResult';
 import { useRouter } from 'next/navigation';
+import { PlayerSeasonStats } from '../../components/Players/PlayerSeasonStats';
+import { PlayerOldSeasonStats } from '../../components/Players/PlayerOldSeasonStats';
+import { PlayerAllTimeStats } from '../../components/Players/PlayerAllTimeStats';
 
 export type JogadorProps = {
   player: PlayerProfile;
@@ -22,9 +21,11 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
 
-  const [currentPlayerProfilePicture, setCurrentPlayerProfilePicture] = useState(
-    player.currentPicture || ''
-  );
+  const [tabYear, setTabYear] = useState<number>(new Date().getFullYear());
+
+  const handleTabChange = (e: any) => {
+    setTabYear(e.target.tabIndex);
+  };
 
   const games = [...player.Stats].sort((a, b) => {
     const aDate = a.createdAt;
@@ -34,18 +35,9 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
 
     return 0;
   });
-  const {
-    goals,
-    goalsConceded,
-    victories,
-    defeats,
-    draws,
-    points,
-    goalsPerGame,
-    mvp,
 
-    goalsConcededPerGame,
-  } = getPlayerStats(player);
+  const oldSeasons = player.oldSeason.sort((a, b) => (a.year < b.year ? 1 : -1));
+  const currentOldSeason = oldSeasons.find((season) => season.year === tabYear);
 
   return (
     <>
@@ -53,7 +45,7 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
         <title>{`${player.name} #${player.shirtNumber}`}</title>
         <meta property="og:url" content={`/jogadores/${player.slug}`} />
       </Head>
-      <div className="flex flex-col">
+      <div className="flex flex-col pt-20 md:pt-4">
         <div className="flex flex-col items-center gap-5 py-2  w-[90%] mx-auto cursor-pointer">
           {player?.role === 'GUEST' ? (
             <span className="indicator-item badge badge-primary">Convidado</span>
@@ -63,121 +55,48 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
           <h1 className="text-xl font-bold">
             {player.name} #{player.shirtNumber || '00'}
           </h1>
-          {/* The button to open modal */}
-          <label htmlFor={`my-modal-${player.id}`}></label>
-
-          {/* Put this part before </body> tag */}
-          <input
-            type="checkbox"
-            id={`my-modal-${player.id}`}
-            className="modal-toggle"
-            onChange={() => ''}
-            checked={isOpen}
-          />
-          <div className="modal modal-bottom sm:modal-middle">
-            <div className="modal-box">
-              <h3 className="font-bold text-lg">Galeria</h3>
-              <div className="flex my-4 gap-8 justify-center  w-full">
-                {player.whiteShirtpicture && (
-                  <div className="flex flex-col gap-2 items-center">
-                    <Image
-                      src={player.whiteShirtpicture || ''}
-                      alt="Foto de perfil do jogador"
-                      width={300}
-                      height={300}
-                      className="rounded-xl w-32 h-32 border-2"
-                      onClick={() => setIsOpen(true)}
-                    />
-                    <button
-                      className="btn btn-sm btn-outline"
-                      onClick={() => setCurrentPlayerProfilePicture('WHITE')}
-                    >
-                      Usar foto
-                    </button>
-                  </div>
-                )}
-                {player.greenShirtpicture && (
-                  <div className="flex flex-col gap-2 items-center">
-                    <Image
-                      src={player.greenShirtpicture || ''}
-                      alt="Foto de perfil do jogador"
-                      width={300}
-                      height={300}
-                      className="rounded-xl w-32 h-32 border-2"
-                      onClick={() => setIsOpen(true)}
-                    />
-                    <button
-                      className="btn btn-sm btn-outline"
-                      onClick={() => setCurrentPlayerProfilePicture('WHITE')}
-                    >
-                      Usar foto
-                    </button>
-                  </div>
-                )}
-              </div>
-              <div className="modal-action">
-                <label
-                  htmlFor={`my-modal-${player.id}`}
-                  className="btn"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Salvar
-                </label>
-              </div>
-            </div>
-          </div>
         </div>
-        <div className=" w-[90%] max-w-[400px] md:max-w-[700px] mx-auto flex flex-wrap justify-center items-center gap-[10px]">
-          <div className="player-profile-stats">
-            {player.function === 'OUTFIELDPLAYER' ? (
-              <>
-                <span className="text-sm">Gols</span>
-                <span className="text-xl font-bold">{goals}</span>
-              </>
-            ) : (
-              <>
-                <span className="text-sm">Gols S</span>
-                <span className="text-xl font-bold">{goalsConceded}</span>
-              </>
-            )}
+        {/* {estatisticas} */}
+        <div className="flex flex-col items-center px-2">
+          <div className="tabs">
+            <a
+              tabIndex={new Date().getFullYear()}
+              className={`tab tab-lifted  ${
+                tabYear === new Date().getFullYear() ? 'tab-active' : 'tab'
+              } `}
+              onClick={handleTabChange}
+            >
+              {'2026'}
+            </a>
+            {oldSeasons.map((season, i, key) => (
+              <a
+                tabIndex={season.year}
+                className={`tab tab-lifted ${tabYear === season.year ? 'tab-active' : 'tab'} `}
+                onClick={handleTabChange}
+              >
+                {season.year}
+              </a>
+            ))}
+            <a
+              tabIndex={2021}
+              className={`tab tab-lifted  ${tabYear === 2021 ? 'tab-active' : 'tab'} `}
+              onClick={handleTabChange}
+            >
+              {'Total'}
+            </a>
           </div>
-          <div className="player-profile-stats">
-            <span className="text-sm">Vitorias</span>
-            <span className="text-xl font-bold">{victories}</span>
-          </div>
-          <div className="player-profile-stats">
-            <span className="text-sm">Derrotas</span>
-            <span className="text-xl font-bold">{defeats}</span>
-          </div>
-          <div className="player-profile-stats">
-            <span className="text-sm">Empates</span>
-            <span className="text-xl font-bold">{draws}</span>
-          </div>
-          <div className="player-profile-stats">
-            <span className="text-sm">Pontos</span>
-            <span className="text-xl font-bold">{points}</span>
-          </div>
-          <div className="player-profile-stats">
-            {player.function === 'OUTFIELDPLAYER' ? (
-              <>
-                <span className="text-sm">Gols p/j</span>
-                <span className="text-xl font-bold">{goalsPerGame.toFixed(2)}</span>
-              </>
-            ) : (
-              <>
-                <span className="text-sm">Gols S p/j</span>
-                <span className="text-xl font-bold">{goalsConcededPerGame}</span>
-              </>
-            )}
-          </div>
-          <div className="player-profile-stats">
-            <span className="text-sm">Pos</span>
-            <span className="text-xl font-bold">{rankPosition || '-'}</span>
-          </div>
-          <div className="player-profile-stats">
-            <span className="text-sm">MVP</span>
-            <span className="text-xl font-bold">{mvp}</span>
-          </div>
+
+          {tabYear === new Date().getFullYear() ? (
+            <PlayerSeasonStats year={2025} player={player} rankPosition={rankPosition} />
+          ) : null}
+
+          {currentOldSeason ? (
+            <PlayerOldSeasonStats
+              season={currentOldSeason}
+              playerPosition={player.playerPosition}
+            />
+          ) : null}
+          {tabYear === 2021 && <PlayerAllTimeStats year={2021} player={player} />}
         </div>
         <div className="divider"></div>
         <div className="w-[95%] max-w-[400px] md:max-w-[700px] mx-auto">

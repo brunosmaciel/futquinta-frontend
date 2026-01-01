@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+
 
 import {
   Minus,
@@ -26,9 +26,9 @@ export const PlayerInGameContainer = ({ playerStats: player }: PlayerInGameConta
     try {
       await api.delete(`/stats/${player.id}`);
       mutate(`/games/${player.gameId}`);
-      toast.success(`Jogador ${player.name} removido com sucesso`, { autoClose: 1000 });
+     alert(`Jogador ${player.name} removido com sucesso`);
     } catch (err: any) {
-      toast.error('Algum erro qualquer');
+      alert('Algum erro qualquer');
     }
   };
   const handleIncrementGoals = async () => {
@@ -44,7 +44,7 @@ export const PlayerInGameContainer = ({ playerStats: player }: PlayerInGameConta
       await mutate(`/games/${player.gameId}`);
       setButtonLoading(false);
     } catch (err: any) {
-      toast.error('Internal Server Error');
+      alert('Internal Server Error');
       setButtonLoading(false);
     }
   };
@@ -62,7 +62,7 @@ export const PlayerInGameContainer = ({ playerStats: player }: PlayerInGameConta
       await mutate(`/games/${player.gameId}`);
       setButtonLoading(false);
     } catch (err: any) {
-      toast.error('Internal Server Error');
+      alert('Internal Server Error');
       setButtonLoading(false);
     }
   };

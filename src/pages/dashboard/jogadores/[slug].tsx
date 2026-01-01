@@ -1,10 +1,11 @@
+
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
-import { useSearchParams } from 'next/navigation';
+
+import {toast } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import useSWR, { mutate } from 'swr';
 
@@ -14,6 +15,9 @@ import { UpdateProfilePictureModal } from '../../../components/UploadProfilePict
 import { slugify } from '../../../functions/slugify';
 import { api } from '../../../services/axios';
 import FourOhFour from '../../404';
+interface Params {
+  slug:string
+}
 
 export type Inputs = {
   name: string;
@@ -21,12 +25,14 @@ export type Inputs = {
   isGuest: boolean;
 };
 const Jogador = () => {
-  const { get } = useSearchParams();
-  const slug = get('slug');
+  const { push,query } = useRouter();
+  const {slug} =  query
+  
+
+  
   const { data: player, error, isLoading } = useSWR<PlayerProfile>(`/players/${slug}`);
   const { register, handleSubmit } = useForm<Inputs>();
   const [IsBtnDisable, setBtnDisable] = useState<'btn-disabled' | 'false'>('btn-disabled');
-  const { push } = useRouter();
   const onSubmit = async (data: Inputs) => {
     const { name, isGuest, shirtNumber } = data;
 
@@ -39,9 +45,10 @@ const Jogador = () => {
       });
       push(`/dashboard/jogadores/${slugify(name)}`);
       mutate(`/players/${slug}`);
-      setBtnDisable('btn-disabled');
+      
+      toast.success('Atualizado com sucesso')
     } catch (err: any) {
-      toast.error(err.message);
+      alert(err.message);
     }
   };
 

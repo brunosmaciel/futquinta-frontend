@@ -20,7 +20,7 @@ export interface OutfieldProfileStats {
 }
 
 export function getPlayerStats(player: PlayerProfile): OutfieldProfileStats {
-  const { function: playerFunction, Stats } = player;
+  const { playerPosition, Stats } = player;
   const goals = Stats.map((stat) => stat.goals).reduce((acc, current) => acc + current, 0);
 
   const assists = Stats.map((stat) => stat.assists).reduce((acc, current) => acc + current, 0);
@@ -64,7 +64,7 @@ export function getPlayerStats(player: PlayerProfile): OutfieldProfileStats {
   const goalsConceded = goalsConcededOnGreenTeam + goalsConcededOnWhiteTeam;
 
   const goalsConcededPerGame = (goalsConceded / goalKeeper.length).toFixed(2);
-  if (playerFunction === 'GOALKEEPER') {
+  if (playerPosition === 'GOALKEEPER') {
     return {
       goals,
       goalsConceded,

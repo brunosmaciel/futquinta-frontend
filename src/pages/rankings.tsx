@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 
 import useSWR from 'swr';
 
-import { Game, PlayerProfile } from '../..';
+import { GameType, PlayerProfile } from '../..';
 import { LoadingSpin } from '../components/Loading';
 import { GeneralRanking } from '../components/Rankings/GeneralRanking';
 import { GoalkeepersRankings } from '../components/Rankings/GoalkeepersRanking';
@@ -12,7 +12,7 @@ import { RecordRanking } from '../components/Rankings/RecordRanking';
 
 const Rankings = () => {
   const { data: players, isLoading } = useSWR<PlayerProfile[]>('/players');
-  const { data: games } = useSWR<Game[]>('/games');
+  const { data: games } = useSWR<GameType[]>('/games');
   const totalNumberOfGames = games?.length;
   const [tab, setTab] = useState<number>(1);
   const tabsDiv = useRef<HTMLDivElement | null>(null);
@@ -30,7 +30,7 @@ const Rankings = () => {
   };
   if (players) {
     const goalkeepers = players.filter(
-      (player) => player.function === 'GOALKEEPER'
+      (player) => player.playerPosition === 'GOALKEEPER'
     ) as PlayerProfile[];
     return (
       <>

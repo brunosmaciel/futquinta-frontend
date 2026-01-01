@@ -1,4 +1,4 @@
-import { Game, GeneralRankingAPIType, RecordRankingType } from '../../..';
+import { GameType, GeneralRankingAPIType, RecordRankingType } from '../../..';
 
 import { CalendarIcon } from 'lucide-react';
 import { formatInTimeZone } from 'date-fns-tz';
@@ -9,11 +9,12 @@ import { RecordRanking } from './RecordRanking';
 import Link from 'next/link';
 type HomeProps = {
   recordRanking: RecordRankingType[];
-  games: Game[];
+  games: GameType[];
   generalRankPlayers: GeneralRankingAPIType[];
 };
 const HomeComponent = ({ games, generalRankPlayers, recordRanking }: HomeProps) => {
   const { push } = useRouter();
+
   if (games.length === 0)
     return (
       <div className=" h-full w-full flex items-center justify-center">

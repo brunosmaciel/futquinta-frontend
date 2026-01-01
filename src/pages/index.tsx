@@ -1,11 +1,11 @@
 import type { GetStaticProps } from 'next';
 
-import { Game, GeneralRankingAPIType, PlayerProfile, RecordRankingType } from '../..';
+import { GameType, GeneralRankingAPIType, PlayerProfile, RecordRankingType } from '../..';
 import { HomeComponent } from '../components/Home/HomePageComponent';
 import { api } from '../services/axios';
 type HomeProps = {
   recordRanking: RecordRankingType[];
-  games: Game[];
+  games: GameType[];
   generalRankPlayers: GeneralRankingAPIType[];
 };
 const Home = ({ recordRanking, games, generalRankPlayers }: HomeProps) => {
@@ -20,7 +20,7 @@ const Home = ({ recordRanking, games, generalRankPlayers }: HomeProps) => {
 export const getStaticProps: GetStaticProps = async () => {
   const [recordRanking, games, generalRanking] = await Promise.all([
     await api.get<RecordRankingType[]>('/rankings/record').then((res) => res.data),
-    await api.get<Game[]>('/games?status=finished').then((res) => res.data),
+    await api.get<GameType[]>('/games?status=finished').then((res) => res.data),
     await api.get<GeneralRankingAPIType[]>('/rankings/general-ranking').then((res) => res.data),
   ]);
   function shuffleArray(inputArray: PlayerProfile[]) {

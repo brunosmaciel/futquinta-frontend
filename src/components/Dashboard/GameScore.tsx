@@ -1,10 +1,10 @@
 import { useContext, useEffect } from 'react';
 
-import { Game } from '../../..';
+import { GameType } from '../../..';
 import { ScoreboardContext } from '../../contexts/ScoreboardContext';
 
 export type GameScore = {
-  game: Game;
+  game: GameType;
 };
 const GameScore = ({ game }: GameScore) => {
   const { setWhiteGoals, setGreenGoals } = useContext(ScoreboardContext);

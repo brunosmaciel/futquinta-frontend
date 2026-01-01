@@ -1,15 +1,13 @@
-import { toast } from 'react-toastify';
-
 import { PlusIcon, MinusIcon } from 'lucide-react';
 import { mutate } from 'swr';
 
-import { Game } from '../../../..';
+import { GameType } from '../../../..';
 import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
 import { Button } from '../../Button';
 type GameScoreTextProps = {
   team: 'GREEN' | 'WHITE';
-  game: Game;
+  game: GameType;
 
   colorClass: string;
   children: React.ReactNode;
@@ -29,7 +27,7 @@ export const GameScoreText = ({
       await mutate(`/games/${game?.id}`);
       setButtonLoading(false);
     } catch (err: any) {
-      toast.error('Internal Server Error');
+      alert('Internal Server Error,tinha toast');
       setButtonLoading(false);
     }
   };
@@ -40,7 +38,7 @@ export const GameScoreText = ({
       await mutate(`/games/${game?.id}`);
       setButtonLoading(false);
     } catch (err: any) {
-      toast.error('Internal Server Error');
+      alert('Internal Server Error,tinha toast');
       setButtonLoading(false);
     }
   };

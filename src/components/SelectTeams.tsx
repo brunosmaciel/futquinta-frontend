@@ -21,7 +21,7 @@ export const SelectPlayers = ({ team, handleTeamSelection, players }: SelectPlay
           key={player.id}
           value={JSON.stringify({
             id: player.id,
-            function: player.function,
+            function: player.playerPosition,
             name: player.name,
             shirtNumber: String(player.shirtNumber || '00'),
           })}

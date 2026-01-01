@@ -5,8 +5,8 @@ const usePlayers = () => {
   const { data, error, isLoading, isValidating, mutate } = useSWR<PlayerProfile[]>('/players');
 
   if (data) {
-    const goalkeepers = data?.filter((player) => player.function === 'GOALKEEPER');
-    const outfieldPlayer = data?.filter((player) => player.function === 'OUTFIELDPLAYER');
+    const goalkeepers = data?.filter((player) => player.playerPosition === 'GOALKEEPER');
+    const outfieldPlayer = data?.filter((player) => player.playerPosition === 'OUTFIELDPLAYER');
     const playersInAlphabeticOrder = outfieldPlayer.sort((a, b) => {
       if (a.name < b.name) {
         return -1;

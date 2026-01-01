@@ -20,7 +20,7 @@ export interface OutfieldProfileStats {
 }
 
 export function getGoalKeeperStats(player: PlayerProfile): OutfieldProfileStats {
-  const { function: playerFunction, Stats: playerStatsRaw } = player;
+  const { playerPosition: playerFunction, Stats: playerStatsRaw } = player;
   const Stats = playerStatsRaw.filter((stat) => stat.function === 'GOALKEEPER');
   const goals = Stats.map((stat) => stat.goals).reduce((acc, current) => acc + current, 0);
 

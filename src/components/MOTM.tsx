@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 
 import { useSWRConfig } from 'swr';
 
-import { Game, PlayerProfile } from '../..';
+import { GameType, PlayerProfile } from '../..';
 import { api } from '../services/axios';
 
 export type MOTMContainerProps = {
   players: PlayerProfile[] | undefined;
-  game: Game;
+  game: GameType;
 };
 type MOTMType = {
   playerId: number;

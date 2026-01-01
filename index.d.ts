@@ -43,9 +43,10 @@ export type PlayerProfile = {
   victories: number;
   defeats: number;
   draws: number;
-  function: PlayerFunction;
+  playerPosition: PlayerFunction;
   MOTM: MOTM[];
   Stats: PlayerStats[];
+  oldSeason: OldSeason[];
   _count: _count;
   createdAt: Date;
   updatedAt: Date;
@@ -56,7 +57,7 @@ export type PlayerProfile = {
  * Model Game
  *
  */
-export type Game = {
+export type GameType = {
   id: number;
   whiteGoals: number;
   greenGoals: number;
@@ -181,7 +182,19 @@ export const PlayerRole: {
   PERMANENT: 'PERMANENT';
   GUEST: 'GUEST';
 };
-
+export type OldSeason = {
+  id: number;
+  year: number;
+  goals: number;
+  goalsConceded: number;
+  victories: number;
+  defeats: number;
+  draws: number;
+  motmPoints: number;
+  player: PlayerProfile;
+  playerId: number;
+  rankPosition: number;
+};
 export type PlayerRole = (typeof PlayerRole)[keyof typeof PlayerRole];
 
 export type Winner = (typeof Winner)[keyof typeof Winner];
