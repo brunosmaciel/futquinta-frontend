@@ -17,11 +17,7 @@ interface ICreateGameModalProps {
 
 const createGameSchema = z.object({
   date: z.string().transform((value) => `${value}T19:15:00`),
-  fixture: z
-    .string({
-      required_error: 'Uma rodada deve ser informada',
-    })
-    .transform((value) => +value),
+  fixture: z.number({ message: 'rodada deve ser informada' }),
 });
 type CreateGameSchema = z.infer<typeof createGameSchema>;
 export function CreateGameModal({ nextFixture }: ICreateGameModalProps) {
