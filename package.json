@@ -6,9 +6,6 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "engines": {
-    "node": ">=20.0.0"
-  },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "axios": "^1.13.2",
