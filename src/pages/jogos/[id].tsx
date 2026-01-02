@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { useMemo } from 'react';
 import { champions } from '../../../public/campeoes';
-
+import { useRouter } from 'next/router';
 import { formatInTimeZone } from 'date-fns-tz';
 import { CalendarIcon, ShirtIcon } from 'lucide-react';
 
 import Image from 'next/image';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 
 import { GameType } from '../../..';
@@ -23,9 +23,10 @@ const sortByFunction = (a: any, b: any) =>
   a.function < b.function ? -1 : a.function > b.function ? 1 : 0;
 
 const Jogo = () => {
-  const params = useParams();
+  const { push, query } = useRouter();
+  const { id } = query;
   const router = useRouter();
-  const { data, isLoading, error } = useSWR<GameType>(`/games/${params.id}`);
+  const { data, isLoading, error } = useSWR<GameType>(`/games/${id}`);
 
   if (!data) return null;
   const whitePlayers =
@@ -33,7 +34,7 @@ const Jogo = () => {
 
   const greenPlayers =
     data?.players.filter((p) => p.currentTeam === 'GREEN').sort(sortByFunction) ?? [];
-  if (!params?.id) return <FourOhFour />;
+  if (!id) return <FourOhFour />;
 
   if (error) return <FourOhFour />;
   if (isLoading) return <LoadingSpin />;

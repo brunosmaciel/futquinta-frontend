@@ -1,11 +1,9 @@
-
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-
-import {toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import useSWR, { mutate } from 'swr';
 
@@ -16,7 +14,7 @@ import { slugify } from '../../../functions/slugify';
 import { api } from '../../../services/axios';
 import FourOhFour from '../../404';
 interface Params {
-  slug:string
+  slug: string;
 }
 
 export type Inputs = {
@@ -25,11 +23,9 @@ export type Inputs = {
   isGuest: boolean;
 };
 const Jogador = () => {
-  const { push,query } = useRouter();
-  const {slug} =  query
-  
+  const { push, query } = useRouter();
+  const { slug } = query;
 
-  
   const { data: player, error, isLoading } = useSWR<PlayerProfile>(`/players/${slug}`);
   const { register, handleSubmit } = useForm<Inputs>();
   const [IsBtnDisable, setBtnDisable] = useState<'btn-disabled' | 'false'>('btn-disabled');
@@ -45,8 +41,8 @@ const Jogador = () => {
       });
       push(`/dashboard/jogadores/${slugify(name)}`);
       mutate(`/players/${slug}`);
-      
-      toast.success('Atualizado com sucesso')
+
+      toast.success('Atualizado com sucesso');
     } catch (err: any) {
       alert(err.message);
     }
