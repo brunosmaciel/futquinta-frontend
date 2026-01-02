@@ -80,7 +80,7 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
               </div>
             ) : (
               <div className="navbar-end">
-                <Link className="btn btn-primary" href="/login">
+                <Link className="btn btn-primary rounded-2xl" href="/login">
                   Login
                 </Link>
               </div>
@@ -91,7 +91,7 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-        <ul className="menu p-4 w-80 min-h-full bg-base-200">
+        <ul className="menu p-4 w-80 min-h-full bg-base-100">
           <div className=" flex items-center gap-2">
             <Link className="btn btn-ghost normal-case text-xl " href={'/'}>
               <Logo className="h-10 w-10" />

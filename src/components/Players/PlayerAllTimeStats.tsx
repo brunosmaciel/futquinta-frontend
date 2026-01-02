@@ -56,7 +56,7 @@ export const PlayerAllTimeStats = ({ player }: PlayerAllTimeStatsProps) => {
     <div className="flex flex-col items-center justify-center">
       <h1 className="mb-4 font-bold underline">Historico</h1>
 
-      <div className="mx-auto flex w-[90%] max-w-[400px] md:max-w-[700px] flex-wrap items-center justify-center gap-[10px]">
+      <div className="mx-auto flex w-[90%] max-w-100 md:max-w-175 flex-wrap items-center justify-center gap-2.5">
         {stats.map(({ label, value }) => (
           <StatCard key={label} label={label} value={value} />
         ))}

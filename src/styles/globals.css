@@ -7,7 +7,7 @@
   default: true; /* set as default */
 
   --color-base-100: '#FAF9F6';
-  --color-base-200: oklch(95% 0.03 240);
+  --color-base-200: ' #B5F024 ';
   --color-base-300: oklch(92% 0.04 240);
   --color-base-content: oklch(10% 0.05 240);
   --color-primary: '#1F5734';

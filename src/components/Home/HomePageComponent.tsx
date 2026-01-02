@@ -2,75 +2,94 @@ import { GameType, GeneralRankingAPIType, RecordRankingType } from '../../..';
 
 import { CalendarIcon } from 'lucide-react';
 import { formatInTimeZone } from 'date-fns-tz';
-import { ShieldIcon } from '../ShieldIcon';
+import { useCallback } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+
+import { ShieldIcon } from '../ShieldIcon';
 import { GeneralRanking } from './GeneralRanking';
 import { RecordRanking } from './RecordRanking';
-import Link from 'next/link';
+
 type HomeProps = {
   recordRanking: RecordRankingType[];
   games: GameType[];
   generalRankPlayers: GeneralRankingAPIType[];
 };
-const HomeComponent = ({ games, generalRankPlayers, recordRanking }: HomeProps) => {
-  const { push } = useRouter();
 
-  if (games.length === 0)
+const HomeComponent = ({ games, generalRankPlayers, recordRanking }: HomeProps) => {
+  const router = useRouter();
+
+  if (!games.length) {
     return (
-      <div className=" h-full w-full flex items-center justify-center">
-        {' '}
+      <div className="flex h-full w-full items-center justify-center">
         <h1 className="text-5xl font-bold">Em manutenção</h1>
       </div>
     );
+  }
+
+  const latestGame = games[0];
+
+  const handleOpenGame = useCallback(() => {
+    router.push(`/jogos/${latestGame.id}`);
+  }, [router, latestGame.id]);
+
   return (
-    <div className="container  h-full flex flex-col items-center">
+    <div className="container flex h-full flex-col items-center">
+      {/* Capa do jogo */}
       <div
-        onClick={() => push(`/jogos/${games[0].id}`)}
-        className="relative flex items-center justify-center m-3 overflow-hidden shadow-xl  max-w-lg w-[95%] h-40 md:h-60 rounded-2xl"
+        onClick={handleOpenGame}
+        className="relative m-3 flex h-40 w-[95%] max-w-lg cursor-pointer items-center justify-center overflow-hidden rounded-2xl shadow-xl md:h-60"
       >
         <div
-          style={{
-            backgroundImage: `url(${games[0].gamePicture || ''})`,
-          }}
-          className="w-full max-w-lg my-2 cursor-pointer h-60 hover:scale-[1.1] absolute  bg-center bg-cover rounded-2xl transition-all duration-500 ease-in-out"
-        ></div>
+          className="absolute h-60 w-full max-w-lg rounded-2xl bg-cover bg-center transition-all duration-500 ease-in-out hover:scale-[1.1]"
+          style={{ backgroundImage: `url(${latestGame.gamePicture ?? ''})` }}
+        />
       </div>
+
+      {/* Data */}
       <div className="mt-4">
         <span className="flex items-center gap-2">
           <CalendarIcon />
-          <span>{formatInTimeZone(games[0].gameDate, 'America/Sao_Paulo', 'dd/MM/yyyy')}</span>
+          <span>{formatInTimeZone(latestGame.gameDate, 'America/Sao_Paulo', 'dd/MM/yyyy')}</span>
         </span>
       </div>
-      <div className="flex gap-4 text-lg mt-2 items-center text-secondary">
-        <div className="space-x-2 flex items-center">
-          <ShieldIcon className="w-16 h-16" />
-          <p className="text-3xl">{games[0].whiteGoals}</p>
+
+      {/* Placar */}
+      <div className="mt-2 flex items-center gap-4 text-lg text-secondary">
+        <div className="flex items-center gap-2">
+          <ShieldIcon className="h-16 w-16" />
+          <p className="text-3xl text-black">{latestGame.whiteGoals}</p>
         </div>
-        <div>
-          <span>x</span>
-        </div>
-        <div className="gap-2 flex items-center text-primary flex-row-reverse">
-          <ShieldIcon className="w-16 h-16" />
-          <p className="text-white text-3xl font-bold">{games[0].greenGoals}</p>
+
+        <span className="text-black">x</span>
+
+        <div className="flex flex-row-reverse items-center gap-2 text-primary">
+          <ShieldIcon className="h-16 w-16" />
+          <p className="text-3xl font-bold text-black">{latestGame.greenGoals}</p>
         </div>
       </div>
-      <Link href={`/jogos/${games[0].id}`} className="link mt-4">
+
+      {/* Link */}
+      <Link href={`/jogos/${latestGame.id}`} className="link mt-4">
         Ver jogo completo
       </Link>
 
-      <div className="divider"></div>
+      <div className="divider" />
 
-      <div className="flex flex-col w-full justify-center ">
-        <h1 className="font-bold text-xl border-b-2 pb-1 w-fit self-center">Resumo da temporada</h1>
-        <div className="flex flex-col   lg:flex-row w-full  gap-4 mt-6">
-          <div className="w-full lg:w-1/2  ">
-            <h3 className="text-center">Melhores pontuadores</h3>
+      {/* Rankings */}
+      <div className="flex w-full flex-col justify-center">
+        <h1 className="w-fit self-center border-b-2 pb-1 text-xl font-bold">Resumo da temporada</h1>
+
+        <div className="mt-6 flex w-full flex-col gap-4 lg:flex-row">
+          <section className="w-full lg:w-1/2">
+            <h3 className="text-center font-bold ">Melhores pontuadores</h3>
             <GeneralRanking players={generalRankPlayers} />
-          </div>
-          <div className="w-full lg:w-1/2 ">
-            <h3 className="text-center">Melhores aproveitamentos</h3>
+          </section>
+
+          <section className="w-full lg:w-1/2">
+            <h3 className="text-center font-bold">Melhores aproveitamentos</h3>
             <RecordRanking players={recordRanking} />
-          </div>
+          </section>
         </div>
       </div>
     </div>
