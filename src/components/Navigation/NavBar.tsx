@@ -52,7 +52,7 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
             </label>
           </div>
           <div className="flex-1 px-2 mx-2">
-            <Link className="btn btn-ghost normal-case text-xl " href={'/'}>
+            <Link className="btn btn-ghost normal-case text-xl border-radius " href={'/'}>
               <Logo className="h-10 w-10" />
               FUTQUINTA
             </Link>
@@ -74,7 +74,7 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
           <div className="flex-none hidden lg:block">
             {isLoggedIn ? (
               <div className="navbar-end mr-2">
-                <Link href={'/dashboard'} className="btn btn-outline">
+                <Link href={'/dashboard'} className="btn btn-neutral text-secondary">
                   Admin
                 </Link>
               </div>

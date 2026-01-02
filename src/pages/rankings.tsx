@@ -30,11 +30,11 @@ const Rankings = () => {
   };
   if (players) {
     const goalkeepers = players.filter(
-      (player) => player.playerPosition === 'GOALKEEPER'
+      (player) => player.playerPosition === 'GOALKEEPER',
     ) as PlayerProfile[];
     return (
       <>
-        <div className="tabs" ref={tabsDiv}>
+        <div className="tabs tabs-border" ref={tabsDiv}>
           <a className="tab tab-lifted tab-active" onClick={handleTabChange}>
             Classificação geral
           </a>

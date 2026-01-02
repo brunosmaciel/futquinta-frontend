@@ -1,6 +1,48 @@
 @import 'tailwindcss';
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: futquinta --default;
+}
+@plugin "daisyui/theme" {
+  name: 'futquinta';
+  default: true; /* set as default */
 
+  --color-base-100: '#FAF9F6';
+  --color-base-200: oklch(95% 0.03 240);
+  --color-base-300: oklch(92% 0.04 240);
+  --color-base-content: oklch(10% 0.05 240);
+  --color-primary: '#1F5734';
+  --color-primary-content: oklch(10% 0.01 240);
+  --color-secondary: ' #B5F024 ';
+  --color-secondary-content: oklch(98% 0.01 200);
+  --color-accent: '#7cc94c';
+  --color-accent-content: oklch(98% 0.01 160);
+  --color-neutral: '#1C2632';
+  --color-neutral-content: oklch(98% 0.01 240);
+  --color-info: '#A9DCEA';
+  --color-info-content: oklch(98% 0.01 220);
+  --color-success: '#15B751';
+  --color-success-content: oklch(98% 0.01 140);
+  --color-warning: '#B07311' --color-warning-content: oklch(20% 0.05 80);
+  --color-error: '#FC222D';
+  --color-error-content: oklch(98% 0.01 30);
+  /* border radius */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+
+  /* base sizes */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  /* border size */
+  --border: 1px;
+
+  /* effects */
+  --depth: 1;
+  --noise: 0;
+}
+
+@layer theme, base, components, utilities;
 * {
   font-family: 'Oxygen', sans-serif;
 }
@@ -161,5 +203,81 @@ body .Toastify__progress-bar--success {
     transform: scaleX(1);
     transform-origin: 0 0;
     opacity: 1;
+  }
+}
+@layer components {
+  .player-profile-stats {
+    background-color: var(--b1);
+    width: 78px;
+    height: 78px;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .link-active {
+    background-color: var(--p); /* bg-primary */
+  }
+
+  .dashboard-h {
+    min-height: calc(100vh - 64px);
+  }
+
+  .side-bar-config-button-gap {
+    gap: calc(100vh - 164px);
+  }
+
+  .side-bar-fixed {
+    position: sticky;
+    top: 10px;
+  }
+
+  .container-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: max-content;
+    grid-template-areas:
+      'navbar navbar navbar navbar navbar'
+      'sidebar main main main main';
+  }
+
+  .logo {
+    grid-area: navbar;
+  }
+
+  .sidebar {
+    grid-area: sidebar;
+  }
+
+  .main {
+    grid-area: main;
+  }
+
+  .new-game-button {
+    transform: rotateX(var(--rotate-angle, 0deg));
+  }
+}
+
+/* Toast fora do layer */
+.toast {
+  background-color: var(--p); /* bg-primary */
+}
+
+/* Input date */
+@layer inputDate {
+  .input-date {
+    background-color: var(--b3); /* bg-base-300 */
+    color: var(--s); /* text-secondary */
+    width: auto;
+    height: auto;
+  }
+
+  .input-date::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
   }
 }

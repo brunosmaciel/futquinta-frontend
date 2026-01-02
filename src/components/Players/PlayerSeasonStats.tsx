@@ -17,66 +17,49 @@ export const PlayerSeasonStats = ({ player, year, rankPosition }: PlayerSeasonSt
     draws,
     points,
     goalsPerGame,
-    mvp,
-
     goalsConcededPerGame,
   } = getPlayerStats(player);
+
   const record = getPlayerRecord(victories, draws, defeats);
 
+  const isOutfieldPlayer = player.playerPosition === 'OUTFIELDPLAYER';
+
+  const stats = [
+    {
+      label: isOutfieldPlayer ? 'Gols' : 'Gols S',
+      value: isOutfieldPlayer ? goals : goalsConceded,
+    },
+    { label: 'Vitórias', value: victories },
+    { label: 'Derrotas', value: defeats },
+    { label: 'Empates', value: draws },
+    { label: 'Pontos', value: points },
+    {
+      label: isOutfieldPlayer ? 'Gols p/j' : 'Gols S p/j',
+      value: isOutfieldPlayer ? goalsPerGame.toFixed(2) : goalsConcededPerGame,
+    },
+    {
+      label: 'Pos',
+      value: rankPosition + '°' || '0°',
+      className: 'player-profile-stats shadow',
+    },
+    {
+      label: 'Aprov',
+      value: record + '%',
+      className: 'player-profile-stats shadow',
+    },
+  ];
+
   return (
-    <div className="flex items-center justify-center flex-col ">
-      <h1 className="font-bold mb-4 underline">Temporada {year}</h1>
-      <div className=" w-[90%] max-w-[400px] md:max-w-[700px] mx-auto flex flex-wrap justify-center items-center gap-[10px]">
-        <div className="player-profile-stats">
-          {player.playerPosition === 'OUTFIELDPLAYER' ? (
-            <>
-              <span className="text-sm">Gols</span>
-              <span className="text-xl font-bold">{goals}</span>
-            </>
-          ) : (
-            <>
-              <span className="text-sm">Gols S</span>
-              <span className="text-xl font-bold">{goalsConceded}</span>
-            </>
-          )}
-        </div>
-        <div className="player-profile-stats">
-          <span className="text-sm">Vitorias</span>
-          <span className="text-xl font-bold">{victories}</span>
-        </div>
-        <div className="player-profile-stats">
-          <span className="text-sm">Derrotas</span>
-          <span className="text-xl font-bold">{defeats}</span>
-        </div>
-        <div className="player-profile-stats">
-          <span className="text-sm">Empates</span>
-          <span className="text-xl font-bold">{draws}</span>
-        </div>
-        <div className="player-profile-stats">
-          <span className="text-sm">Pontos</span>
-          <span className="text-xl font-bold">{points}</span>
-        </div>
-        <div className="player-profile-stats">
-          {player.playerPosition === 'OUTFIELDPLAYER' ? (
-            <>
-              <span className="text-sm">Gols p/j</span>
-              <span className="text-xl font-bold">{goalsPerGame.toFixed(2)}</span>
-            </>
-          ) : (
-            <>
-              <span className="text-sm">Gols S p/j</span>
-              <span className="text-xl font-bold">{goalsConcededPerGame}</span>
-            </>
-          )}
-        </div>
-        <div className="player-profile-stats">
-          <span className="text-sm">Pos</span>
-          <span className="text-xl font-bold">{rankPosition || '-'}</span>
-        </div>
-        <div className="player-profile-stats">
-          <span className="text-sm">Aprov</span>
-          <span className="text-xl font-bold">{record}</span>
-        </div>
+    <div className="flex flex-col items-center justify-center">
+      <h1 className="mb-4 font-bold underline">Temporada {year}</h1>
+
+      <div className="mx-auto flex w-[90%] max-w-100 flex-wrap items-center justify-center gap-[10px] md:max-w-175">
+        {stats.map(({ label, value, className }) => (
+          <div key={label} className={className ?? 'player-profile-stats shadow'}>
+            <span className="text-sm">{label}</span>
+            <span className="text-xl font-bold">{value}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

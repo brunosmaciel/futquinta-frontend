@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
+/**@reference */
+
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
@@ -9,7 +11,7 @@ module.exports = {
   daisyui: {
     themes: [
       {
-        appTheme: {
+        aqua: {
           primary: '#000000',
           secondary: '#f5f5f4',
           accent: '#7cc94c',

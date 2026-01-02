@@ -1,14 +1,15 @@
-import { useRef, useState } from 'react';
-import { getPlayerGameResult } from '../../utils/getPlayerGameResult';
-import { formatInTimeZone } from 'date-fns-tz';
-import { GetStaticProps } from 'next';
+import { useState, MouseEvent, SetStateAction } from 'react';
 import Head from 'next/head';
+import { GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
+import { formatInTimeZone } from 'date-fns-tz';
 
 import { GeneralRankingAPIType, PlayerProfile } from '../../..';
-import { PlayerProfileImage } from '../../components/PlayerProfileImage';
 import { api } from '../../services/axios';
+
+import { getPlayerGameResult } from '../../utils/getPlayerGameResult';
+import { PlayerProfileImage } from '../../components/PlayerProfileImage';
 import { PlayerProfileGameResult } from '../../components/PlayerProfileGameResult';
-import { useRouter } from 'next/navigation';
 import { PlayerSeasonStats } from '../../components/Players/PlayerSeasonStats';
 import { PlayerOldSeasonStats } from '../../components/Players/PlayerOldSeasonStats';
 import { PlayerAllTimeStats } from '../../components/Players/PlayerAllTimeStats';
@@ -17,116 +18,121 @@ export type JogadorProps = {
   player: PlayerProfile;
   rankPosition: string;
 };
+
+const CURRENT_YEAR = new Date().getFullYear();
+const TOTAL_TAB_YEAR = 2021;
+
 const Jogador = ({ player, rankPosition }: JogadorProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
+  const [tabYear, setTabYear] = useState<number>(CURRENT_YEAR);
 
-  const [tabYear, setTabYear] = useState<number>(new Date().getFullYear());
-
-  const handleTabChange = (e: any) => {
-    setTabYear(e.target.tabIndex);
+  const handleTabChange = (e: MouseEvent<HTMLAnchorElement>) => {
+    setTabYear(Number(e.currentTarget.tabIndex));
   };
 
-  const games = [...player.Stats].sort((a, b) => {
-    const aDate = a.createdAt;
-    const bDate = b.createdAt;
+  const games = [...player.Stats].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
 
-    if (new Date(aDate) > new Date(bDate)) return -1;
-
-    return 0;
-  });
-
-  const oldSeasons = player.oldSeason.sort((a, b) => (a.year < b.year ? 1 : -1));
+  const oldSeasons = [...player.oldSeason].sort((a, b) => b.year - a.year);
   const currentOldSeason = oldSeasons.find((season) => season.year === tabYear);
 
   return (
     <>
       <Head>
-        <title>{`${player.name} #${player.shirtNumber}`}</title>
+        <title>{`${player.name} #${player.shirtNumber || '00'}`}</title>
         <meta property="og:url" content={`/jogadores/${player.slug}`} />
       </Head>
+
       <div className="flex flex-col pt-20 md:pt-4">
-        <div className="flex flex-col items-center gap-5 py-2  w-[90%] mx-auto cursor-pointer">
-          {player?.role === 'GUEST' ? (
-            <span className="indicator-item badge badge-primary">Convidado</span>
-          ) : null}
-          <PlayerProfileImage player={player} setIsOpen={setIsOpen} />
+        {/* Header */}
+        <div className="flex flex-col items-center gap-5 py-2 w-[90%] mx-auto">
+          {player.role === 'GUEST' && <span className="badge badge-primary">Convidado</span>}
+
+          <PlayerProfileImage player={player} />
 
           <h1 className="text-xl font-bold">
             {player.name} #{player.shirtNumber || '00'}
           </h1>
         </div>
-        {/* {estatisticas} */}
-        <div className="flex flex-col items-center px-2">
-          <div className="tabs">
+
+        {/* Estatísticas */}
+        <div className="flex flex-col items-center ">
+          <div className="tabs tabs-border p-4">
             <a
-              tabIndex={new Date().getFullYear()}
-              className={`tab tab-lifted  ${
-                tabYear === new Date().getFullYear() ? 'tab-active' : 'tab'
-              } `}
+              tabIndex={CURRENT_YEAR}
+              className={`tab tab-lifted ${tabYear === CURRENT_YEAR ? 'tab-active' : ''}`}
               onClick={handleTabChange}
             >
-              {'2026'}
+              {CURRENT_YEAR}
             </a>
-            {oldSeasons.map((season, i, key) => (
+
+            {oldSeasons.map((season) => (
               <a
+                key={season.year}
                 tabIndex={season.year}
-                className={`tab tab-lifted ${tabYear === season.year ? 'tab-active' : 'tab'} `}
+                className={`tab tab-lifted ${tabYear === season.year ? 'tab-active' : ''}`}
                 onClick={handleTabChange}
               >
                 {season.year}
               </a>
             ))}
+
             <a
-              tabIndex={2021}
-              className={`tab tab-lifted  ${tabYear === 2021 ? 'tab-active' : 'tab'} `}
+              tabIndex={TOTAL_TAB_YEAR}
+              className={`tab tab-lifted ${tabYear === TOTAL_TAB_YEAR ? 'tab-active' : ''}`}
               onClick={handleTabChange}
             >
-              {'Total'}
+              Total
             </a>
           </div>
 
-          {tabYear === new Date().getFullYear() ? (
-            <PlayerSeasonStats year={2025} player={player} rankPosition={rankPosition} />
-          ) : null}
+          {tabYear === CURRENT_YEAR && (
+            <PlayerSeasonStats year={CURRENT_YEAR} player={player} rankPosition={rankPosition} />
+          )}
 
-          {currentOldSeason ? (
+          {currentOldSeason && (
             <PlayerOldSeasonStats
               season={currentOldSeason}
               playerPosition={player.playerPosition}
             />
-          ) : null}
-          {tabYear === 2021 && <PlayerAllTimeStats year={2021} player={player} />}
+          )}
+
+          {tabYear === TOTAL_TAB_YEAR && <PlayerAllTimeStats player={player} />}
         </div>
-        <div className="divider"></div>
-        <div className="w-[95%] max-w-[400px] md:max-w-[700px] mx-auto">
-          <div className="w-[95%] mx-auto text-lg font-bold mb-4 flex justify-center ">
-            <h2>Jogos</h2>
-          </div>
+
+        <div className="divider" />
+
+        {/* Jogos */}
+        <div className="w-[95%] max-w-175 mx-auto">
+          <h2 className="text-lg font-bold mb-4 text-center">Jogos</h2>
 
           {games.map((stat) => (
             <div
               key={stat.Game.id}
               onClick={() => router.push(`/jogos/${stat.gameId}`)}
-              className="h-14  space-y-2 w-[95%] max-w-[400px] md:max-w-[700px] mx-auto flex gap-2 flex-col justify-center my-4 cursor-pointer hover:-translate-y-1 transition-all"
+              className="my-4 cursor-pointer hover:-translate-y-1 transition-all"
             >
-              <div className="flex my-2 w-full p-2 hover:bg-base-200 transition-all rounded-md ">
+              <div className="flex w-full p-2 hover:bg-base-200 rounded-md">
                 <div className="flex flex-col items-center w-24">
                   <p>{formatInTimeZone(stat.Game.gameDate, 'America/Sao_Paulo', 'dd/MM')}</p>
                   <p className="text-sm">Rodada {stat.Game.fixture}</p>
                 </div>
-                <div className="divider divider-horizontal"></div>
+
+                <div className="divider divider-horizontal" />
+
                 <div className="flex-1">
                   <div className="flex justify-between w-20">
-                    <p className="text-white">Preto </p>
-                    <p className="text-white">{stat.Game.greenGoals}</p>
+                    <span>Preto</span>
+                    <span>{stat.Game.greenGoals}</span>
                   </div>
                   <div className="flex justify-between w-20">
-                    <p className="text-white">Branco</p>
-                    <p className="text-white">{stat.Game.whiteGoals}</p>
+                    <span>Branco</span>
+                    <span>{stat.Game.whiteGoals}</span>
                   </div>
                 </div>
-                <div className=" h-full flex items-center justify-center">
+
+                <div className="flex items-center">
                   <PlayerProfileGameResult
                     result={getPlayerGameResult(stat.currentTeam, stat.Game.winnerTeam)}
                   />
@@ -140,15 +146,14 @@ const Jogador = ({ player, rankPosition }: JogadorProps) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const data = await Promise.all([
-    await api.get<PlayerProfile>(`/players/${context?.params?.slug}`),
-    await api.get<GeneralRankingAPIType[]>('/rankings/general-ranking'),
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const [playerRes, rankingRes] = await Promise.all([
+    api.get<PlayerProfile>(`/players/${params?.slug}`),
+    api.get<GeneralRankingAPIType[]>('/rankings/general-ranking'),
   ]);
 
-  const player = data[0].data;
-
-  const rankPosition = data[1].data.filter((pl) => pl?.name === player?.name)[0]?.position || '-';
+  const player = playerRes.data;
+  const rankPosition = rankingRes.data.find((pl) => pl.name === player.name)?.position ?? '-';
 
   return {
     props: {
@@ -158,18 +163,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
     revalidate: 10,
   };
 };
-export async function getStaticPaths() {
+
+export const getStaticPaths = async () => {
   const { data: players } = await api.get<PlayerProfile[]>('/players');
 
   return {
-    paths: players.map((player) => {
-      return {
-        params: {
-          slug: player.slug,
-        },
-      };
-    }),
+    paths: players.map((player) => ({
+      params: { slug: player.slug },
+    })),
     fallback: false,
   };
-}
+};
+
 export default Jogador;

@@ -1,74 +1,65 @@
 import { PlayerProfile } from '../../..';
 import { getPlayerRecord } from '../../functions/functions';
-import { getPlayerStats } from '../../functions/getPlayerStats';
 
 export type PlayerAllTimeStatsProps = {
-  year: number;
   player: PlayerProfile;
 };
 
-export const PlayerAllTimeStats = ({ player, year }: PlayerAllTimeStatsProps) => {
-  const { goals, goalsConceded, victories, defeats, draws } = player;
+type StatCardProps = {
+  label: string;
+  value: React.ReactNode;
+};
+
+const StatCard = ({ label, value }: StatCardProps) => (
+  <div className="player-profile-stats shadow">
+    <span className="text-sm">{label}</span>
+    <span className="text-xl font-bold">{value}</span>
+  </div>
+);
+
+export const PlayerAllTimeStats = ({ player }: PlayerAllTimeStatsProps) => {
+  const { goals, goalsConceded, victories, defeats, draws, playerPosition } = player;
+  const safeGoalsConceded = goalsConceded ?? 0;
+
+  const games = victories + defeats + draws;
+  const points = victories * 3 + draws;
   const record = getPlayerRecord(victories, draws, defeats);
 
-  const points = victories * 3 + draws;
-  const goalsPerGame = goals / (victories + defeats + draws) || 0.0;
-  const goalsConcededPerGame = goalsConceded || 0 / (victories + defeats + draws) || 0.0;
+  const isOutfieldPlayer = playerPosition === 'OUTFIELDPLAYER';
+
+  const goalStats = isOutfieldPlayer
+    ? {
+        total: goals,
+        label: 'Gols',
+        perGameLabel: 'Gols p/j',
+        perGame: games > 0 ? (goals / games).toFixed(2) : '0.00',
+      }
+    : {
+        total: goalsConceded,
+        label: 'Gols S',
+        perGameLabel: 'Gols S p/j',
+        perGame: games > 0 ? (safeGoalsConceded / games).toFixed(2) : '0.00',
+      };
+
+  const stats = [
+    { label: goalStats.label, value: goalStats.total },
+    { label: 'Vitórias', value: victories },
+    { label: 'Derrotas', value: defeats },
+    { label: 'Empates', value: draws },
+    { label: 'Pontos', value: points },
+    { label: goalStats.perGameLabel, value: goalStats.perGame },
+    { label: 'Jogos', value: games },
+    { label: 'Aprov', value: record },
+  ];
 
   return (
-    <div className="flex items-center justify-center flex-col ">
-      <h1 className="font-bold mb-4 underline">Temporada {year}</h1>
-      <div className=" w-[90%] max-w-[400px] md:max-w-[700px] mx-auto flex flex-wrap justify-center items-center gap-[10px]">
-        <div className="player-profile-stats">
-          {player.playerPosition === 'OUTFIELDPLAYER' ? (
-            <>
-              <span className="text-sm">Gols</span>
-              <span className="text-xl font-bold">{goals}</span>
-            </>
-          ) : (
-            <>
-              <span className="text-sm">Gols S</span>
-              <span className="text-xl font-bold">{goalsConceded}</span>
-            </>
-          )}
-        </div>
-        <div className="player-profile-stats">
-          <span className="text-sm">Vitorias</span>
-          <span className="text-xl font-bold">{victories}</span>
-        </div>
-        <div className="player-profile-stats">
-          <span className="text-sm">Derrotas</span>
-          <span className="text-xl font-bold">{defeats}</span>
-        </div>
-        <div className="player-profile-stats">
-          <span className="text-sm">Empates</span>
-          <span className="text-xl font-bold">{draws}</span>
-        </div>
-        <div className="player-profile-stats">
-          <span className="text-sm">Pontos</span>
-          <span className="text-xl font-bold">{points}</span>
-        </div>
-        <div className="player-profile-stats">
-          {player.playerPosition === 'OUTFIELDPLAYER' ? (
-            <>
-              <span className="text-sm">Gols p/j</span>
-              <span className="text-xl font-bold">{goalsPerGame.toFixed(2)}</span>
-            </>
-          ) : (
-            <>
-              <span className="text-sm">Gols S p/j</span>
-              <span className="text-xl font-bold">{goalsConcededPerGame}</span>
-            </>
-          )}
-        </div>
-        <div className="player-profile-stats">
-          <span className="text-sm">Jogos</span>
-          <span className="text-xl font-bold">{victories + defeats + draws}</span>
-        </div>
-        <div className="player-profile-stats">
-          <span className="text-sm">Aprov</span>
-          <span className="text-xl font-bold">{record}</span>
-        </div>
+    <div className="flex flex-col items-center justify-center">
+      <h1 className="mb-4 font-bold underline">Historico</h1>
+
+      <div className="mx-auto flex w-[90%] max-w-[400px] md:max-w-[700px] flex-wrap items-center justify-center gap-[10px]">
+        {stats.map(({ label, value }) => (
+          <StatCard key={label} label={label} value={value} />
+        ))}
       </div>
     </div>
   );

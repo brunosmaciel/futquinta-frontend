@@ -23,9 +23,9 @@ const Layout = ({ children }: LayoutProps) => {
         <Head>
           <title>FUTQUINTA - Admin</title>
         </Head>
-        <main className="container-grid dashboard-h">
+        <main className="container-grid min-height: calc(100vh - 64px)">
           <div className="logo container mx-auto ">
-            <div className="navbar bg-base-100 px-0 ">
+            <div className="navbar  px-0 ">
               <div className="navbar-start">
                 <Link className="btn btn-ghost normal-case text-xl " href={'/'}>
                   <Logo className="h-10 w-10" />
@@ -45,7 +45,7 @@ const Layout = ({ children }: LayoutProps) => {
             <SideBar />
           </>
 
-          <main className="main w-full md:w-[95%]  dashboard-h ">{children}</main>
+          <main className="main  w-full md:w-[95%]  dashboard-h ">{children}</main>
         </main>
       </>
     );
@@ -56,7 +56,7 @@ const Layout = ({ children }: LayoutProps) => {
         <title>FUTQUINTA</title>
       </Head>
       <NavBar>
-        <main className="container mx-auto min-h-screen flex flex-col justify-between main-container-height">
+        <main className="container  mx-auto min-h-screen flex flex-col justify-between main-container-height">
           {children}
         </main>
       </NavBar>

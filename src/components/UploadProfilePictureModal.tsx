@@ -1,9 +1,8 @@
 import { useForm, useFieldArray } from 'react-hook-form';
 
-
 import Image from 'next/image';
 import { useSWRConfig } from 'swr';
-import {toast} from 'react-hot-toast'
+import { toast } from 'react-hot-toast';
 
 import { PlayerProfile } from '../..';
 import { api } from '../services/axios';
@@ -45,12 +44,11 @@ const UpdateProfilePictureModal = ({ player }: UploadProfilePictureModal) => {
       await api.post(`players/upload/${player.id}`, formData);
       mutate(`/players/${player.slug}`);
     } catch (err: any) {
-      toast.error(err.message)
- 
+      toast.error(err.message);
     }
   };
   return (
-    <div className="gap-[5px] flex flex-col items-center">
+    <div className="gap-1.25 flex flex-col items-center">
       <i className="text-sm relative">Clique na foto para editar</i>
       <label htmlFor="my-modal-3" className="">
         <Image

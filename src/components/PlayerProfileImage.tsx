@@ -1,11 +1,9 @@
 import { SetStateAction } from 'react';
+import Image from 'next/image';
+
 import { champions } from '../../public/campeoes';
 import { TournamentChampionsBadge } from '../components/tournamentChampionsBadge';
-import { Crown } from 'lucide-react';
-import coroa from '../../public/crown.svg'
-
-
-import Image from 'next/image';
+import coroa from '../../public/crown.svg';
 
 import { PlayerProfile } from '../..';
 import { profilePicturePlaceholder } from '../utils/profilePicturePlaceholder';
@@ -13,51 +11,53 @@ import { cn } from '../utils/cn';
 
 interface IPlayerProfileImageProps {
   player: PlayerProfile;
-  setIsOpen: (value: SetStateAction<boolean>) => void;
 }
 
-export function PlayerProfileImage({ player, setIsOpen }: IPlayerProfileImageProps) {
+export function PlayerProfileImage({ player }: IPlayerProfileImageProps) {
+  const playerChampions = champions.filter((tournamentPlayer) => tournamentPlayer.id === player.id);
+
+  const hasChampion = playerChampions.length > 0;
+
   if (!player.currentPicture) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        className="rounded-full w-32 h-32 border-2"
         src={profilePicturePlaceholder(player.slug)}
-        alt=""
+        alt="Foto de perfil"
+        className="w-32 h-32 border-2 "
       />
     );
   }
 
+  const picture =
+    player.currentPicture === 'WHITE' ? player.whiteShirtpicture : player.greenShirtpicture;
+
+  if (!picture) return null;
+
   return (
     <>
-      <div
-        className={` flex flex-col items-center justify-center rounded-full w-38 h-38 ${champions.map(
-          (tournarmentPlayer) =>
-            tournarmentPlayer.id === player.id ? cn('border-[#ffbf00] border-4') : null
-        )}`}
-      >
-    {player.slug === 'otavio' && <div className="absolute top-16 md:top-2 z-10  rounded-full p-[1px] shadow-md">
-      <Image src={coroa} alt='1' className="w-24 h-24 text-white" />
-    </div>}
+      <div className={cn('relative flex items-center justify-center  w-46 h-46')}>
+        {player.slug === 'otavio' && (
+          <div className="absolute -top-6 z-10">
+            <Image src={coroa} alt="Coroa" className="w-24 h-24" />
+          </div>
+        )}
+
         <Image
-          src={
-            player.currentPicture === 'WHITE'
-              ? player.whiteShirtpicture || ''
-              : player.greenShirtpicture || ''
-          }
+          src={picture}
           alt="Foto de perfil do jogador"
           width={300}
           height={300}
-          className="rounded-full w-36 h-36 border-2"
-          onClick={() => setIsOpen(true)}
+          className="w-full h-full border-2  cursor-pointer "
         />
       </div>
-      {champions.map((tournamentPlayer) =>
-        tournamentPlayer.id === player.id ? (
-          <div key={player.id} className="flex flex-col justify-center  flex-grow">
-            <TournamentChampionsBadge type={tournamentPlayer.type as string} />
-          </div>
-        ) : null
+
+      {hasChampion && (
+        <div className="flex flex-col justify-center grow gap-3">
+          {playerChampions.map((champion, index) => (
+            <TournamentChampionsBadge key={`${champion.type}-${index}`} type={champion.type} />
+          ))}
+        </div>
       )}
     </>
   );
