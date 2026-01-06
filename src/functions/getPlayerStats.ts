@@ -1,4 +1,4 @@
-import { PlayerProfile } from '../..';
+import { BolaMurcha, PlayerProfile } from '../..';
 import { getGamesRecord } from './functions';
 
 export interface OutfieldProfileStats {
@@ -17,6 +17,7 @@ export interface OutfieldProfileStats {
   totalGames: number;
   substitutionPerGame?: number;
   mostTeamPlayed?: number;
+  bolaMurcha: number;
 }
 
 export function getPlayerStats(player: PlayerProfile): OutfieldProfileStats {
@@ -27,16 +28,16 @@ export function getPlayerStats(player: PlayerProfile): OutfieldProfileStats {
 
   const substitutions = Stats.map((stat) => stat.substituition).reduce(
     (acc, current) => acc + current,
-    0
+    0,
   );
   const victories = Stats.filter((stat) => stat.currentTeam === stat.Game.winnerTeam).length;
 
   const defeats = Stats.filter(
-    (stat) => stat.currentTeam !== stat.Game.winnerTeam && stat.Game.winnerTeam !== 'DRAW'
+    (stat) => stat.currentTeam !== stat.Game.winnerTeam && stat.Game.winnerTeam !== 'DRAW',
   ).length;
 
   const draws = Stats.filter(
-    (stat) => stat.currentTeam !== stat.Game.winnerTeam && stat.Game.winnerTeam === 'DRAW'
+    (stat) => stat.currentTeam !== stat.Game.winnerTeam && stat.Game.winnerTeam === 'DRAW',
   ).length;
 
   const totalGames = Stats.filter((stat) => stat.Game).length;
@@ -48,6 +49,7 @@ export function getPlayerStats(player: PlayerProfile): OutfieldProfileStats {
   const gamesRecord = getGamesRecord(totalGames, victories, draws) || 0.0;
 
   const mvp = player.MOTM.length;
+  const bolaMurcha = player?.BolaMurcha?.length || 0;
 
   const goalKeeper = Stats.filter((stat) => stat.function === 'GOALKEEPER');
 
@@ -79,6 +81,7 @@ export function getPlayerStats(player: PlayerProfile): OutfieldProfileStats {
       gamesRecord,
       mvp,
       totalGames,
+      bolaMurcha,
     };
   }
   return {
@@ -95,5 +98,6 @@ export function getPlayerStats(player: PlayerProfile): OutfieldProfileStats {
     gamesRecord,
     mvp,
     totalGames,
+    bolaMurcha,
   };
 }

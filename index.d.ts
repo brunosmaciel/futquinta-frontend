@@ -51,6 +51,7 @@ export type PlayerProfile = {
   createdAt: Date;
   updatedAt: Date;
   role: PlayerRole;
+  BolaMurcha: BolaMurcha[];
 };
 
 /**
@@ -73,8 +74,16 @@ export type GameType = {
   gamePicture: string | null;
   gameDate: string;
   fixture: number;
+  BolaMurcha: BolaMurcha[];
 };
-
+type BolaMurcha = {
+  id: number;
+  playerId: number;
+  gameid: number;
+  player: {
+    name: string;
+  };
+};
 /**
  * Model PlayerStats
  *

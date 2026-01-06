@@ -7,55 +7,46 @@ import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { api } from '../../../services/axios';
 import { Button } from '../../Button';
 
-export type EditMOTMType = {
+export type EditBolaMurchaType = {
   playerId: number;
-  gameId: number;
-  team: 'WHITE' | 'GREEN';
+  bolaMurchaId: number;
   name: string;
 };
 
-type EditMOTMProps = {
+type EditBolaMurchaProps = {
   game: GameType;
   setEditMode: Dispatch<SetStateAction<boolean>>;
 };
 
-type EditMOTMInputs = {
-  motm: string;
+type EditBolaMurchaInputs = {
+  bolaMurcha: string;
 };
 
-export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
-  const { register, handleSubmit } = useForm<EditMOTMInputs>();
+export const EditBolaMurcha = ({ game, setEditMode }: EditBolaMurchaProps) => {
+  const { register, handleSubmit } = useForm<EditBolaMurchaInputs>();
   const { isButtonLoading, setButtonLoading } = useButtonLoading();
 
-  const currentMOTM = game.MOTM[0];
+  const currentBolaMurcha = game.BolaMurcha[0];
+
   const players = game.players;
 
-  const handleEditMOTM = async (data: EditMOTMInputs) => {
-    if (!data.motm) {
+  const handleEditBolaMurcha = async (data: EditBolaMurchaInputs) => {
+    if (!data.bolaMurcha) {
       setEditMode(false);
       return;
     }
 
-    const newMOTM = JSON.parse(data.motm) as EditMOTMType;
+    const newBolaMurcha = JSON.parse(data.bolaMurcha) as EditBolaMurchaType;
 
-    // Nenhuma alteração
-    if (newMOTM.playerId === currentMOTM.player.id) {
-      setEditMode(false);
-      return;
-    }
-
-    setButtonLoading(true);
     try {
-      // Cria novo MOTM
-      await api.post(`/motm/${newMOTM.gameId}/${newMOTM.playerId}`, {
-        team: newMOTM.team,
-      });
-
-      // Remove MOTM antigo
-      await api.delete(`/motm/${currentMOTM.id}`);
-
+      const { data: novoBolaMurcha } = await api.put(
+        `/bola-murcha/${game.BolaMurcha[0].id}/${newBolaMurcha.playerId}`,
+      );
+      // Nenhuma alteração
+      console.log(novoBolaMurcha);
       await mutate(`/games/${game.id}`);
       setEditMode(false);
+      setButtonLoading(true);
     } catch (err: any) {
       alert(err.message);
     } finally {
@@ -66,41 +57,37 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
   return (
     <form
       className="scale-in-hor-left flex w-96 flex-col self-center items-center gap-4"
-      onSubmit={handleSubmit(handleEditMOTM)}
+      onSubmit={handleSubmit(handleEditBolaMurcha)}
     >
       <h1 className="font-bold text-md">
         <i>Editar</i>
       </h1>
 
-      <div className="w-full bg-[#131A21] rounded-2xl px-4 py-3">
+      <div className="w-full  rounded-2xl px-4 py-3">
         <select
-          {...register('motm')}
+          {...register('bolaMurcha')}
           className="select select-bordered select-sm w-full"
           defaultValue={JSON.stringify({
             gameId: game.id,
-            playerId: currentMOTM.playerProfileId,
-            team: currentMOTM.team,
-            name: currentMOTM.player.name,
+            playerId: currentBolaMurcha.playerId,
+            name: currentBolaMurcha.player.name,
           })}
         >
           <option
             value={JSON.stringify({
               gameId: game.id,
-              playerId: currentMOTM.playerProfileId,
-              team: currentMOTM.team,
-              name: currentMOTM.player.name,
+              playerId: currentBolaMurcha.playerId,
+              name: currentBolaMurcha.player.name,
             })}
           >
-            {currentMOTM.player.name}
+            {currentBolaMurcha.player.name}
           </option>
 
           {players.map((player) => (
             <option
               key={player.id}
               value={JSON.stringify({
-                gameId: player.gameId,
                 playerId: player.playerId,
-                team: player.currentTeam,
                 name: player.name,
               })}
             >

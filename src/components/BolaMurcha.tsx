@@ -4,39 +4,39 @@ import { useSWRConfig } from 'swr';
 import { GameType, PlayerProfile } from '../..';
 import { api } from '../services/axios';
 
-export type MOTMContainerProps = {
+export type BolaMurchaContainerProps = {
   players?: PlayerProfile[];
   game: GameType;
 };
 
-type MOTMType = {
+type BolaMurchaType = {
   playerId: number;
-  gameId: number;
-  team: 'WHITE' | 'GREEN';
+  gameid: number;
+  player: {
+    name: string;
+  };
   name: string;
 };
 
-const MOTMContainer = ({ game }: MOTMContainerProps) => {
+const BolaMurchaCotainer = ({ game }: BolaMurchaContainerProps) => {
   const { mutate } = useSWRConfig();
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedMOTM, setSelectedMOTM] = useState<MOTMType | null>(null);
+  const [selectedBolaMurcha, setSelectedBolaMurcha] = useState<BolaMurchaType | null>(null);
 
   const players = game.players;
 
   const handleSave = async () => {
-    if (!selectedMOTM) {
-      alert('Selecione o craque da partida');
+    if (!selectedBolaMurcha) {
+      alert('Selecione o BolaMurcha da partida');
       return;
     }
 
     setIsLoading(true);
     try {
-      await api.post(`/motm/${selectedMOTM.gameId}/${selectedMOTM.playerId}`, {
-        team: selectedMOTM.team,
-      });
+      await api.post(`/motm/${selectedBolaMurcha.gameid}/${selectedBolaMurcha.playerId}`);
 
       await mutate(`games/${game.id}`);
-      setSelectedMOTM(null);
+      setSelectedBolaMurcha(null);
     } catch (err: any) {
       alert(err.message);
     } finally {
@@ -46,23 +46,23 @@ const MOTMContainer = ({ game }: MOTMContainerProps) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === 'Selecione') {
-      setSelectedMOTM(null);
+      setSelectedBolaMurcha(null);
       return;
     }
 
-    const value = JSON.parse(e.target.value) as MOTMType;
-    setSelectedMOTM(value);
+    const value = JSON.parse(e.target.value) as BolaMurchaType;
+    setSelectedBolaMurcha(value);
   };
 
-  const currentMOTM = game.MOTM.length === 1 ? game.MOTM[0] : null;
+  const currentBolaMurcha = game.BolaMurcha.length === 1 ? game.BolaMurcha[0] : null;
 
   return (
     <div className="flex w-96 flex-col self-center items-center gap-4">
-      <h1 className="font-bold text-xl">Craque da partida</h1>
+      <h1 className="font-bold text-xl">bola murcha</h1>
 
-      <div className="w-[90%] bg-[#131A21] rounded-2xl px-4 py-3 flex justify-center">
-        {currentMOTM ? (
-          <span className="text-lg font-semibold">{currentMOTM.player.name}</span>
+      <div className="w-[90%]  rounded-2xl px-4 py-3 flex justify-center">
+        {currentBolaMurcha ? (
+          <span className="text-lg font-semibold">{currentBolaMurcha.player.name}</span>
         ) : (
           <select
             className="select select-bordered select-sm w-full"
@@ -87,7 +87,7 @@ const MOTMContainer = ({ game }: MOTMContainerProps) => {
         )}
       </div>
 
-      {currentMOTM ? (
+      {currentBolaMurcha ? (
         <button className="btn btn-xs btn-outline" onClick={() => mutate(`games/${game.id}`)}>
           Editar
         </button>
@@ -104,4 +104,4 @@ const MOTMContainer = ({ game }: MOTMContainerProps) => {
   );
 };
 
-export { MOTMContainer };
+export { BolaMurchaCotainer };

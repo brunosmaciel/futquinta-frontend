@@ -48,7 +48,7 @@ const GoalkeepersRankings = ({ players, numberOfGames }: GeneralPlacingProps) =>
   const goalkeepers = [...goalkeepers1, ...goalkeepers2];
   return (
     <div className="h-screen">
-      <div className="h-[44px] justify-between mx-1 my-4 text-[12px] font-light italic flex  lg:justify-normal lg:gap-10 ">
+      <div className="h-11 justify-between mx-1 my-4 text-[12px] font-light italic flex  lg:justify-normal lg:gap-10 ">
         <div className="flex flex-col gap-2">
           <span>
             <b>Gols S*</b> Gols sofridos
@@ -87,7 +87,7 @@ const GoalkeepersRankings = ({ players, numberOfGames }: GeneralPlacingProps) =>
                     <td>{totalGames}</td>
                     <td>{goalsConceded}</td>
                   </tr>
-                )
+                ),
               )}
             </tbody>
           </table>

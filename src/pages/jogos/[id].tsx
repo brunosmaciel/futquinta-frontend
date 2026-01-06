@@ -66,6 +66,9 @@ const Jogo = () => {
           <ShirtIcon size={18} />
           {player.player.shirtNumber} - {player.name}
           {motmName === player.name && <span className="badge badge-ghost ml-4">Craque</span>}
+          {data.BolaMurcha[0].player.name === player.name && (
+            <span className="badge badge-ghost ml-4">Bagre</span>
+          )}
         </p>
 
         <div className="flex  items-center gap-2">

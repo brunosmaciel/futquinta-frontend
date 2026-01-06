@@ -14,6 +14,8 @@ import { useButtonLoading } from '../../../hooks/useButtonLoading';
 import { ChoseTeamContext } from '../../../hooks/useSelectPlayer';
 import { api } from '../../../services/axios';
 import { Button } from '../../../components/Button';
+import { BolaMurchaCotainer } from '../../../components/BolaMurcha';
+import { BolaMurchaWrapper } from '../../../components/Dashboard/BolaMurcha/BolaMurchaWrapper';
 
 interface IGamePageProps {
   id: number;
@@ -23,6 +25,7 @@ export default function GamePage({ id }: IGamePageProps) {
   const { players: playersList, reset } = useContext(ChoseTeamContext);
   const { data: game, isLoading } = useSWR<GameType>(`/games/${id}`);
   const { data } = useSWR<PlayerProfile[]>('/players');
+  console.log(game?.BolaMurcha);
 
   useEffect(() => {
     reset();
@@ -98,7 +101,12 @@ export default function GamePage({ id }: IGamePageProps) {
                   </Button>
                 )}
 
-                {game.status === 'FINISHED' && <MOTMWrapper game={game} />}
+                {game.status === 'FINISHED' && (
+                  <div>
+                    <MOTMWrapper game={game} />
+                    <BolaMurchaWrapper game={game} />
+                  </div>
+                )}
               </div>
               <div className="w-full h-full  gap-2 sm:gap-0 flex flex-wrap">
                 <div className="flex-1 p-2 ">
