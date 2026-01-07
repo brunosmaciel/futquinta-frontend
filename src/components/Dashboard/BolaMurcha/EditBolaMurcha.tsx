@@ -43,7 +43,7 @@ export const EditBolaMurcha = ({ game, setEditMode }: EditBolaMurchaProps) => {
         `/bola-murcha/${game.BolaMurcha[0].id}/${newBolaMurcha.playerId}`,
       );
       // Nenhuma alteração
-      console.log(novoBolaMurcha);
+   
       await mutate(`/games/${game.id}`);
       setEditMode(false);
       setButtonLoading(true);

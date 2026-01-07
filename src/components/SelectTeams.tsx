@@ -14,7 +14,7 @@ export const SelectPlayers = ({ team, handleTeamSelection, players }: SelectPlay
       value={team}
     >
       <option defaultValue={team.toLocaleLowerCase().slice(0, 1)[0].toUpperCase()}>
-        {team === 'GREEN' ? 'Time Preto' : 'Time Branco'}
+        {team === 'GREEN' ? 'Verde Escuro' : 'Verde Claro'}
       </option>
       {players.map((player) => (
         <option

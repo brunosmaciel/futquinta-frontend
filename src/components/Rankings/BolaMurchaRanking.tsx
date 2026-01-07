@@ -25,7 +25,7 @@ const BolaMurchaRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps)
       (a, b) =>
         b.bolaMurcha - a.bolaMurcha || a.totalGames - b.totalGames || a.gamesRecord - b.gamesRecord,
     )
-    .filter((player) => player.mvp > 0)
+    .filter((player) => player.bolaMurcha > 0)
     .filter((player) => player.totalGames >= fortyPerCentGames);
 
   return (

@@ -1,6 +1,6 @@
 import { ReactNode, useContext, useEffect, useRef } from 'react';
 
-import { HomeIcon, MedalIcon, ShirtIcon } from 'lucide-react';
+import { HomeIcon, BookA, ShirtIcon, MedalIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -69,13 +69,16 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
               <li>
                 <Link href="/rankings">Rankings</Link>
               </li>
+              <li>
+                <Link href="/rankings">Regulamento</Link>
+              </li>
             </ul>
           </div>
           <div className="flex-none hidden lg:block">
             {isLoggedIn ? (
-              <div className="navbar-end mr-2">
-                <Link href={'/dashboard'} className="btn btn-neutral text-secondary">
-                  Admin
+              <div className="navbar-end ml-4">
+                <Link href={'/dashboard'} className="btn btn-outline btn-sm">
+                  Editar
                 </Link>
               </div>
             ) : (
@@ -95,7 +98,7 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
           <div className=" flex items-center gap-2">
             <Link className="btn btn-ghost normal-case text-xl " href={'/'}>
               <Logo className="h-10 w-10" />
-              FUTQUINTA21
+              FUTQUINTA
             </Link>
 
             {isLoggedIn ? (
@@ -125,6 +128,11 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
           <li className="text-lg mt-2">
             <Link href={`/rankings`}>
               <MedalIcon size={20} /> Rankings
+            </Link>
+          </li>
+          <li className="text-lg mt-2">
+            <Link href={`/rankings`}>
+              <BookA size={20} /> Regulamento
             </Link>
           </li>
           <li className="text-lg mt-2 fixed bottom-5">
