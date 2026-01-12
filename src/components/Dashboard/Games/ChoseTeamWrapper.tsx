@@ -22,6 +22,8 @@ export const ChoseTeamWrapper = ({ players, handleStartGame, isLoading }: ChoseT
   const gameDate = watch('gameDate');
   const isShowingGuests = watch('showGuest');
   const filterValue = watch('filter');
+  const permanentPlayers = players.filter((player) => player.role === 'PERMANENT');
+  const guestPlayer = players.filter((player) => player.role === 'GUEST');
 
   const filteredPlayers = players.filter((player) => {
     if (isShowingGuests) return player;
@@ -61,25 +63,25 @@ export const ChoseTeamWrapper = ({ players, handleStartGame, isLoading }: ChoseT
         <div className="flex-1">
           <h1 className="text-xl flex items-center gap-2 border-b-[1px]  py-2">
             {' '}
-            <p className="w-6 h-6 rounded-full bg-white"></p>Equipe Branca
+            <p className="w-6 h-6 rounded-full bg-white"></p>Verde Claro
           </h1>
           {filterValue ? (
             <>
               {filteredPlayers
-                .sort((a, b) => (a.name < b.name ? 1 : -1))
+                .sort((a, b) => (a.shirtNumber < b.shirtNumber ? 1 : -1))
                 .sort((a, b) => (a.playerPosition > b.playerPosition ? 1 : -1))
                 .filter((player) => player.name.includes(filterValue.charAt(0).toUpperCase()))
                 .map((player) => (
-                  <ChoseTeam key={player.id} player={player} team={'WHITE'} />
+                  <ChoseTeam role={player.role} key={player.id} player={player} team={'WHITE'} />
                 ))}
             </>
           ) : (
             <>
               {players
-                .sort((a, b) => (a.name < b.name ? 1 : -1))
+                .sort((a, b) => (a.shirtNumber < b.shirtNumber ? 1 : -1))
                 .sort((a, b) => (a.playerPosition > b.playerPosition ? 1 : -1))
                 .map((player) => (
-                  <ChoseTeam key={player.id} player={player} team={'WHITE'} />
+                  <ChoseTeam role={player.role} key={player.id} player={player} team={'WHITE'} />
                 ))}
             </>
           )}
@@ -87,25 +89,32 @@ export const ChoseTeamWrapper = ({ players, handleStartGame, isLoading }: ChoseT
         <div className="flex-1">
           <h1 className="text-xl flex items-center gap-2 border-b-[1px]  py-2">
             {' '}
-            <p className="w-6 h-6 rounded-full bg-green-800 "></p>Equipe Preto
+            <p className="w-6 h-6 rounded-full bg-green-800 "></p>Verde Escuro
           </h1>
           {filterValue ? (
             <>
               {filteredPlayers
-                .sort((a, b) => (a.name < b.name ? 1 : -1))
+                .sort((a, b) => (a.shirtNumber < b.shirtNumber ? 1 : -1))
                 .sort((a, b) => (a.playerPosition > b.playerPosition ? 1 : -1))
                 .filter((player) => player.name.includes(filterValue.charAt(0).toUpperCase()))
                 .map((player) => (
-                  <ChoseTeam key={player.id} player={player} team={'GREEN'} />
+                  <ChoseTeam role={player.role} key={player.id} player={player} team={'GREEN'} />
                 ))}
             </>
           ) : (
             <>
-              {players
-                .sort((a, b) => (a.name < b.name ? 1 : -1))
+              {permanentPlayers
+                .sort((a, b) => (a.shirtNumber < b.shirtNumber ? 1 : -1))
                 .sort((a, b) => (a.playerPosition > b.playerPosition ? 1 : -1))
                 .map((player) => (
-                  <ChoseTeam key={player.id} player={player} team={'GREEN'} />
+                  <ChoseTeam role={player.role} key={player.id} player={player} team={'GREEN'} />
+                ))}
+              <span>Convidados</span>
+              {guestPlayer
+                .sort((a, b) => (a.shirtNumber < b.shirtNumber ? 1 : -1))
+                .sort((a, b) => (a.playerPosition > b.playerPosition ? 1 : -1))
+                .map((player) => (
+                  <ChoseTeam role={player.role} key={player.id} player={player} team={'GREEN'} />
                 ))}
             </>
           )}

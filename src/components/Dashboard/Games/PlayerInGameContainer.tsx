@@ -1,5 +1,3 @@
-
-
 import {
   Minus,
   MinusIcon,
@@ -26,7 +24,7 @@ export const PlayerInGameContainer = ({ playerStats: player }: PlayerInGameConta
     try {
       await api.delete(`/stats/${player.id}`);
       mutate(`/games/${player.gameId}`);
-     alert(`Jogador ${player.name} removido com sucesso`);
+      alert(`Jogador ${player.name} removido com sucesso`);
     } catch (err: any) {
       alert('Algum erro qualquer');
     }

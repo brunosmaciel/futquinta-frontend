@@ -1,6 +1,6 @@
 import { ReactNode, useContext, useEffect, useRef } from 'react';
 
-import { HomeIcon, BookA, ShirtIcon, MedalIcon } from 'lucide-react';
+import { HomeIcon, BookA, ShirtIcon, MedalIcon, TvMinimalPlayIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -70,20 +70,28 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
                 <Link href="/rankings">Rankings</Link>
               </li>
               <li>
-                <Link href="/rankings">Regulamento</Link>
+                <Link href="/regulamento">Regulamento</Link>
+              </li>
+              <li>
+                <Link
+                  target="_blank"
+                  href={`https://drive.google.com/drive/folders/1UTpxIPywDWsEmG8ta7lyuhCH1Fx0Nt3Z?usp=share_link`}
+                >
+                  Videos
+                </Link>
               </li>
             </ul>
           </div>
           <div className="flex-none hidden lg:block">
             {isLoggedIn ? (
-              <div className="navbar-end ml-4">
+              <div className="navbar-end ml-6">
                 <Link href={'/dashboard'} className="btn btn-outline btn-sm">
                   Editar
                 </Link>
               </div>
             ) : (
-              <div className="navbar-end">
-                <Link className="btn btn-primary rounded-2xl" href="/login">
+              <div className="navbar-end ml-6">
+                <Link className="btn btn-primary btn-sm " href="/login">
                   Login
                 </Link>
               </div>
@@ -131,11 +139,19 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
             </Link>
           </li>
           <li className="text-lg mt-2">
-            <Link href={`/rankings`}>
+            <Link href={`/regulamento`}>
               <BookA size={20} /> Regulamento
             </Link>
           </li>
-          <li className="text-lg mt-2 fixed bottom-5">
+          <li className="text-lg mt-2">
+            <Link
+              target="_blank"
+              href={`https://drive.google.com/drive/folders/1UTpxIPywDWsEmG8ta7lyuhCH1Fx0Nt3Z?usp=share_link`}
+            >
+              <TvMinimalPlayIcon size={20} /> Videos
+            </Link>
+          </li>
+          <li className="text-lg mt-2 ">
             <Link href={`/`}>
               <HomeIcon size={20} /> Inicio
             </Link>

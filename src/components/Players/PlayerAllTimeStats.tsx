@@ -49,7 +49,7 @@ export const PlayerAllTimeStats = ({ player }: PlayerAllTimeStatsProps) => {
     { label: 'Pontos', value: points },
     { label: goalStats.perGameLabel, value: goalStats.perGame },
     { label: 'Jogos', value: games },
-    { label: 'Aprov', value: record },
+    { label: 'Aprov', value: record + '%' },
   ];
 
   return (

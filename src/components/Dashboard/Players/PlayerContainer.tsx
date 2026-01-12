@@ -13,7 +13,7 @@ export const PlayerContainer = ({ player }: PlayerContainerProps) => {
   return (
     <div
       key={player.id}
-      className="flex items-center hover:bg-neutral transition-all justify-between gap-5 py-2 border-b-[1px] border-neutral-900 w-[90%] mx-auto "
+      className="flex items-center hover:shadow-2xl hover:w-[93%] rounded-2xl transition-all justify-between gap-5 p-2  w-[90%] mx-auto cursor-pointer "
     >
       <div className="flex items-center gap-4  flex-1 ">
         <Link

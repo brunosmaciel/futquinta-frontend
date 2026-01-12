@@ -1,18 +1,21 @@
 import { useContext, useEffect, useState, memo } from 'react';
 import { useForm } from 'react-hook-form';
+import Image from 'next/image';
 
 import { CheckIcon, PlusIcon, Trash2Icon, BanIcon } from 'lucide-react';
 
 import { PlayerProfile } from '../../../..';
 import { ChoseTeamContext, GamePlayersList } from '../../../hooks/useSelectPlayer';
+import { getProfileImage, getProfileImageOnSelectTeams } from '../../../functions/getProfileImage';
 type Inputs = {
   playerFunction: 'OUTFIELDPLAYER' | 'GOALKEEPER';
 };
 type ChoseTeamProps = {
   player: PlayerProfile;
   team: 'WHITE' | 'GREEN';
+  role: 'PERMANENT' | 'GUEST';
 };
-export const ChoseTeam = memo(({ player, team }: ChoseTeamProps) => {
+export const ChoseTeam = memo(({ player, team, role }: ChoseTeamProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [wasChosen, setWasChosen] = useState<boolean>(false);
   const { add, remove, players } = useContext(ChoseTeamContext);
@@ -47,11 +50,23 @@ export const ChoseTeam = memo(({ player, team }: ChoseTeamProps) => {
   return (
     <div
       key={player.id}
-      className={`flex transition-colors mt-2 h-auto items-center justify-start px-2 rounded-md ${
+      className={`flex bg- transition-colors mt-2 h-auto items-center justify-start px-2 rounded-md ${
         isSelected2 ? 'bg-base-300' : ''
-      }`}
+      } ${role === 'GUEST' ? 'bg-red-400' : ''}`}
     >
-      <h1>{player.name}</h1>
+      <div className=" w-full flex items-center">
+        <Image
+          alt="alt"
+          src={getProfileImageOnSelectTeams({ player, team })}
+          className="w-24 border  cursor-pointer"
+          width={120}
+          height={30}
+          quality={100}
+        />
+        <h1>
+          {player.shirtNumber} - {player.name}
+        </h1>
+      </div>
       <div className="flex items-center flex-1">
         <form className="flex justify-end gap-4 w-full">
           <div className="flex gap-1 ">

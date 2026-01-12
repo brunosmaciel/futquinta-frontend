@@ -26,7 +26,7 @@ export const SelectPlayers = ({ team, handleTeamSelection, players }: SelectPlay
             shirtNumber: String(player.shirtNumber || '00'),
           })}
         >
-          {player.name}
+          {player.name}teste
         </option>
       ))}
     </select>
