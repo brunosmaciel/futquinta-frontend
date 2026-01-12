@@ -87,7 +87,7 @@ const UpdateProfilePictureModal = ({ player }: UploadProfilePictureModal) => {
                 <h4>Selecione a cor da camisa</h4>
                 <div className="flex gap-4">
                   <label htmlFor="shirtColor" className="">
-                    Preto
+                    Verde Listrado
                   </label>
                   <input
                     type="radio"
@@ -96,7 +96,7 @@ const UpdateProfilePictureModal = ({ player }: UploadProfilePictureModal) => {
                     {...register('color')}
                   />
                   <label htmlFor="shirtColor" className="">
-                    Branco
+                    Verde Escuro
                   </label>
                   <input
                     type="radio"

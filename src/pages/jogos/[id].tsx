@@ -43,7 +43,6 @@ const Jogo = () => {
   const greenMOTM = data.MOTM.find((p) => p.team === 'GREEN');
 
   const renderPlayer = (player: any, team: Team, motmName?: string) => {
-
     const shirtPicture =
       team === 'WHITE' ? player.player.whiteShirtpicture : player.player.greenShirtpicture;
 
@@ -79,29 +78,32 @@ const Jogo = () => {
       </div>
     );
   };
-  const currentBolaMurcha = data.players.find((player) => player.name === data.BolaMurcha[0].player.name)
-
-
-
+  const currentBolaMurcha = data.players.find(
+    (player) => player.name === data.BolaMurcha[0].player.name,
+  );
 
   const GetMOTMProfilePicture = ({ player }: any) => {
-    if (!player) return null
-    const imageUrl = player.currentTeam === player.player.whiteShirtpicture ? player.player.whiteShirtpicture : player.player.greenShirtpicture
+    if (!player) return null;
 
+    const imageUrl =
+      player.currentTeam === 'WHITE'
+        ? player.player.whiteShirtpicture
+        : player.player.greenShirtpicture;
 
-    return <div className='flex max-w-50 rounded shadow-xl  p-4 flex-col items-center'>
-      <Image
-        priority
-        src={imageUrl}
-        alt="Bagre do Jogo"
-        width={768}
-        height={768}
-        className="w-32 rounded-md drop-shadow-lg"
-      />
-      <span className='font-bold text-xl'>Bagre do jogo</span>
-    </div>
-
-  }
+    return (
+      <div className="flex max-w-50 rounded shadow-xl  p-4 flex-col items-center">
+        <Image
+          priority
+          src={imageUrl}
+          alt="Bagre do Jogo"
+          width={768}
+          height={768}
+          className="w-32 rounded-md drop-shadow-lg"
+        />
+        <span className="font-bold text-xl">Bagre do jogo</span>
+      </div>
+    );
+  };
   return (
     <div className="flex  flex-col  items-center p-4">
       {data.gamePicture && (
@@ -127,28 +129,35 @@ const Jogo = () => {
       </div>
 
       <Score greenGoals={data.greenGoals} whiteGoals={data.whiteGoals} />
-      <div className="flex md:lg:flex-row md:lg:space-x-7 justify-center space-x-2.5 w-[90%] 
-      ">
+      <div
+        className="flex md:lg:flex-row md:lg:space-x-7 justify-center space-x-2.5 w-[90%] 
+      "
+      >
         <GetMOTMProfilePicture player={currentBolaMurcha} />
-        {data.MOTM[0] && <div className='flex rounded max-w-50 shadow-xl p-4 flex-col items-center'>
-
-          <Image
-            priority
-            src={data.MOTM[0].team === "WHITE" ? data.MOTM[0].player.whiteShirtpicture || '' : data.MOTM[0].player.greenShirtpicture || ''}
-            alt="Bagre do Jogo"
-            width={768}
-            height={768}
-            className="w-32 rounded-md drop-shadow-lg"
-          />
-          <span className='font-bold text-xl'>Craque do jogo</span>
-        </div>}
+        {data.MOTM[0] && (
+          <div className="flex rounded max-w-50 shadow-xl p-4 flex-col items-center">
+            <Image
+              priority
+              src={
+                data.MOTM[0].team === 'WHITE'
+                  ? data.MOTM[0].player.whiteShirtpicture || ''
+                  : data.MOTM[0].player.greenShirtpicture || ''
+              }
+              alt="Bagre do Jogo"
+              width={768}
+              height={768}
+              className="w-32 rounded-md drop-shadow-lg"
+            />
+            <span className="font-bold text-xl">Craque do jogo</span>
+          </div>
+        )}
       </div>
       <div className="mt-4 flex w-full flex-col lg:flex-row">
         {/* Time Branco */}
         <section className="w-full p-2 lg:w-1/2">
           <header className="flex items-center gap-4 p-2 font-bold">
-            <div className="h-10 w-10 rounded-full bg-secondary" />
-            <span className="text-xl">Verde Claro</span>
+            <div className="h-10 w-10 rounded-full bg-primary" />
+            <span className="text-xl">Verde Escuro</span>
           </header>
 
           {whitePlayers.map((player) => renderPlayer(player, 'WHITE', whiteMOTM?.player.name))}
@@ -157,8 +166,8 @@ const Jogo = () => {
         {/* Time Verde */}
         <section className="w-full p-2 lg:w-1/2">
           <header className="flex items-center gap-4 p-2 font-bold">
-            <div className="h-10 w-10 rounded-full bg-primary" />
-            <span className="text-xl">Verde Escuro</span>
+            <div className="h-10 w-10 rounded-full bg-secondary" />
+            <span className="text-xl">Verde Listrado</span>
           </header>
 
           {greenPlayers.map((player) => renderPlayer(player, 'GREEN', greenMOTM?.player.name))}

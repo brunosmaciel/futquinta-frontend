@@ -55,7 +55,7 @@ const HomeComponent = ({ games, generalRankPlayers, recordRanking }: HomeProps) 
       </div>
 
       {/* Placar */}
-      <div className="mt-2 flex items-center gap-4 text-lg text-secondary">
+      <div className="mt-2 flex items-center gap-4 text-lg text-primary">
         <div className="flex items-center gap-2">
           <ShieldIcon className="h-16 w-16" />
           <p className="text-3xl text-black">{latestGame.whiteGoals}</p>
@@ -63,7 +63,7 @@ const HomeComponent = ({ games, generalRankPlayers, recordRanking }: HomeProps) 
 
         <span className="text-black">x</span>
 
-        <div className="flex flex-row-reverse items-center gap-2 text-primary">
+        <div className="flex flex-row-reverse items-center gap-2 text-secondary">
           <ShieldIcon className="h-16 w-16" />
           <p className="text-3xl font-bold text-black">{latestGame.greenGoals}</p>
         </div>
