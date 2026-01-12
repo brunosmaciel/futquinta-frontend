@@ -20,10 +20,16 @@ const getProfileImageOnSelectTeams = ({ player, team }: GetProfileImageType): st
   const { whiteShirtpicture, greenShirtpicture, slug } = player;
 
   if (team === 'WHITE') {
-    return whiteShirtpicture!;
+    return (
+      whiteShirtpicture ||
+      `https://ui-avatars.com/api/?name=${slug.replace('-', '')}&background=191D24&color=fff`
+    );
   }
   if (team === 'GREEN') {
-    return greenShirtpicture!;
+    return (
+      greenShirtpicture! ||
+      `https://ui-avatars.com/api/?name=${slug.replace('-', '')}&background=191D24&color=fff`
+    );
   }
 
   return `https://ui-avatars.com/api/?name=${slug.replace('-', '')}&background=191D24&color=fff`;
