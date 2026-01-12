@@ -21,8 +21,9 @@ const HomeComponent = ({ games, generalRankPlayers, recordRanking }: HomeProps) 
 
   if (!games.length) {
     return (
-      <div className="flex h-full w-full items-center justify-center">
-        <h1 className="text-5xl font-bold">Em manutenção</h1>
+      <div className="flex h-full w-full items-center justify-center flex-col ">
+        <h1 className="text-5xl font-bold mb-5">Temporada 2026</h1>
+        <h3 className="italic">Nenhum jogo encontrado...</h3>
       </div>
     );
   }

@@ -30,7 +30,7 @@ const Jogos = () => {
         {games.map((game) => (
           <article
             key={game.id}
-            className="my-2 cursor-pointer p-2 transition-all hover:bg-[#191D24]"
+            className="flex items-center hover:shadow-2xl hover:w-[93%] rounded-2xl transition-all justify-between gap-5 p-2  w-[90%] mx-auto cursor-pointer"
           >
             <div className="mx-2 mt-[0.1rem] flex w-full justify-between">
               <div className="flex">
