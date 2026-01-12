@@ -1,5 +1,6 @@
 import { PlayerProfile } from '../../..';
 import { getTopScorers } from '../../functions/functions';
+import { RankPositionTd } from '../ui/RankPositionTd';
 
 export type GeneralPlacingProps = {
   players: PlayerProfile[];
@@ -40,12 +41,8 @@ const TopScorersRanking = ({ players }: GeneralPlacingProps) => {
           <tbody>
             {/* row 1 */}
             {topScorerRankingArray.map(({ id, name, goals, totalGames, goalsPerGame }, i) => (
-              <tr
-                key={id}
-                data-willbeawarded={i + 1 <= 3}
-                className=" border-l-4 hover transition-all gap-2  data-[willbeawarded=true]:border-l-green-500 border-transparent "
-              >
-                <th className="w-16">{i + 1} °</th>
+              <tr key={id} className=" border-l-4 hover transition-all gap-2  ">
+                <RankPositionTd awardPosition={5} index={i} />
                 <td>{name}</td>
                 <td>{totalGames}</td>
                 <td>{goals}</td>

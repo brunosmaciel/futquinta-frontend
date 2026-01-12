@@ -1,5 +1,6 @@
 import { PlayerProfile } from '../../../';
 import { getGeneralRanking } from '../../functions/getGeneralRanking';
+import { RankPositionTd } from '../ui/RankPositionTd';
 
 export type GeneralPlacingProps = {
   players: PlayerProfile[];
@@ -50,7 +51,7 @@ const GeneralRanking = ({ players }: GeneralPlacingProps) => {
                     key={slug}
                     className=" border-l-4  gap-2 hover transition-all data-[willbeawarded=true]:border-l-green-500 border-transparent "
                   >
-                    <th className="w-16 ">{i + 1} °</th>
+                    <RankPositionTd awardPosition={5} index={i} />
                     <td>{name}</td>
                     <td>{points}</td>
                     <td>{totalGames}</td>

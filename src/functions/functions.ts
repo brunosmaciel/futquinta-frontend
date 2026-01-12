@@ -34,14 +34,13 @@ export function getTopScorers(players: PlayerProfile[]): GetTopScorersType[] {
         ...stats,
       };
     })
-    .sort((a, b) => (a.goals > b.goals ? -1 : 1))
     .sort((a, b) => {
-      if (a.goals === b.goals && a.goalsPerGame > b.goalsPerGame) return -1;
-      return 1;
-    })
-    .sort((a, b) => {
-      if (a.goals === b.goals && a.goalsPerGame === b.goalsPerGame && a.name < b.name) return -1;
-      return 1;
+      const mediaA = a.totalGames ? a.goals / a.totalGames : 0;
+      const mediaB = b.totalGames ? b.goals / b.totalGames : 0;
+
+      if (mediaB !== mediaA) return mediaB - mediaA;
+
+      return b.totalGames - a.totalGames;
     });
 
   return topScorerRankingArray;

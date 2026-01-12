@@ -2,13 +2,14 @@ import Link from 'next/link';
 
 import { PlayerProfile } from '../../..';
 import { getPlayerStats } from '../../functions/getPlayerStats';
+import { RankPositionTd } from '../ui/RankPositionTd';
 
 export type GeneralPlacingProps = {
   players: PlayerProfile[];
   totalNumberOfGames: number;
 };
 const MOTMRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps) => {
-  const fortyPerCentGames = Math.floor(totalNumberOfGames * 0.4);
+  const fortyPerCentGames = Math.ceil(totalNumberOfGames * 0.45);
 
   const playerStats = players
     .filter((player) => player.role === 'PERMANENT')
@@ -21,11 +22,10 @@ const MOTMRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps) => {
         ...stats,
       };
     })
-    .sort((a, b) => (a.mvp > b.mvp ? -1 : 1))
     .sort((a, b) => {
-      if (a.mvp === b.mvp && a.totalGames < b.totalGames) return -1;
+      if (b.totalGames !== a.totalGames) return b.totalGames - a.totalGames;
 
-      return 1;
+      return b.gamesRecord - a.gamesRecord;
     })
     .filter((player) => player.mvp > 0)
     .filter((player) => player.totalGames >= fortyPerCentGames);
@@ -33,7 +33,7 @@ const MOTMRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps) => {
   return (
     <div className="h-full w-full">
       <div className="justify-between mx-1 my-4 text-[12px] font-light italic flex  lg:justify-normal lg:gap-10 ">
-        <div className="h-[44px] invisible flex flex-col gap-2"></div>
+        <div className="h-11 invisible flex flex-col gap-2"></div>
       </div>
       <div className="overflow-x-auto">
         {playerStats && (
@@ -55,7 +55,7 @@ const MOTMRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps) => {
                   data-willbeawarded={i + 1 <= 1}
                   className=" border-l-4  gap-2 hover transition-all data-[willbeawarded=true]:border-l-green-500 border-transparent "
                 >
-                  <th className="w-16">{i + 1} °</th>
+                  <RankPositionTd awardPosition={1} index={1} />
                   <td>
                     <Link href={`/jogadores/${slug}`} className="cursor-pointer">
                       {name}

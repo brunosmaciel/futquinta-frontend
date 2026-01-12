@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { PlayerProfile } from '../../..';
 import { getPlayerStats } from '../../functions/getPlayerStats';
+import { RankPositionTd } from '../ui/RankPositionTd';
 
 export type GeneralPlacingProps = {
   players: PlayerProfile[];
@@ -53,7 +54,7 @@ const BolaMurchaRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps)
                   data-willbeawarded={i + 1 <= 1}
                   className=" border-l-4  gap-2 hover transition-all data-[willbeawarded=true]:border-l-green-500 border-transparent "
                 >
-                  <th className="w-16">{i + 1} °</th>
+                  <RankPositionTd awardPosition={1} index={1} />
                   <td>
                     <Link href={`/jogadores/${slug}`} className="cursor-pointer">
                       {name}

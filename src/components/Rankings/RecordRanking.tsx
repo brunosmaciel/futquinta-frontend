@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { PlayerProfile } from '../../..';
-import { getTopScorers } from '../../functions/functions';
 import { LoadingSpin } from '../Loading';
+import { RankPositionTd } from '../ui/RankPositionTd';
 
 export type GeneralPlacingProps = {
   players: PlayerProfile[];
@@ -56,7 +56,7 @@ const RecordRanking = () => {
                 data-willbeawarded={i + 1 <= 5}
                 className=" border-l-4 hover transition-all gap-2  data-[willbeawarded=true]:border-l-green-500 border-transparent "
               >
-                <th className="w-16">{i + 1} °</th>
+                <RankPositionTd awardPosition={5} index={i} />
                 <td>{name}</td>
                 <td>{games}</td>
                 <td>{record.toFixed(2)} %</td>

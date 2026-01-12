@@ -14,27 +14,17 @@ export function getGeneralRanking(players: PlayerProfile[]) {
         ...stats,
         gamesRecord: stats.gamesRecord || 0.0,
       };
-    })
-    .sort((a, b) => (a.points > b.points ? -1 : 1))
-    .sort((a, b) => {
-      if (a.points === b.points && a.gamesRecord > b.gamesRecord) return -1;
-      return 1;
-    })
-    .sort((a, b) => {
-      if (a.points === b.points && a.gamesRecord === b.gamesRecord && a.totalGames > b.totalGames)
-        return -1;
-      return 1;
-    })
-    .sort((a, b) => {
-      if (
-        a.points === b.points &&
-        a.gamesRecord === b.gamesRecord &&
-        a.totalGames === b.totalGames &&
-        a.name < b.name
-      )
-        return -1;
-      return 1;
-    });
+    }).sort((a, b) => {
+  if (b.gamesRecord !== a.gamesRecord)
+    return b.gamesRecord - a.gamesRecord;
+
+  if (b.totalGames !== a.totalGames)
+    return b.totalGames - a.totalGames;
+
+  return b.victories - a.victories;
+});
+    
+    
 
   return playersGeneralRanking;
 }

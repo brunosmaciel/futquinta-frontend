@@ -2,96 +2,105 @@ import Link from 'next/link';
 
 import { PlayerProfile } from '../../..';
 import { getGoalKeeperStats } from '../../functions/getGoalkeeperRank';
+import { RankPositionTd } from '../ui/RankPositionTd';
 
 export type GeneralPlacingProps = {
   players: PlayerProfile[];
   numberOfGames: number;
 };
-const GoalkeepersRankings = ({ players, numberOfGames }: GeneralPlacingProps) => {
-  const gamesFilter = Math.ceil(numberOfGames * (40 / 100));
 
-  const playerStats = players
-    .filter((player) => player.role !== 'GUEST')
-    .map((player) => {
+type GoalkeeperRank = {
+  name: string;
+  slug: string;
+  goalsConceded: number;
+  totalGames: number;
+  gamesRecord: number;
+  averageGoalsPerGame: number;
+};
+
+const GoalkeepersRankings = ({ players, numberOfGames }: GeneralPlacingProps) => {
+  const minimumGames = Math.ceil(numberOfGames * 0.4);
+
+  const goalkeepers = players
+    // ❌ remove convidados
+    .filter((player) => player.role !== 'GUEST' && player.name !== 'Convidados')
+    // 📊 calcula stats
+    .map<GoalkeeperRank>((player) => {
       const stats = getGoalKeeperStats(player);
 
       return {
         name: player.name,
         slug: player.slug,
-        ...stats,
+        goalsConceded: stats.goalsConceded,
+        totalGames: stats.totalGames,
+        gamesRecord: stats.gamesRecord,
+        averageGoalsPerGame: stats.averageGoalsPerGame,
       };
     })
+    // ❌ remove quem não tem média válida
+    .filter((player) => player.averageGoalsPerGame > 0)
+    // 🏆 ranking
+    .sort((a, b) => {
+      // 1️⃣ menor média de gols sofridos
+      if (a.averageGoalsPerGame !== b.averageGoalsPerGame) {
+        return a.averageGoalsPerGame - b.averageGoalsPerGame;
+      }
 
-    .sort((a, b) => {
-      return a.goalsConceded / a.totalGames > b.goalsConceded / b.totalGames ? 1 : -1;
-    })
-    .sort((a, b) => {
-      if (
-        a.goalsConceded / a.totalGames === b.goalsConceded / b.totalGames &&
-        a.totalGames > b.totalGames
-      )
-        return -1;
-      return 1;
-    })
-    .sort((a, b) => {
-      if (
-        a.goalsConceded / a.totalGames === b.goalsConceded / b.totalGames &&
-        a.totalGames > b.totalGames
-      )
-        return -1;
-      return 1;
-    })
-    .filter((player) => player.name !== 'Convidados')
-    .filter((player) => player.averageGoalsPerGame > 0);
-  const goalkeepers1 = playerStats.filter((player) => player.totalGames >= gamesFilter);
-  const goalkeepers2 = playerStats.filter((player) => player.totalGames < gamesFilter);
-  const goalkeepers = [...goalkeepers1, ...goalkeepers2];
+      // 2️⃣ mais jogos
+      if (a.totalGames !== b.totalGames) {
+        return b.totalGames - a.totalGames;
+      }
+
+      // 3️⃣ melhor retrospecto
+      return b.gamesRecord - a.gamesRecord;
+    });
+
+  // 🔀 separação por número mínimo de jogos
+  const qualified = goalkeepers.filter((p) => p.totalGames >= minimumGames);
+  const notQualified = goalkeepers.filter((p) => p.totalGames < minimumGames);
+
+  const rankedGoalkeepers = [...qualified, ...notQualified];
+
   return (
     <div className="h-screen">
-      <div className="h-11 justify-between mx-1 my-4 text-[12px] font-light italic flex  lg:justify-normal lg:gap-10 ">
-        <div className="flex flex-col gap-2">
-          <span>
-            <b>Gols S*</b> Gols sofridos
-          </span>
-        </div>
+      <div className="mx-1 my-4 flex h-11 justify-between text-[12px] font-light italic lg:justify-normal lg:gap-10">
+        <span>
+          <b>Gols S*</b> Gols sofridos
+        </span>
       </div>
-      <div className="overflow-x-auto ">
-        {playerStats && (
-          <table className="table  w-full max-w-3xl">
-            {/* head */}
-            <thead>
-              <tr className="border-none">
-                <th></th>
-                <th>Atleta</th>
-                <th>Média</th>
-                <th>J</th>
-                <th>Gols S</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {goalkeepers.map(
-                ({ slug, name, goalsConceded, totalGames, averageGoalsPerGame }, i) => (
-                  <tr
-                    key={slug}
-                    data-willbeawarded={i + 1 === 1}
-                    className=" border-l-4  gap-2 transition-all hover data-[willbeawarded=true]:border-l-green-500 border-transparent "
-                  >
-                    <th className="w-16">{i + 1} °</th>
-                    <td>
-                      <Link href={`/jogadores/${slug}`} className="cursor-pointer">
-                        {name}
-                      </Link>
-                    </td>
-                    <td>{averageGoalsPerGame.toFixed(2)}</td>
-                    <td>{totalGames}</td>
-                    <td>{goalsConceded}</td>
-                  </tr>
-                ),
-              )}
-            </tbody>
-          </table>
-        )}
+
+      <div className="overflow-x-auto">
+        <table className="table w-full max-w-3xl">
+          <thead>
+            <tr className="border-none">
+              <th></th>
+              <th>Atleta</th>
+              <th>Média</th>
+              <th>J</th>
+              <th>Gols S</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {rankedGoalkeepers.map(
+              ({ slug, name, goalsConceded, totalGames, averageGoalsPerGame }, index) => (
+                <tr
+                  key={slug}
+                  data-willbeawarded={index === 0}
+                  className="gap-2 border-l-4 border-transparent transition-all hover:data-[willbeawarded=true]:border-l-green-500"
+                >
+                  <th className="w-16">{index + 1}°</th>
+
+                  <RankPositionTd awardPosition={1} index={1} />
+
+                  <td>{averageGoalsPerGame.toFixed(2)}</td>
+                  <td>{totalGames}</td>
+                  <td>{goalsConceded}</td>
+                </tr>
+              ),
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
