@@ -4,17 +4,9 @@ type GetProfileImageType = {
   player: PlayerProfile;
   team?: 'WHITE' | 'GREEN';
 };
-const getProfileImage = ({
-  currentPicture,
-  greenShirtpicture,
-  slug,
-  whiteShirtpicture,
-}: {
-  currentPicture: string;
-  whiteShirtpicture: string;
-  greenShirtpicture: string;
-  slug: string;
-}): string => {
+const getProfileImage = ({ player, team }: GetProfileImageType): string => {
+  const { currentPicture, whiteShirtpicture, greenShirtpicture, slug } = player;
+
   if (currentPicture === 'WHITE') {
     return whiteShirtpicture!;
   }

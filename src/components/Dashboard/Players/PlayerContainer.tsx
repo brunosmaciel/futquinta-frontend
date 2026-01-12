@@ -22,7 +22,7 @@ export const PlayerContainer = ({ player }: PlayerContainerProps) => {
           className="cursor-pointer"
         >
           <Image
-            src={getProfileImage(player)}
+            src={getProfileImage({ player })}
             alt="Foto de perfil do jogador"
             width={60}
             height={60}
