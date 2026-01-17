@@ -64,10 +64,6 @@ const Jogo = () => {
         <p className="flex flex-1 items-center gap-2 text-lg">
           <ShirtIcon size={18} />
           {player.player.shirtNumber} - {player.name}
-          {motmName === player.name && <span className="badge badge-ghost ml-4">Craque</span>}
-          {data.BolaMurcha[0].player.name === player.name && (
-            <span className="badge badge-ghost ml-4">Bagre</span>
-          )}
         </p>
 
         <div className="flex  items-center gap-2">
@@ -78,9 +74,12 @@ const Jogo = () => {
       </div>
     );
   };
-  const currentBolaMurcha = data.players.find(
-    (player) => player.name === data.BolaMurcha[0].player.name,
-  );
+  const currentBolaMurcha = data.players.find((player) => {
+    if (!data.BolaMurcha[0]) {
+      return null;
+    }
+    return data.BolaMurcha;
+  });
 
   const GetMOTMProfilePicture = ({ player }: any) => {
     if (!player) return null;
@@ -133,7 +132,7 @@ const Jogo = () => {
         className="flex md:lg:flex-row md:lg:space-x-7 justify-center space-x-2.5 w-[90%] 
       "
       >
-        <GetMOTMProfilePicture player={currentBolaMurcha} />
+        {currentBolaMurcha && <GetMOTMProfilePicture player={currentBolaMurcha} />}
         {data.MOTM[0] && (
           <div className="flex rounded max-w-50 shadow-xl p-4 flex-col items-center">
             <Image
