@@ -14,6 +14,11 @@ export const SideBar = () => {
 
   const menus: MenuType[] = [
     {
+      path: '/',
+      icon: <HomeIcon />,
+      title: 'Inicio',
+    },
+    {
       path: '/dashboard/jogos',
       icon: <SoccerBallIcon />,
       title: 'Jogos',

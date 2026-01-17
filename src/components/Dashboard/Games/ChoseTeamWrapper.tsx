@@ -55,15 +55,14 @@ export const ChoseTeamWrapper = ({ players, handleStartGame, isLoading }: ChoseT
               className="checkbox checkbox-neutral"
               {...register('showGuest')}
             />
-            <span className="label-text">Mostrar convidados</span>
           </div>
         </div>
       </div>
       <div className="flex flex-wrap gap-10">
         <div className="flex-1">
-          <h1 className="text-xl flex items-center gap-2 border-b-[1px]  py-2">
+          <h1 className="text-xl flex items-center gap-2 border-b  py-2">
             {' '}
-            <p className="w-6 h-6 rounded-full bg-white"></p>Verde Claro
+            <p className="w-6 h-6 rounded-full bg-primary"></p>Verde Escuro
           </h1>
           {filterValue ? (
             <>
@@ -77,7 +76,16 @@ export const ChoseTeamWrapper = ({ players, handleStartGame, isLoading }: ChoseT
             </>
           ) : (
             <>
-              {players
+              {permanentPlayers
+                .sort((a, b) => (a.shirtNumber < b.shirtNumber ? 1 : -1))
+                .sort((a, b) => (a.playerPosition > b.playerPosition ? 1 : -1))
+                .map((player) => (
+                  <ChoseTeam role={player.role} key={player.id} player={player} team={'WHITE'} />
+                ))}
+              <div className="font-bold p-4 flex itens-center justify-center text-2xl">
+                Convidados
+              </div>
+              {guestPlayer
                 .sort((a, b) => (a.shirtNumber < b.shirtNumber ? 1 : -1))
                 .sort((a, b) => (a.playerPosition > b.playerPosition ? 1 : -1))
                 .map((player) => (
@@ -87,9 +95,9 @@ export const ChoseTeamWrapper = ({ players, handleStartGame, isLoading }: ChoseT
           )}
         </div>
         <div className="flex-1">
-          <h1 className="text-xl flex items-center gap-2 border-b-[1px]  py-2">
+          <h1 className="text-xl flex items-center gap-2 border-b  py-2">
             {' '}
-            <p className="w-6 h-6 rounded-full bg-green-800 "></p>Verde Escuro
+            <p className="w-6 h-6 rounded-full bg-secondary "></p>Verde Listrado
           </h1>
           {filterValue ? (
             <>
@@ -109,7 +117,9 @@ export const ChoseTeamWrapper = ({ players, handleStartGame, isLoading }: ChoseT
                 .map((player) => (
                   <ChoseTeam role={player.role} key={player.id} player={player} team={'GREEN'} />
                 ))}
-              <span>Convidados</span>
+              <div className="font-bold p-4 flex itens-center justify-center text-2xl">
+                Convidados
+              </div>
               {guestPlayer
                 .sort((a, b) => (a.shirtNumber < b.shirtNumber ? 1 : -1))
                 .sort((a, b) => (a.playerPosition > b.playerPosition ? 1 : -1))

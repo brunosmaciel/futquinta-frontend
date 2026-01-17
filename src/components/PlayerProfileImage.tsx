@@ -38,7 +38,7 @@ export function PlayerProfileImage({ player }: IPlayerProfileImageProps) {
     <>
       <div className={cn('relative flex items-center justify-center  w-46 h-46')}>
         {player.slug === 'otavio' && (
-          <div className="absolute -top-6 z-10">
+          <div className="absolute -top-18 z-10">
             <Image src={coroa} alt="Coroa" className="w-24 h-24" />
           </div>
         )}

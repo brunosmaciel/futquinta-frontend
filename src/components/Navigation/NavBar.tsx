@@ -123,6 +123,11 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
               </div>
             )}
           </div>
+          <li className="text-lg mt-2 ">
+            <Link href={`/`}>
+              <HomeIcon size={20} /> Inicio
+            </Link>
+          </li>
           <li className="text-lg mt-2">
             <Link href={`/jogadores`}>
               <ShirtIcon size={20} /> Jogadores{' '}
@@ -149,11 +154,6 @@ export const NavBar = ({ children }: { children: ReactNode }) => {
               href={`https://drive.google.com/drive/folders/1UTpxIPywDWsEmG8ta7lyuhCH1Fx0Nt3Z?usp=share_link`}
             >
               <TvMinimalPlayIcon size={20} /> Videos
-            </Link>
-          </li>
-          <li className="text-lg mt-2 ">
-            <Link href={`/`}>
-              <HomeIcon size={20} /> Inicio
             </Link>
           </li>
         </ul>

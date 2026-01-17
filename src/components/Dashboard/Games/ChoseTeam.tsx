@@ -52,7 +52,7 @@ export const ChoseTeam = memo(({ player, team, role }: ChoseTeamProps) => {
       key={player.id}
       className={`flex bg- transition-colors mt-2 h-auto items-center justify-start px-2 rounded-md ${
         isSelected2 ? 'bg-base-300' : ''
-      } ${role === 'GUEST' ? 'bg-red-400' : ''}`}
+      } ${role === 'GUEST' ? 'bg-gray-200' : ''}`}
     >
       <div className=" w-full flex items-center">
         <Image
