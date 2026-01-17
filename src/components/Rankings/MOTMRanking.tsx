@@ -55,7 +55,7 @@ const MOTMRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps) => {
                   data-willbeawarded={i + 1 <= 1}
                   className=" border-l-4  gap-2 hover transition-all data-[willbeawarded=true]:border-l-green-500 border-transparent "
                 >
-                  <RankPositionTd awardPosition={1} index={1} />
+                  <RankPositionTd awardPosition={1} index={i} />
                   <td>
                     <Link href={`/jogadores/${slug}`} className="cursor-pointer">
                       {name}

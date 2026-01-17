@@ -44,13 +44,13 @@ const Jogos = () => {
 
                 {/* Placar */}
                 <div>
-                  <div className="flex w-20 justify-between">
-                    <p className="text-white">Preto</p>
-                    <p className="text-white">{game.greenGoals}</p>
+                  <div className="flex w-40 space-x-1.5 justify-between">
+                    <p className="">Verde Listrado</p>
+                    <p className="">{game.greenGoals}</p>
                   </div>
-                  <div className="flex w-20 justify-between">
-                    <p className="text-white">Branco</p>
-                    <p className="text-white">{game.whiteGoals}</p>
+                  <div className="flex w-40 space-x-1.5 justify-between">
+                    <p className="">Verde Escuro</p>
+                    <p className="">{game.whiteGoals}</p>
                   </div>
                 </div>
               </div>

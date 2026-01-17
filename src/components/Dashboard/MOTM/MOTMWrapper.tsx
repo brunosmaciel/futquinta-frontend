@@ -81,7 +81,7 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
                       name: player.name,
                     })}
                   >
-                    {player.name} ({player.currentTeam === 'WHITE' ? 'Branco' : 'Verde'})
+                    {player.name} ({player.currentTeam === 'WHITE' ? 'Verde E' : 'Verde L'})
                   </option>
                 ))}
               </select>

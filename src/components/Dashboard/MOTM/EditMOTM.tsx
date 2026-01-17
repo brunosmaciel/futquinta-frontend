@@ -104,7 +104,7 @@ export const EditMOTM = ({ game, setEditMode }: EditMOTMProps) => {
                 name: player.name,
               })}
             >
-              {player.name} ({player.currentTeam === 'WHITE' ? 'Branco' : 'Verde'})
+              {player.name} ({player.currentTeam === 'WHITE' ? 'Verde E' : 'Verde L'})
             </option>
           ))}
         </select>

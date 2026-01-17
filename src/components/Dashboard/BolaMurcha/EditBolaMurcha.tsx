@@ -43,7 +43,7 @@ export const EditBolaMurcha = ({ game, setEditMode }: EditBolaMurchaProps) => {
         `/bola-murcha/${game.BolaMurcha[0].id}/${newBolaMurcha.playerId}`,
       );
       // Nenhuma alteração
-   
+
       await mutate(`/games/${game.id}`);
       setEditMode(false);
       setButtonLoading(true);
@@ -91,7 +91,7 @@ export const EditBolaMurcha = ({ game, setEditMode }: EditBolaMurchaProps) => {
                 name: player.name,
               })}
             >
-              {player.name} ({player.currentTeam === 'WHITE' ? 'Branco' : 'Verde'})
+              {player.name} ({player.currentTeam === 'WHITE' ? 'Verde E' : 'Verde L'})
             </option>
           ))}
         </select>

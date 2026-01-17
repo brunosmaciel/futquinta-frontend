@@ -74,13 +74,9 @@ const Jogo = () => {
       </div>
     );
   };
-  const currentBolaMurcha = data.players.find((player) => {
-    if (!data.BolaMurcha[0]) {
-      return null;
-    }
-    return data.BolaMurcha;
-  });
-
+  const currentBolaMurcha = data.players.find(
+    (player) => player.name === data.BolaMurcha[0].player.name,
+  );
   const GetMOTMProfilePicture = ({ player }: any) => {
     if (!player) return null;
 
@@ -103,6 +99,7 @@ const Jogo = () => {
       </div>
     );
   };
+  console.log(data.BolaMurcha[0]);
   return (
     <div className="flex  flex-col  items-center p-4">
       {data.gamePicture && (

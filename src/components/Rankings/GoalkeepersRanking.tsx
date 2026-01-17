@@ -89,7 +89,7 @@ const GoalkeepersRankings = ({ players, numberOfGames }: GeneralPlacingProps) =>
                   data-willbeawarded={index === 0}
                   className="gap-2 border-l-4 border-transparent transition-all hover:data-[willbeawarded=true]:border-l-green-500"
                 >
-                  <RankPositionTd awardPosition={1} index={1} />
+                  <RankPositionTd awardPosition={1} index={index} />
 
                   <td>{name}</td>
                   <td>{averageGoalsPerGame.toFixed(2)}</td>

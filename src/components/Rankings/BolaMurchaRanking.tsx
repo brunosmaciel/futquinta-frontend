@@ -48,19 +48,19 @@ const BolaMurchaRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps)
             </thead>
             <tbody>
               {/* row 1 */}
-              {playerStats.map(({ slug, name, mvp, totalGames }, i) => (
+              {playerStats.map(({ slug, name, totalGames, bolaMurcha }, i) => (
                 <tr
                   key={slug}
                   data-willbeawarded={i + 1 <= 1}
                   className=" border-l-4  gap-2 hover transition-all data-[willbeawarded=true]:border-l-green-500 border-transparent "
                 >
-                  <RankPositionTd awardPosition={1} index={1} />
+                  <RankPositionTd awardPosition={1} index={i} />
                   <td>
                     <Link href={`/jogadores/${slug}`} className="cursor-pointer">
                       {name}
                     </Link>
                   </td>
-                  <td>{mvp}</td>
+                  <td>{bolaMurcha}</td>
                   <td>{totalGames}</td>
                 </tr>
               ))}
