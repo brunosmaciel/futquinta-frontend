@@ -16,6 +16,8 @@ import BallIcon from '../../components/ui/BallIcon';
 import { profilePicturePlaceholder } from '../../utils/profilePicturePlaceholder';
 import FourOhFour from '../404';
 import { cn } from '../../utils/cn';
+import VerdeListradoShield from '../../components/VerdeListradoShield';
+import VerdeEscuroShield from '../../components/VerdeEscuroShield';
 
 type Team = 'WHITE' | 'GREEN';
 
@@ -149,10 +151,10 @@ const Jogo = () => {
         )}
       </div>
       <div className="mt-4 flex w-full flex-col lg:flex-row">
-        {/* Time Branco */}
+        {/* Time Verde Forte */}
         <section className="w-full p-2 lg:w-1/2">
           <header className="flex items-center gap-4 p-2 font-bold">
-            <div className="h-10 w-10 rounded-full bg-primary" />
+            <VerdeEscuroShield className="h-14 w-14" />
             <span className="text-xl">Verde Escuro</span>
           </header>
 
@@ -162,7 +164,7 @@ const Jogo = () => {
         {/* Time Verde */}
         <section className="w-full p-2 lg:w-1/2">
           <header className="flex items-center gap-4 p-2 font-bold">
-            <div className="h-10 w-10 rounded-full bg-secondary" />
+            <VerdeListradoShield className="h-14 w-14" />
             <span className="text-xl">Verde Listrado</span>
           </header>
 

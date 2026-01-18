@@ -9,6 +9,8 @@ import Link from 'next/link';
 import { ShieldIcon } from '../ShieldIcon';
 import { GeneralRanking } from './GeneralRanking';
 import { RecordRanking } from './RecordRanking';
+import VerdeEscuroShield from '../VerdeEscuroShield';
+import VerdeListradoShield from '../VerdeListradoShield';
 
 type HomeProps = {
   recordRanking: RecordRankingType[];
@@ -57,16 +59,16 @@ const HomeComponent = ({ games, generalRankPlayers, recordRanking }: HomeProps) 
 
       {/* Placar */}
       <div className="mt-2 flex items-center gap-4 text-lg text-primary">
-        <div className="flex items-center gap-2">
-          <ShieldIcon className="h-16 w-16" />
-          <p className="text-3xl text-black">{latestGame.whiteGoals}</p>
+        <div className="flex flex-row items-center gap-2 text-secondary">
+          <VerdeEscuroShield className="w-20 h-20" />
+          <p className="text-5xl font-bold text-black">{latestGame.whiteGoals}</p>
         </div>
 
         <span className="text-black">x</span>
 
         <div className="flex flex-row-reverse items-center gap-2 text-secondary">
-          <ShieldIcon className="h-16 w-16" />
-          <p className="text-3xl font-bold text-black">{latestGame.greenGoals}</p>
+          <VerdeListradoShield className="w-20 h-20" />
+          <p className="text-5xl font-bold text-black">{latestGame.greenGoals}</p>
         </div>
       </div>
 
