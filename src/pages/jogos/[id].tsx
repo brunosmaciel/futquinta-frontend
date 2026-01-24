@@ -76,9 +76,12 @@ const Jogo = () => {
       </div>
     );
   };
-  const currentBolaMurcha = data.players.find(
-    (player) => player.name === data.BolaMurcha[0].player.name,
-  );
+  const bolaMurchaPlayerName = data.BolaMurcha?.[0]?.player?.name;
+
+  const currentBolaMurcha = bolaMurchaPlayerName
+    ? data.players.find((player) => player.name === bolaMurchaPlayerName)
+    : null;
+
   const GetMOTMProfilePicture = ({ player }: any) => {
     if (!player) return null;
 
@@ -101,7 +104,7 @@ const Jogo = () => {
       </div>
     );
   };
-  console.log(data.BolaMurcha[0]);
+
   return (
     <div className="flex  flex-col  items-center p-4">
       {data.gamePicture && (
@@ -132,14 +135,14 @@ const Jogo = () => {
       "
       >
         {currentBolaMurcha && <GetMOTMProfilePicture player={currentBolaMurcha} />}
-        {data.MOTM[0] && (
+        {data.MOTM.map((data) => (
           <div className="flex rounded max-w-50 shadow-xl p-4 flex-col items-center">
             <Image
               priority
               src={
-                data.MOTM[0].team === 'WHITE'
-                  ? data.MOTM[0].player.whiteShirtpicture || ''
-                  : data.MOTM[0].player.greenShirtpicture || ''
+                data.team === 'WHITE'
+                  ? data.player.whiteShirtpicture || ''
+                  : data.player.greenShirtpicture || ''
               }
               alt="Bagre do Jogo"
               width={768}
@@ -148,7 +151,7 @@ const Jogo = () => {
             />
             <span className="font-bold text-xl">Craque do jogo</span>
           </div>
-        )}
+        ))}
       </div>
       <div className="mt-4 flex w-full flex-col lg:flex-row">
         {/* Time Verde Forte */}

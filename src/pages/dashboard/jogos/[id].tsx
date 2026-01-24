@@ -103,8 +103,16 @@ export default function GamePage({ id }: IGamePageProps) {
 
                 {game.status === 'FINISHED' && (
                   <div>
-                    <MOTMWrapper game={game} />
-                    <BolaMurchaWrapper game={game} />
+                    {game.greenGoals === game.whiteGoals ? (
+                      <>
+                        <MOTMWrapper game={game} />
+                      </>
+                    ) : (
+                      <>
+                        <MOTMWrapper game={game} />
+                        <BolaMurchaWrapper game={game} />
+                      </>
+                    )}
                   </div>
                 )}
               </div>

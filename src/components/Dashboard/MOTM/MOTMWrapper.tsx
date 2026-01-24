@@ -13,7 +13,7 @@ export type MOTMWrapperProps = {
 };
 
 type MOTMInputs = {
-  motm: string;
+  motm: string | string[];
 };
 
 export type CreateMOTMType = {
@@ -30,20 +30,33 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
 
   const players = game.players;
 
-  const onSubmit = async (data: MOTMInputs) => {
-    if (data.motm === 'Selecione') {
+  const isDraw = game.whiteGoals === game.greenGoals;
+
+  const onSubmit = async (formData: MOTMInputs) => {
+    const motmArray = Array.isArray(formData.motm) ? formData.motm : [formData.motm];
+
+    if (!motmArray.length || motmArray.includes('Selecione')) {
       alert('É necessário selecionar o craque do jogo');
       return;
     }
 
-    const motmData = JSON.parse(data.motm) as CreateMOTMType;
+    if (isDraw && motmArray.length !== 2) {
+      alert('Em jogos empatados é necessário escolher 2 craques do jogo');
+      return;
+    }
+
+    const motms = motmArray.map((item) => JSON.parse(item) as CreateMOTMType);
 
     setButtonLoading(true);
     try {
-      const { data } = await api.post(`/motm/${motmData.gameId}/${motmData.playerId}`, {
-        team: motmData.team,
-      });
-      console.log(data);
+      await Promise.all(
+        motms.map((motm) =>
+          api.post(`/motm/${motm.gameId}/${motm.playerId}`, {
+            team: motm.team,
+          }),
+        ),
+      );
+
       await mutate(`/games/${game.id}`);
       reset();
     } catch (err: any) {
@@ -55,22 +68,33 @@ export const MOTMWrapper = ({ game }: MOTMWrapperProps) => {
   };
 
   return (
-    <div className="flex  w-full flex-col items-center max-w-175 ">
+    <div className="flex w-full flex-col items-center max-w-175">
       {editMode ? (
         <EditMOTM game={game} setEditMode={setEditMode} />
       ) : (
         <form
-          className="  scale-in-hor-left  w-full flex items-center gap-4"
+          className="scale-in-hor-left w-full flex items-center gap-4"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <h1 className="">Craque do jogo</h1>
+          <h1>Craque do jogo</h1>
 
-          <div className="w-[50%] bg-base-100  p-2 flex justify-center">
-            {game.MOTM.length === 1 ? (
-              <span className="text-lg font-semibold">{game.MOTM[0].player.name}</span>
+          <div className="w-[50%] bg-base-100 p-2 flex justify-center">
+            {game.MOTM.length > 0 ? (
+              <div className="flex flex-col gap-1">
+                {game.MOTM.map((motm) => (
+                  <span key={motm.id} className="text-lg font-semibold">
+                    {motm.player.name}
+                  </span>
+                ))}
+              </div>
             ) : (
-              <select {...register('motm')} className="select select-bordered select-sm w-full">
-                <option>Selecione</option>
+              <select
+                {...register('motm')}
+                multiple={isDraw}
+                className="select select-bordered select-sm w-full"
+              >
+                {!isDraw && <option>Selecione</option>}
+
                 {players.map((player) => (
                   <option
                     key={player.id}
