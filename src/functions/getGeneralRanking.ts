@@ -14,17 +14,29 @@ export function getGeneralRanking(players: PlayerProfile[]) {
         ...stats,
         gamesRecord: stats.gamesRecord || 0.0,
       };
-    }).sort((a, b) => {
-  if (b.gamesRecord !== a.gamesRecord)
-    return b.gamesRecord - a.gamesRecord;
+    })
+    .sort((a, b) => {
+      // 1º Maior número de pontos
+      if (b.points !== a.points) {
+        return b.points - a.points;
+      }
 
-  if (b.totalGames !== a.totalGames)
-    return b.totalGames - a.totalGames;
+      // 2º Maior aproveitamento
+      const aproveitamentoA = a.points / (a.totalGames * 3);
+      const aproveitamentoB = b.points / (b.totalGames * 3);
 
-  return b.victories - a.victories;
-});
-    
-    
+      if (aproveitamentoB !== aproveitamentoA) {
+        return aproveitamentoB - aproveitamentoA;
+      }
+
+      // 3º Maior número de jogos
+      if (b.totalGames !== a.totalGames) {
+        return b.totalGames - a.totalGames;
+      }
+
+      // 4º Maior número de vitórias
+      return b.victories - a.victories;
+    });
 
   return playersGeneralRanking;
 }
