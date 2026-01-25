@@ -351,7 +351,7 @@ export default function Index() {
 
       {/* CAPITULO VI */}
 
-      <section className="mb-8">
+      {/* <section className="mb-8">
         <h2 className="text-xl font-semibold mt-10 mb-4">CAPÍTULO VI</h2>
         <h3 className="font-semibold mb-4">Da Comunicação e Transparência (AVISO IMPORTANTE)</h3>
 
@@ -380,7 +380,7 @@ export default function Index() {
           continuidade do FUTQUINTA. Pedimos que ninguém leve as cobranças para o lado pessoal, pois
           o que vale para um, vale para todos.
         </p>
-      </section>
+      </section> */}
     </div>
   );
 }
