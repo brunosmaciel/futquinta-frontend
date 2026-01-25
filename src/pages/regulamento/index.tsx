@@ -218,127 +218,164 @@ export default function Index() {
 
       {/* CAPITULO V */}
       <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">CAPÍTULO V</h2>
-        <h3 className="text-xl font-semibold mb-4">Das Regras de Quadra:</h3>
+        {/* CAPÍTULO V */}
+        <h2 className="text-xl font-semibold mt-10 mb-4">CAPÍTULO V</h2>
+        <h3 className="font-semibold mb-4">Das Regras de Quadra:</h3>
 
         <p className="mb-4">
-          <strong>ARTIGO 13º -</strong> Disciplina: Agressão física resulta em expulsão imediata.
+          <strong>ARTIGO 13º</strong> - Disciplina: Agressão física resulta em expulsão imediata.
         </p>
 
         <p className="mb-4">
-          <strong>ARTIGO 14º -</strong> Arbitragem: As partidas contarão com arbitragem. O
+          <strong>ARTIGO 14º</strong> - Arbitragem: As partidas contarão com arbitragem. O
           desrespeito às decisões do árbitro ou condutas antidesportivas serão punidas com cartões:
         </p>
 
-        <p className="mb-2">
-          <strong>§ 1º -</strong> Cartão Amarelo: O atleta punido deve obrigatoriamente sair do jogo
-          por 2 minutos.
-        </p>
-
-        <p className="mb-2">
-          <strong>§ 1º-A-</strong> Reposição: Outro atleta entra imediatamente no lugar de quem
-          tomou o amarelo (o time não fica com um a menos).
-        </p>
-
-        <p className="mb-2">
-          <strong>§ 1º-B-</strong> Retorno e Substituição: Após os 2 minutos, o atleta punido
-          retorna ao jogo e quem o substituiu sai para que a ordem de trocas obrigatórias (a cada 7
-          min) não seja prejudicada. O amarelo não altera a vez de sair na fila de substituição.
-        </p>
-
-        <p className="mb-2">
-          <strong>§ 1º-C-</strong> Acúmulo: O 3º cartão amarelo para o mesmo atleta na partida
-          resulta em Cartão Vermelho.
-        </p>
-
-        <p className="mb-2">
-          <strong>§ 2º -</strong> Cartão Vermelho: O atleta está fora da partida e não pode
-          retornar.
-        </p>
-
-        <p className="mb-2">
-          <strong>§ 2º-A-</strong> Punidade Coletiva: O time deverá jogar com 1 jogador a menos por
-          2 minutos. Após esse período, o time pode colocar outro jogador para recompor o elenco,
-          mas o atleta expulso permanece fora.
-        </p>
-
-        <p className="mb-4">
-          <strong>§ 2º-B-</strong> Suspensão por Acúmulo (Temporada): O atleta que acumular o total
-          de 3 cartões vermelhos (seja por expulsão direta ou soma de amarelos) ao longo do ano,
-          ficará automaticamente suspenso por 1 jogo.
-        </p>
+        <ul className="list-disc pl-6 mb-4 space-y-2">
+          <li>
+            <strong>§ 1º</strong> - Cartão Amarelo: O atleta punido deve obrigatoriamente sair do
+            jogo por 2 minutos.
+          </li>
+          <li>
+            <strong>§ 1º-A</strong> - Reposição: Outro atleta entra imediatamente no lugar de quem
+            tomou o amarelo (o time não fica com um a menos).
+          </li>
+          <li>
+            <strong>§ 1º-B</strong> - Retorno e Substituição: Após os 2 minutos, o atleta punido
+            retorna ao jogo e quem o substituiu sai para que a ordem de trocas obrigatórias (a cada
+            7 min) não seja prejudicada. O amarelo não altera a vez de sair na fila de substituição.
+          </li>
+          <li>
+            <strong>§ 1º-C</strong> - Acúmulo: O 3º cartão amarelo para o mesmo atleta na partida
+            resulta em Cartão Vermelho.
+          </li>
+          <li>
+            <strong>§ 2º</strong> - Cartão Vermelho: O atleta está fora da partida e não pode
+            retornar.
+          </li>
+          <li>
+            <strong>§ 2º-A</strong> - Punidade Coletiva: O time deverá jogar com 1 jogador a menos
+            por 2 minutos. Após esse período, o time pode colocar outro jogador para recompor o
+            elenco, mas o atleta expulso permanece fora.
+          </li>
+          <li>
+            <strong>§ 2º-B</strong> - Suspensão por Acúmulo (Temporada): O atleta que acumular o
+            total de 3 cartões vermelhos (seja por expulsão direta ou soma de amarelos) ao longo do
+            ano, ficará automaticamente suspenso por 1 jogo.
+          </li>
+        </ul>
 
         <p className="mb-4">
-          <strong>ARTIGO 15º -</strong> Carrinhos: Estão proibidos; a infração será punida com
+          <strong>ARTIGO 15º</strong> - Carrinhos: Estão proibidos; a infração será punida com
           falta.
         </p>
 
         <p className="mb-4">
-          <strong>ARTIGO 16º -</strong> Faltas Coletivas: Até a 5ª falta, cobrança com tiro livre
+          <strong>ARTIGO 16º</strong> - Faltas Coletivas: Até a 5ª falta, cobrança com tiro livre
           direto. Na 6ª falta, aplica-se Shootout e a contagem de faltas reinicia, volta para o
           zero.
         </p>
 
-        <p className="mb-2">
-          <strong>§ 1º -</strong> Execução do Shootout: O batedor e o goleiro iniciam na marcação.
-          Todos os demais atletas devem aguardar ATRÁS da linha de MEIO-CAMPO.
-        </p>
+        <ul className="list-disc pl-6 mb-4 space-y-2">
+          <li>
+            <strong>§ 1º</strong> - Execução do Shootout: O batedor e o goleiro iniciam na marcação.
+            Todos os demais atletas devem aguardar <strong>ATRÁS</strong> da <strong>OUTRA</strong>{' '}
+            linha de <strong>SHOOTOUT</strong>.
+          </li>
+          <li>
+            <strong>§ 2º</strong> - Tempo: Após o apito, o batedor não tem tempo mínimo para
+            finalizar a cobrança, porém, os outros jogadores podem tentar recuperar a bola.
+          </li>
+        </ul>
 
         <p className="mb-4">
-          <strong>§ 2º -</strong> Tempo: Após o apito, o batedor tem no máximo 5 segundos para
-          concluir a cobrança.
-        </p>
-
-        <p className="mb-4">
-          <strong>ARTIGO 17º -</strong> Goleiro: Tempo máximo de 5 segundos com a bola nas mãos.
+          <strong>ARTIGO 17º</strong> - Goleiro: Tempo máximo de 5 segundos com a bola nas mãos.
           Infração resulta em tiro livre na linha da área mais próxima onde foi cometida a infração.
         </p>
 
         <p className="mb-4">
-          <strong>ARTIGO 18º -</strong> Faltas no Ataque: Após o meio-campo, a cobrança, para TIRO
-          LIVRE DIRETO, exige o "OK" do goleiro adversário após montar a barreira.
+          <strong>ARTIGO 18º</strong> - Laterais e escanteios obrigatoriamente com as mãos.
         </p>
 
+        <ul className="list-disc pl-6 mb-4 space-y-2">
+          <li>
+            <strong>§ 1º</strong> - Tempo: 5 segundos para realizar as cobranças, caso contrário
+            será concedido reversão da posse de bola.
+          </li>
+          <li>
+            <strong>§ 2º</strong> - Cobranças: Os 2 pés devem estar na linha, mãos atrás da cabeça e
+            girar o tronco para realizar a cobrança. Caso seja realizado a cobrança diferente da
+            regra, será realizado a reversão da posse de bola.
+          </li>
+        </ul>
+
         <p className="mb-4">
-          <strong>ARTIGO 19º -</strong> Início e Reinício: Todos os atletas devem estar em seus
+          <strong>ARTIGO 19º</strong> - Início e Reinício: Todos os atletas devem estar em seus
           campos. Gols diretos de saída de bola não são válidos.
         </p>
 
-        <p className="mb-4">
-          <strong>ARTIGO 20º -</strong> Recuo e Reposição: Proibido recuo intencional para as mãos
-          do goleiro. Laterais e escanteios obrigatoriamente com as mãos.
+        <p className="mb-6">
+          <strong>ARTIGO 20º</strong> - Recuo: Proibido recuo intencional para as mãos do goleiro.
         </p>
-      </section>
 
-      {/* CAPITULO VI */}
-
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">CAPÍTULO VI</h2>
-        <h3 className="text-xl font-semibold mb-4">
-          Da Comunicação e Transparência (AVISO IMPORTANTE)
-        </h3>
+        {/* CAPÍTULO VI */}
+        <h2 className="text-xl font-semibold mt-10 mb-4">CAPÍTULO VI</h2>
+        <h3 className="font-semibold mb-4">Da Comunicação e Transparência (AVISO IMPORTANTE)</h3>
 
         <p className="mb-4">
-          <strong>ARTIGO 21º -</strong> Transparência Total: NINGUÉM será comunicado em particular
-          sobre atrasos em pagamentos ou mensalidades. Todas as informações financeiras e pendências
-          serão publicadas no grupo, visíveis a todos os membros.
+          <strong>ARTIGO 21º</strong> - Transparência Total: <strong>NINGUÉM</strong> será
+          comunicado em particular sobre atrasos em pagamentos ou mensalidades. Todas as informações
+          financeiras e pendências serão publicadas no grupo, visíveis a todos os membros.
         </p>
 
         <p className="mb-4">
-          <strong>ARTIGO 22º -</strong> Uso dos Grupos: O FUTQUINTA possui dois grupos. O Grupo
+          <strong>ARTIGO 22º</strong> - Uso dos Grupos: O FUTQUINTA possui dois grupos. O Grupo
           Bloqueado é exclusivo para informações oficiais e avisos. É fundamental que os atletas não
           deixem este grupo no silencioso para não alegarem desconhecimento das regras, multas ou
           surpresas ao serem removidos por inadimplência.
         </p>
 
         <p className="mb-4">
-          <strong>ARTIGO 23º -</strong> Remoções e Retornos: Caso um atleta seja removido por
+          <strong>ARTIGO 23º</strong> - Remoções e Retornos: Caso um atleta seja removido por
           inadimplência, poderá ser readmitido no grupo sem qualquer restrição assim que regularizar
           seus débitos.
         </p>
 
+        <p className="mb-10">
+          <strong>ARTIGO 24º</strong> - Imparcialidade: As regras são aplicadas de forma idêntica a
+          todos, independentemente do tempo de casa ou amizade. O foco é sempre o bem-estar e a
+          continuidade do FUTQUINTA. Pedimos que ninguém leve as cobranças para o lado pessoal, pois
+          o que vale para um, vale para todos.
+        </p>
+      </section>
+
+      {/* CAPITULO VI */}
+
+      <section className="mb-8">
+        <h2 className="text-xl font-semibold mt-10 mb-4">CAPÍTULO VI</h2>
+        <h3 className="font-semibold mb-4">Da Comunicação e Transparência (AVISO IMPORTANTE)</h3>
+
         <p className="mb-4">
-          <strong>ARTIGO 24º -</strong> Imparcialidade: As regras são aplicadas de forma idêntica a
+          <strong>ARTIGO 21º</strong> - Transparência Total: <strong>NINGUÉM</strong> será
+          comunicado em particular sobre atrasos em pagamentos ou mensalidades. Todas as informações
+          financeiras e pendências serão publicadas no grupo, visíveis a todos os membros.
+        </p>
+
+        <p className="mb-4">
+          <strong>ARTIGO 22º</strong> - Uso dos Grupos: O FUTQUINTA possui dois grupos. O Grupo
+          Bloqueado é exclusivo para informações oficiais e avisos. É fundamental que os atletas não
+          deixem este grupo no silencioso para não alegarem desconhecimento das regras, multas ou
+          surpresas ao serem removidos por inadimplência.
+        </p>
+
+        <p className="mb-4">
+          <strong>ARTIGO 23º</strong> - Remoções e Retornos: Caso um atleta seja removido por
+          inadimplência, poderá ser readmitido no grupo sem qualquer restrição assim que regularizar
+          seus débitos.
+        </p>
+
+        <p className="mb-10">
+          <strong>ARTIGO 24º</strong> - Imparcialidade: As regras são aplicadas de forma idêntica a
           todos, independentemente do tempo de casa ou amizade. O foco é sempre o bem-estar e a
           continuidade do FUTQUINTA. Pedimos que ninguém leve as cobranças para o lado pessoal, pois
           o que vale para um, vale para todos.
