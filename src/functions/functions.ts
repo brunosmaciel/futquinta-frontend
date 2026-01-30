@@ -35,11 +35,20 @@ export function getTopScorers(players: PlayerProfile[]): GetTopScorersType[] {
       };
     })
     .sort((a, b) => {
+      // 1º Maior número de gols
+      if (b.goals !== a.goals) {
+        return b.goals - a.goals;
+      }
+
+      // 2º Maior média de gols por jogo
       const mediaA = a.totalGames ? a.goals / a.totalGames : 0;
       const mediaB = b.totalGames ? b.goals / b.totalGames : 0;
 
-      if (mediaB !== mediaA) return mediaB - mediaA;
+      if (mediaB !== mediaA) {
+        return mediaB - mediaA;
+      }
 
+      // 3º Maior número de jogos
       return b.totalGames - a.totalGames;
     });
 

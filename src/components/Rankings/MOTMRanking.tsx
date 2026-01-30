@@ -11,6 +11,7 @@ export type GeneralPlacingProps = {
 const MOTMRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps) => {
   const fortyPerCentGames = Math.ceil(totalNumberOfGames * 0.45);
 
+  console;
   const playerStats = players
     .filter((player) => player.role === 'PERMANENT')
     .map((player) => {
@@ -29,7 +30,6 @@ const MOTMRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps) => {
     })
     .filter((player) => player.mvp > 0)
     .filter((player) => player.totalGames >= fortyPerCentGames);
-
   return (
     <div className="h-full w-full">
       <div className="justify-between mx-1 my-4 text-[12px] font-light italic flex  lg:justify-normal lg:gap-10 ">
