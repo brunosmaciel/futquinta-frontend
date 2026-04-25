@@ -19,7 +19,7 @@ type GoalkeeperRank = {
 };
 
 const GoalkeepersRankings = ({ players, numberOfGames }: GeneralPlacingProps) => {
-  const minimumGames = Math.ceil(numberOfGames * 0.4);
+  const minimumGames = Math.ceil(numberOfGames * 0.3);
 
   const goalkeepers = players
     // ❌ remove convidados

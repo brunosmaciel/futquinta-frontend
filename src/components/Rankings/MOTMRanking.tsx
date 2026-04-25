@@ -9,7 +9,7 @@ export type GeneralPlacingProps = {
   totalNumberOfGames: number;
 };
 const MOTMRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps) => {
-  const fortyPerCentGames = Math.ceil(totalNumberOfGames * 0.45);
+  const fortyPerCentGames = Math.ceil(totalNumberOfGames * 0.35);
 
   console;
   const playerStats = players
@@ -24,9 +24,21 @@ const MOTMRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps) => {
       };
     })
     .sort((a, b) => {
-      if (b.totalGames !== a.totalGames) return b.totalGames - a.totalGames;
+      // 1º Maior número de pontos
+      if (b.mvp !== a.mvp) {
+        return b.mvp - a.mvp;
+      }
 
-      return b.gamesRecord - a.gamesRecord;
+      // 2º Maior número de jogos
+      if (b.totalGames !== a.totalGames) {
+        return b.totalGames - a.totalGames;
+      }
+
+      // 3º Maior aproveitamento
+      const aproveitamentoA = a.totalGames ? a.points / (a.totalGames * 3) : 0;
+      const aproveitamentoB = b.totalGames ? b.points / (b.totalGames * 3) : 0;
+
+      return aproveitamentoB - aproveitamentoA;
     })
     .filter((player) => player.mvp > 0)
     .filter((player) => player.totalGames >= fortyPerCentGames);

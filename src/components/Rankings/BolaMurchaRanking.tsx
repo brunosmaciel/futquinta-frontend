@@ -9,8 +9,6 @@ export type GeneralPlacingProps = {
   totalNumberOfGames: number;
 };
 const BolaMurchaRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps) => {
-  const fortyPerCentGames = Math.floor(totalNumberOfGames * 0.45);
-
   const playerStats = players
     .filter((player) => player.role === 'PERMANENT')
     .map((player) => {
@@ -26,8 +24,7 @@ const BolaMurchaRanking = ({ players, totalNumberOfGames }: GeneralPlacingProps)
       (a, b) =>
         b.bolaMurcha - a.bolaMurcha || a.totalGames - b.totalGames || a.gamesRecord - b.gamesRecord,
     )
-    .filter((player) => player.bolaMurcha > 0)
-    .filter((player) => player.totalGames >= fortyPerCentGames);
+    .filter((player) => player.bolaMurcha > 0);
 
   return (
     <div className="h-full w-full">
